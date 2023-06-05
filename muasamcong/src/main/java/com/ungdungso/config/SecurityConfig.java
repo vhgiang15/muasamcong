@@ -25,14 +25,14 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 				.authorizeHttpRequests((requests) -> requests
-						.requestMatchers("/login/**").permitAll()
+						.requestMatchers("/login").permitAll()
 						.requestMatchers("/css/**").permitAll()
 						.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/admin**").hasAnyRole("ADMIN")
 						.anyRequest().permitAll())
 				.formLogin((form) -> form
-						.loginPage("/login-form")
-						.loginProcessingUrl("/loginpost")
+						.loginPage("/login-page")
+						.loginProcessingUrl("/login")
 						.successHandler(loginSuccessHandler)
 						.failureUrl("/login-form?error=failed")
 						.permitAll())
