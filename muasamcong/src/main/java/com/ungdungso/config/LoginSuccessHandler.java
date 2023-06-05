@@ -27,7 +27,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             //redirectURL = "admin-dashboard";
         } else if (tempString.equals("[ROLE_USER]")) {
             //redirectURL = "index";
-        	redirectURL = "/user/organization-manage";
+        	redirectURL = "/user/home";
         }  
         
         response.sendRedirect(redirectURL);		
