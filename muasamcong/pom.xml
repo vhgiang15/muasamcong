@@ -75,6 +75,16 @@
     		<artifactId>okhttp</artifactId>
     		<version>2.7.5</version>
 		</dependency>
+		
+		
+		
+		<!-- https://mvnrepository.com/artifact/de.adito/trustmanager -->
+<dependency>
+    <groupId>de.adito</groupId>
+    <artifactId>trustmanager</artifactId>
+    <version>1.0.4</version>
+</dependency>
+
 
 		<dependency>
 			<groupId>com.ungdungso</groupId>
