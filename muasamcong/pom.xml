@@ -65,6 +65,22 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		
+				
+		
+		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp -->
+		<dependency>
+    		<groupId>com.squareup.okhttp</groupId>
+    		<artifactId>okhttp</artifactId>
+    		<version>2.7.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.ungdungso</groupId>
+			<artifactId>cdskdgp</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
