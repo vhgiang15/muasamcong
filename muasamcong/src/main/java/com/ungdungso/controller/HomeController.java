@@ -14,9 +14,15 @@ public class HomeController {
 	return  model;
 	}
 	
-	@GetMapping(value = { "/user/home"})
+	@GetMapping(value = { "/user/home","/dashboard"})
 	public ModelAndView home(Authentication authentication) {
-		ModelAndView model= new ModelAndView("client/home");
+		ModelAndView model= new ModelAndView("client/dashboard");
+	return  model;
+	}
+	
+	@GetMapping(value = { "/notice-today"})
+	public ModelAndView noticeToday(Authentication authentication) {
+		ModelAndView model= new ModelAndView("client/notice-today");
 	return  model;
 	}
 }
