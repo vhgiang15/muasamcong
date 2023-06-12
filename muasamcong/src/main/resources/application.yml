@@ -1,7 +1,0 @@
-server:
-  ssl:
-    key-alias: spring-https
-    key-store: classpath:giang.jks
-    key-store-type: JKS
-    key-store-password: 123456aA@    
-  port: 7777

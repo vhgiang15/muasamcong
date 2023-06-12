@@ -1,28 +1,31 @@
 package com.ungdungso.controller;
-
-import java.io.IOException;
-import java.security.cert.X509Certificate;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
-import javax.net.ssl.HostnameVerifier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.ungdungso.model.Area;
+import com.ungdungso.repository.AreaRepository;
 import com.squareup.okhttp.RequestBody;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 
 @Controller
 public class HomeController {
+	@Autowired
+	private AreaRepository areaRepository;
 
 	@GetMapping(value = { "/", "/index" })
 	public ModelAndView loginPage(Authentication authentication) {
@@ -37,11 +40,8 @@ public class HomeController {
 	}
 	
 	@GetMapping(value = { "/notice-today"})
-	public ModelAndView noticeToday(Authentication authentication) throws Exception {
-		ModelAndView model= new ModelAndView("client/notice-today");
-		
-		
-		
+	public ModelAndView noticeToday(Authentication authentication) throws IOException {
+		ModelAndView model= new ModelAndView("client/notice-today");		
 		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json");
 		RequestBody body = RequestBody.create(mediaType, "{\"areaType\":\"1\",\"parentCode\":\"VN\"}");
@@ -63,17 +63,26 @@ public class HomeController {
 		  .addHeader("sec-ch-ua-mobile", "?1")
 		  .addHeader("sec-ch-ua-platform", "\"Android\"")
 		  .build();	
-		Response response = client.newCall(request).execute();
-		//System.out.println(response.toString());
+			Response response;
+			response = client.newCall(request).execute();
+		    String jsonData = response.body().string();
+		    JSONObject jobject = new JSONObject(jsonData);
+		    System.out.println(jsonData);
+		    JSONArray Jarray = jobject.getJSONArray("areas");
+	    System.out.println(Jarray.length());
+	    List<Area> list =new ArrayList<Area>();	    
+	    for(int i=0; i<Jarray.length(); i++)
+	    {
+	    	ObjectMapper objectMapper = new ObjectMapper();
+	    	Area area= objectMapper.readValue(Jarray.get(i).toString(), Area.class);
+	    	list.add(area);
+	    	//areaRepository.save(area); only once run
+		}
+	    for (Area area : list) {
+	    	System.out.println(area.getNameTranslate());
+		}
 		
-		
-		
-		
-		
-		
-		
-		
-		
+				
 	return  model;
 	}
 }
