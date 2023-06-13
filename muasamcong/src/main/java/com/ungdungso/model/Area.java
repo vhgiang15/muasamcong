@@ -21,14 +21,24 @@ public class Area {
 	
 	@Column( name="status")
 	private int status;
+	
+	@Column( name="status12")
+	private int status12;
+	
 	@Transient
 	private String createdDate;
+	
 	@Transient
 	private String createdBy;
+	
 	@Transient
 	private String lastModifiedDate;
+	
 	@Transient
 	private String lastModifiedBy;
+	
+	@Transient
+	private String lastModifiedBy12;/////
 	
 	@Column( name="parentcode")
 	private String parentCode;
@@ -45,13 +55,6 @@ public class Area {
 	@Transient
 	private String parentDTO;
 	
-	/*
-	 * "code": "709", "areaType": "1", "name": "Tỉnh Tây Ninh", "orderIndex": 48,
-	 * "status": 1, "createdDate": "2022-04-23T18:03:31", "createdBy": "hientv9",
-	 * "lastModifiedDate": null, "lastModifiedBy": "hientv9", "parentCode": "VN",
-	 * "parent": null, "nameTranslate": "Tỉnh Tây Ninh", "groupCode": "004",
-	 * "parentDTO": null
-	 */
 	
 	
 	
@@ -62,25 +65,123 @@ public class Area {
 
 
 
-	public Area(int code, int areaType, String name, int orderIndex, int status, String createdDate, String createdBy,
-			String lastModifiedDate, String lastModifiedBy, String parentCode, String parent, String nameTranslate,
-			int groupCode, String parentDTO) {
+	
+
+
+
+	
+
+
+
+
+
+
+
+	public int getStatus12() {
+		return status12;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setStatus12(int status12) {
+		this.status12 = status12;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public String getLastModifiedBy12() {
+		return lastModifiedBy12;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void setLastModifiedBy12(String lastModifiedBy12) {
+		this.lastModifiedBy12 = lastModifiedBy12;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public Area(int code, int areaType, String name, int orderIndex, int status, int status12, String createdDate,
+			String createdBy, String lastModifiedDate, String lastModifiedBy, String lastModifiedBy12,
+			String parentCode, String parent, String nameTranslate, int groupCode, String parentDTO) {
 		super();
 		this.code = code;
 		this.areaType = areaType;
 		this.name = name;
 		this.orderIndex = orderIndex;
 		this.status = status;
+		this.status12 = status12;
 		this.createdDate = createdDate;
 		this.createdBy = createdBy;
 		this.lastModifiedDate = lastModifiedDate;
 		this.lastModifiedBy = lastModifiedBy;
+		this.lastModifiedBy12 = lastModifiedBy12;
 		this.parentCode = parentCode;
 		this.parent = parent;
 		this.nameTranslate = nameTranslate;
 		this.groupCode = groupCode;
 		this.parentDTO = parentDTO;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -76,7 +76,7 @@ public class HomeController {
 	    	ObjectMapper objectMapper = new ObjectMapper();
 	    	Area area= objectMapper.readValue(Jarray.get(i).toString(), Area.class);
 	    	list.add(area);
-	    	//areaRepository.save(area); only once run
+	    	areaRepository.save(area); //only once run
 		}
 	    for (Area area : list) {
 	    	System.out.println(area.getNameTranslate());

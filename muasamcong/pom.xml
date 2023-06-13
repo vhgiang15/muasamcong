@@ -65,26 +65,20 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
-	
-		
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
-<dependency>
-    <groupId>org.json</groupId>
-    <artifactId>json</artifactId>
-    <version>20230227</version>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
-<dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.15.2</version>
-</dependency>
-
-
-
 				
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+    		<groupId>org.json</groupId>
+    		<artifactId>json</artifactId>
+    		<version>20230227</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
+    		<version>2.15.2</version>
+		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/com.squareup.okhttp/okhttp -->
 		<dependency>
@@ -92,22 +86,14 @@
     		<artifactId>okhttp</artifactId>
     		<version>2.7.5</version>
 		</dependency>
-		
-		
-		
-		<!-- https://mvnrepository.com/artifact/de.adito/trustmanager -->
-<dependency>
-    <groupId>de.adito</groupId>
-    <artifactId>trustmanager</artifactId>
-    <version>1.0.4</version>
-</dependency>
-
 
 		<dependency>
-			<groupId>com.ungdungso</groupId>
-			<artifactId>cdskdgp</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+    		<groupId>de.adito</groupId>
+    		<artifactId>trustmanager</artifactId>
+    		<version>1.0.4</version>
 		</dependency>
+
+		
 	</dependencies>
 
 	<build>
