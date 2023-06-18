@@ -1,50 +1,238 @@
 package com.ungdungso.model;
-
+import java.util.Date;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.Table;
+@Entity
+@Table(name = "bids_notice")
 public class BidsNotice {
 	@Id
-	private String id; // ID trong database
+	@Column( name="notify_no")
+	private String notifyNo; // Số thông báo mời thầu
 	
-	private String notifyId;
-	private String bidCloseDate;  // ngày đóng thầu
+	@Column( name="public_date")
+	private Date publicDate;
+	
+	@Column( name="bid_close_date")
+	private Date bidCloseDate; 
+	
+	@Column( name="bid_form")
 	private String bidForm;	// hình thức thầu
-	private String bidMode; // phương thức LCNT
-	private String bidName; // tên gói thầu
-	private String investField; // lĩnh vực
-	private int isInternet; // đấu thầu qua mạng hay không
-	private String locations; // địa điểm thực hiện thầu
-	private String notifyNo; // sô thông báo mời thầu
-	private String notifyVersion; 
-	private String notifyNoStand;
-	private String processApply; 
-	private String procuringEntityCode; // mã đơn vị chủ đầu tư
-	private String procuringEntityName; // tên chủ đầu tư
-	private String publicDate; // ngày đăng thầu
-	private String status; // trạng thái thông báo mời thầu
-	private String bidOpenDate;
-
 	
+	@Column( name="bid_mode")
+	private String bidMode; // phương thức LCNT
+	
+	@Column( name="bid_name")
+	private String bidName; // tên gói thầu
+	
+	@Column( name="invest_field")
+	private String investField; // lĩnh vực
+	
+	@Column( name="is_internet")
+	private int isInternet; // đấu thầu qua mạng hay không
+	
+	@Column( name="procuring_entity_code")
+	private String procuringEntityCode; // mã đơn vị mời thầu trên hệ thống mua sắm công
+	
+	@Column( name="procuring_entity_name")
+	private String procuringEntityName; // tên đơn vị mời thầu
+	
+	@Column( name="investor_name")
+	private String investorName; 		// tên chủ đẩu tư
+	
+	@Column( name="notify_version")
+	private String notifyVersion; 
+	
+	@Column( name="notify_no_stand")
+	private String notifyNoStand;
+	
+	@Column( name="status")
+	private String status; // trạng thái thông báo mời thầu
+	
+
+	@Column( name="bid_open_date")
+	private Date bidOpenDate;
 		
-	/*
-	 * "id": "3dc38628-f4e5-4f08-b0c4-e590fa58c60b", "notifyId":
-	 * "3dc38628-f4e5-4f08-b0c4-e590fa58c60b", "bidCloseDate":
-	 * "2023-06-14T10:00:00", "bidForm": "CHCT", "bidMode": "1_MTHS", "bidName": [
-	 * "Mua sắm trang thiết bị bay không người lái (Flycam) phục vụ công tác tuần tra, kiểm tra quản lý, bảo vệ rừng"
-	 * ], "investField": [ "HH" ], "isInternet": 1, "locations": [ { "provCode":
-	 * "703", "provName": "Tỉnh Lâm Đồng", "districtCode": "70323", "districtName":
-	 * "Huyện Đam Rông" } ], "notifyNo": "IB2300120225", "notifyVersion": "00",
-	 * "notifyNoStand": "IB2300120225-00", "processApply": "LDT",
-	 * "procuringEntityCode": "vn5801427635", "procuringEntityName":
-	 * "CÔNG TY TNHH TMDV VÀ TVXD HOÀNG PHÚC GROUP", "publicDate":
-	 * "2023-06-07T23:34:32.651", "status": "01", "bidOpenDate":
-	 * "2023-06-14T10:00:00", "planType": "TX", "planNo": "PL2300089723",
-	 * "stepCode": "notify-contractor-step-1-tbmt", "type": "es-notify-contractor",
-	 * "statusForNotify": "", "goods": [ "Thiết Bị Bay Không Người Lái" ],
-	 * "numPetition": 0, "numClarifyReq": 0, "numBidderTech": 0, "bidId":
-	 * "cf919250-2595-473f-b134-68d08be2f04c", "createdBy": "vn5801427635",
-	 * "bidPrice": 1.4473E8, "numPetitionHsmt": 0, "numPetitionLcnt": 0,
-	 * "numPetitionKqlcnt": 0, "score": "NaN", "pvccNew": [ { "name":
-	 * "Thiết Bị Bay Không Người Lái" } ] },
-	 */
+	@Column( name="plan_No")
+	private String planNo;				// số KHLCNT
+	
+	@Column( name="district_code")     // địa điểm cấp huyện thực hiện thầu
+	private int districtCode;	
+	
+	@Column( name="prov_code")        // địa điểm cấp tỉnh thực hiện thầu
+	private int provCode;	
+
+	public BidsNotice() {
+		super();
+	}
+
+	public BidsNotice(String notifyNo, Date publicDate, Date bidCloseDate, String bidForm, String bidMode,
+			String bidName, String investField, int isInternet, String procuringEntityCode, String procuringEntityName,
+			String investorName, String notifyVersion, String notifyNoStand, String status, Date bidOpenDate,
+			String planNo, int districtCode, int provCode) {
+		super();
+		this.notifyNo = notifyNo;
+		this.publicDate = publicDate;
+		this.bidCloseDate = bidCloseDate;
+		this.bidForm = bidForm;
+		this.bidMode = bidMode;
+		this.bidName = bidName;
+		this.investField = investField;
+		this.isInternet = isInternet;
+		this.procuringEntityCode = procuringEntityCode;
+		this.procuringEntityName = procuringEntityName;
+		this.investorName = investorName;
+		this.notifyVersion = notifyVersion;
+		this.notifyNoStand = notifyNoStand;
+		this.status = status;
+		this.bidOpenDate = bidOpenDate;
+		this.planNo = planNo;
+		this.districtCode = districtCode;
+		this.provCode = provCode;
+	}
+
+	public String getNotifyNo() {
+		return notifyNo;
+	}
+
+	public void setNotifyNo(String notifyNo) {
+		this.notifyNo = notifyNo;
+	}
+
+	public Date getPublicDate() {
+		return publicDate;
+	}
+
+	public void setPublicDate(Date publicDate) {
+		this.publicDate = publicDate;
+	}
+
+	public Date getBidCloseDate() {
+		return bidCloseDate;
+	}
+
+	public void setBidCloseDate(Date bidCloseDate) {
+		this.bidCloseDate = bidCloseDate;
+	}
+
+	public String getBidForm() {
+		return bidForm;
+	}
+
+	public void setBidForm(String bidForm) {
+		this.bidForm = bidForm;
+	}
+
+	public String getBidMode() {
+		return bidMode;
+	}
+
+	public void setBidMode(String bidMode) {
+		this.bidMode = bidMode;
+	}
+
+	public String getBidName() {
+		return bidName;
+	}
+
+	public void setBidName(String bidName) {
+		this.bidName = bidName;
+	}
+
+	public String getInvestField() {
+		return investField;
+	}
+
+	public void setInvestField(String investField) {
+		this.investField = investField;
+	}
+
+	public int getIsInternet() {
+		return isInternet;
+	}
+
+	public void setIsInternet(int isInternet) {
+		this.isInternet = isInternet;
+	}
+
+	public String getProcuringEntityCode() {
+		return procuringEntityCode;
+	}
+
+	public void setProcuringEntityCode(String procuringEntityCode) {
+		this.procuringEntityCode = procuringEntityCode;
+	}
+
+	public String getProcuringEntityName() {
+		return procuringEntityName;
+	}
+
+	public void setProcuringEntityName(String procuringEntityName) {
+		this.procuringEntityName = procuringEntityName;
+	}
+
+	public String getInvestorName() {
+		return investorName;
+	}
+
+	public void setInvestorName(String investorName) {
+		this.investorName = investorName;
+	}
+
+	public String getNotifyVersion() {
+		return notifyVersion;
+	}
+
+	public void setNotifyVersion(String notifyVersion) {
+		this.notifyVersion = notifyVersion;
+	}
+
+	public String getNotifyNoStand() {
+		return notifyNoStand;
+	}
+
+	public void setNotifyNoStand(String notifyNoStand) {
+		this.notifyNoStand = notifyNoStand;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Date getBidOpenDate() {
+		return bidOpenDate;
+	}
+
+	public void setBidOpenDate(Date bidOpenDate) {
+		this.bidOpenDate = bidOpenDate;
+	}
+
+	public String getPlanNo() {
+		return planNo;
+	}
+
+	public void setPlanNo(String planNo) {
+		this.planNo = planNo;
+	}
+
+	public int getDistrictCode() {
+		return districtCode;
+	}
+
+	public void setDistrictCode(int districtCode) {
+		this.districtCode = districtCode;
+	}
+
+	public int getProvCode() {
+		return provCode;
+	}
+
+	public void setProvCode(int provCode) {
+		this.provCode = provCode;
+	}	
 }
