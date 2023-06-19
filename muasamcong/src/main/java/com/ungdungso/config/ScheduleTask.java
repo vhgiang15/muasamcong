@@ -1,6 +1,7 @@
 package com.ungdungso.config;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,7 +37,14 @@ public class ScheduleTask {
 	public void scheduleGetBidNotice() throws IOException {	
 				OkHttpClient client = new OkHttpClient();
 				MediaType mediaType = MediaType.parse("application/json");
-				RequestBody body = RequestBody.create(mediaType, "{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"2023-06-17T00:00:00.000Z\",\"to\":\"2023-06-17T23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}");
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				Date today= new Date();
+				String dateString=format.format(today).toString();		
+				String tempString="{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"fromDayT00:00:00.000Z\",\"to\":\"toDayT23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";
+				//RequestBody body = RequestBody.create(mediaType, "{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"2023-06-17T00:00:00.000Z\",\"to\":\"2023-06-17T23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}");
+				tempString=tempString.replace("fromDay", dateString);
+				tempString=tempString.replace("toDay", dateString);				
+				RequestBody body = RequestBody.create(mediaType,tempString);				
 				Request request = new Request.Builder()
 				  .url("https://muasamcong.mpi.gov.vn/o/egp-portal-contractor-selection-v2/services/smart/search")
 				  .method("POST", body)
@@ -52,10 +60,8 @@ public class ScheduleTask {
 				String jsonData = response.body().string();		   
 			    int  tmp= jsonData.lastIndexOf("totalPages");
 			    String temp3=jsonData.substring(8,tmp-2)+"}";
-			    System.out.println(temp3);
 			    JSONObject jobject = new JSONObject(temp3);			    
 			    JSONArray Jarray = jobject.getJSONArray("content");  //2023-06-28T09:00:00
-			    System.out.println(Jarray.length());	
 			    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 			    ObjectMapper objectMapper = new ObjectMapper();
 			    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false); 
@@ -66,7 +72,7 @@ public class ScheduleTask {
 					BidsNotice bidsNotice= objectMapper.readValue(tmpString, BidsNotice.class);
 					if(bidsNoticeRepostory.existsById(bidsNotice.getNotifyNo())) { 
 						System.out.println("Đã tồn tại thông báo mời thầu");	
-						break;}		
+						continue;}		
 					bidsNoticeRepostory.save(bidsNotice);
 					District district=objectMapper.readValue(tmpString, District.class);
 					if(!districRepository.existsById(district.getDistrictCode())) {
