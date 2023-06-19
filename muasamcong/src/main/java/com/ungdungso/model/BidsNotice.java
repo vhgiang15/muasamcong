@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 @Table(name = "bids_notice")
 public class BidsNotice {
 	@Id
-	@Column( name="notify_no")
+	@Column( name="notify_no", columnDefinition = "NVARCHAR(20)")
 	private String notifyNo; // Số thông báo mời thầu
 	
 	@Column( name="public_date")
@@ -17,22 +17,22 @@ public class BidsNotice {
 	@Column( name="bid_close_date")
 	private Date bidCloseDate; 
 	
-	@Column( name="bid_form")
+	@Column( name="bid_form", columnDefinition = "NVARCHAR(10)")
 	private String bidForm;	// hình thức thầu
 	
-	@Column( name="bid_mode")
+	@Column( name="bid_mode", columnDefinition = "NVARCHAR(20)")
 	private String bidMode; // phương thức LCNT
 	
 	@Column( name="bid_name")
 	private String bidName; // tên gói thầu
 	
-	@Column( name="invest_field")
+	@Column( name="invest_field", columnDefinition = "NVARCHAR(5)")
 	private String investField; // lĩnh vực
 	
-	@Column( name="is_internet")
+	@Column( name="is_internet", columnDefinition = "NVARCHAR(10)")
 	private int isInternet; // đấu thầu qua mạng hay không
 	
-	@Column( name="procuring_entity_code")
+	@Column( name="procuring_entity_code", columnDefinition = "NVARCHAR(20)")
 	private String procuringEntityCode; // mã đơn vị mời thầu trên hệ thống mua sắm công
 	
 	@Column( name="procuring_entity_name")
@@ -41,20 +41,20 @@ public class BidsNotice {
 	@Column( name="investor_name")
 	private String investorName; 		// tên chủ đẩu tư
 	
-	@Column( name="notify_version")
+	@Column( name="notify_version", columnDefinition = "NVARCHAR(2)")
 	private String notifyVersion; 
 	
-	@Column( name="notify_no_stand")
+	@Column( name="notify_no_stand", columnDefinition = "NVARCHAR(20)")
 	private String notifyNoStand;
 	
-	@Column( name="status")
+	@Column( name="status",columnDefinition = "NVARCHAR(20)")
 	private String status; // trạng thái thông báo mời thầu
 	
 
 	@Column( name="bid_open_date")
 	private Date bidOpenDate;
 		
-	@Column( name="plan_No")
+	@Column( name="plan_No", columnDefinition = "NVARCHAR(20)")
 	private String planNo;				// số KHLCNT
 	
 	@Column( name="district_code")     // địa điểm cấp huyện thực hiện thầu

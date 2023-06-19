@@ -11,13 +11,13 @@ public class District {
 	@Column(name="district_code")
 	private int districtCode;
 	
-	@Column(name="district_name")
+	@Column(name="district_name",columnDefinition = "NVARCHAR(20)")
 	private String districtName;
 	
 	@Column(name="prov_code")
 	private int provCode;
 	
-	@Column(name="prov_Name")
+	@Column(name="prov_Name",columnDefinition = "NVARCHAR(20)")
 	private String provName;
 
 	public District() {

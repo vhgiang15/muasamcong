@@ -23,12 +23,6 @@ import com.ungdungso.repository.BidsNoticeRepostory;
 import com.ungdungso.repository.DistricRepository;
 
 public class GetBidNotice {
-	
-//	@Autowired
-//	private static BidsNoticeRepostory bidsNoticeRepostory;
-	
-//	@Autowired
-//	private static DistricRepository districRepository;
 	public static List<BidsNotice> getBidsNoticedbyDate( Date dateFrom, Date dateTo, DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory) throws IOException
 	{	
 		OkHttpClient client = new OkHttpClient();
