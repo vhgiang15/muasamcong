@@ -24,17 +24,16 @@ import com.ungdungso.repository.DistricRepository;
 
 public class GetBidNotice {
 	
-	@Autowired
-	private BidsNoticeRepostory bidsNoticeRepostory;
+//	@Autowired
+//	private static BidsNoticeRepostory bidsNoticeRepostory;
 	
-	@Autowired
-	private DistricRepository districRepository;
-	public List<BidsNotice> getBidsNoticedbyDate( Date dateFrom, Date dateTo) throws IOException
+//	@Autowired
+//	private static DistricRepository districRepository;
+	public static List<BidsNotice> getBidsNoticedbyDate( Date dateFrom, Date dateTo, DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory) throws IOException
 	{	
 		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json");
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		Date today= new Date();
 		String dateFromString=format.format(dateFrom).toString();
 		String dateToString=format.format(dateTo).toString();		
 		String mediaTypeString="{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"fromDayT00:00:00.000Z\",\"to\":\"toDayT23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";
@@ -79,7 +78,7 @@ public class GetBidNotice {
 	return lisBidsNotices;
 	}
 	
-	private String reExcuteString(String objectString) { // tiền xử lý data json
+	private static String reExcuteString(String objectString) { // tiền xử lý data json
 		int tmp=objectString.indexOf("\"pvccNew\":");   // xoá key pvccNew
 		int tmp2= objectString.indexOf("],", tmp);
 		String firString=objectString.substring(0, tmp);
