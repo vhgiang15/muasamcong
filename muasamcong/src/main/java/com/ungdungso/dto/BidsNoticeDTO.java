@@ -1,4 +1,7 @@
 package com.ungdungso.dto;
+
+import com.ungdungso.model.BidsNotice;
+
 public class BidsNoticeDTO {
 
 	private String notifyNo; // Số thông báo mời thầu
@@ -121,5 +124,20 @@ public class BidsNoticeDTO {
 	public void setBidPrice(String bidPrice) {
 		this.bidPrice = bidPrice;
 	}	
+	
+	
+	public BidsNoticeDTO convertBidNoticeToDTO (BidsNotice bidsNotice) {
+		BidsNoticeDTO bidsNoticeDTO= new BidsNoticeDTO();
+		notifyNo=bidsNotice.getNotifyNo();
+		notifyNoStand= bidsNotice.getNotifyNoStand();
+		bidName=bidsNotice.getBidName();
+		procuringEntityName=bidsNotice.getProcuringEntityName();
+		investorName=bidsNotice.getInvestorName();
+		
+		
+		
+		return bidsNoticeDTO;
+		
+	}
 
 }

@@ -12,7 +12,7 @@ import com.ungdungso.repository.BidsNoticeRepostory;
 import com.ungdungso.repository.DistricRepository;
 
 @Component
-@EnableScheduling /// https://gpcoder.com/3231-huong-dan-phan-tich-noi-dung-html-su-dung-thu-vien-jsoup/
+@EnableScheduling 
 public class ScheduleTask {
 	@Autowired
 	private BidsNoticeRepostory bidsNoticeRepostory;
