@@ -16,7 +16,6 @@ import com.ungdungso.repository.DistricRepository;
 public class ScheduleTask {
 	@Autowired
 	private BidsNoticeRepostory bidsNoticeRepostory;
-
 	@Autowired
 	private DistricRepository districRepository;
 
@@ -26,7 +25,6 @@ public class ScheduleTask {
 		List<BidsNotice> listBid=GetBidNotice.getBidsNoticedbyDate(toDay, toDay,districRepository, bidsNoticeRepostory);
 		for (BidsNotice bidsNotice : listBid) {			
 			bidsNoticeRepostory.save(bidsNotice);
-		}
-				
+		}				
 }
 }

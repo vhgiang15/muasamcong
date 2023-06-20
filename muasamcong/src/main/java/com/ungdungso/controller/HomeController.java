@@ -36,7 +36,7 @@ public class HomeController {
 	return  model;
 	}
 	
-	@GetMapping(value = { "/notice-today"})
+	@GetMapping(value = { "/notice-today1"})
 	public ModelAndView noticeToday(Authentication authentication) throws IOException {
 		ModelAndView model= new ModelAndView("client/notice-today");		
 		OkHttpClient client = new OkHttpClient();

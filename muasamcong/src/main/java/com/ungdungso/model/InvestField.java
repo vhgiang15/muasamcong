@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="invest_ield")
+@Table(name="invest_field")
 public class InvestField {
 	@Id
 	@Column(name="invest_field", columnDefinition = "NVARCHAR(5)")

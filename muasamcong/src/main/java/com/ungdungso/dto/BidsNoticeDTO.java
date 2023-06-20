@@ -1,8 +1,27 @@
 package com.ungdungso.dto;
 
+import java.text.SimpleDateFormat;
+
+import org.hibernate.query.sqm.mutation.internal.MultiTableSqmMutationConverter;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.ungdungso.model.BidsNotice;
+import com.ungdungso.repository.BidFormRepository;
+import com.ungdungso.repository.BidStatusRepository;
+import com.ungdungso.repository.InvestFieldRepository;
+
 
 public class BidsNoticeDTO {
+	@Autowired
+	private InvestFieldRepository investFieldRepository;
+	@Autowired
+	private BidStatusRepository bidStatusRepository;
+	@Autowired
+	private BidFormRepository bidFormRepository;
+	
+
+	//this.planNo = planNo;
+
 
 	private String notifyNo; // Số thông báo mời thầu
 	private String notifyNoStand;
@@ -12,7 +31,7 @@ public class BidsNoticeDTO {
 	private String investorName; 		// tên chủ đẩu tư
 	private String publicDate;			// ngày đăng thầu
 	private String bidCloseDate; 		// thời điểm đóng thầu
-	private int isInternet; // đấu thầu qua mạng hay không
+	private String isInternet; // đấu thầu qua mạng hay không
 	private String investField; // lĩnh vực
 	private String status; // trạng thái thông báo mời thầu
 	private String planNo;				// số KHLCNT	
@@ -22,7 +41,7 @@ public class BidsNoticeDTO {
 		super();
 	}
 	public BidsNoticeDTO(String notifyNo, String notifyNoStand, String bidName, String link, String procuringEntityName,
-			String investorName, String publicDate, String bidCloseDate, int isInternet, String investField,
+			String investorName, String publicDate, String bidCloseDate, String isInternet, String investField,
 			String status, String planNo, String bidForm, String bidPrice) {
 		super();
 		this.notifyNo = notifyNo;
@@ -88,10 +107,10 @@ public class BidsNoticeDTO {
 	public void setBidCloseDate(String bidCloseDate) {
 		this.bidCloseDate = bidCloseDate;
 	}
-	public int getIsInternet() {
+	public String getIsInternet() {
 		return isInternet;
 	}
-	public void setIsInternet(int isInternet) {
+	public void setIsInternet(String isInternet) {
 		this.isInternet = isInternet;
 	}
 	public String getInvestField() {
@@ -126,17 +145,26 @@ public class BidsNoticeDTO {
 	}	
 	
 	
-	public BidsNoticeDTO convertBidNoticeToDTO (BidsNotice bidsNotice) {
+	public void convertBidNoticeToDTO (BidsNotice bidsNotice) {
 		BidsNoticeDTO bidsNoticeDTO= new BidsNoticeDTO();
 		notifyNo=bidsNotice.getNotifyNo();
 		notifyNoStand= bidsNotice.getNotifyNoStand();
 		bidName=bidsNotice.getBidName();
 		procuringEntityName=bidsNotice.getProcuringEntityName();
 		investorName=bidsNotice.getInvestorName();
+		SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd-MM-yyyy");
+		publicDate=formatDate.format(bidsNotice.getPublicDate()).toString();		
+		bidCloseDate =formatDate.format(bidsNotice.getBidCloseDate()).toString();
+		isInternet = "Qua mạng";
+		System.out.println("---------------------in ra");
+		System.out.println(bidsNotice.getInvestField());
+		investField =investFieldRepository.queryName(bidsNotice.getInvestField());
 		
-		
-		
-		return bidsNoticeDTO;
+		//status=bidStatusRepository.findById(bidsNotice.getStatus()).get().getStatusName();
+		//bidForm=bidFormRepository.findById(bidsNotice.getBidForm()).get().getNameBidForm()	;
+		//this.planNo = planNo;
+		//this.bidPrice = bidPrice;	
+		//return bidsNoticeDTO;
 		
 	}
 
