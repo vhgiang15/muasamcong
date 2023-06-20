@@ -20,14 +20,21 @@ import com.ungdungso.repository.BidsNoticeRepostory;
 import com.ungdungso.repository.DistricRepository;
 
 public class GetBidNotice {
+	private static int totalPage; //số lượng trang trả về khi get API
 	public static List<BidsNotice> getBidsNoticedbyDate( Date dateFrom, Date dateTo, DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory) throws IOException
 	{	
 		OkHttpClient client = new OkHttpClient();
-		MediaType mediaType = MediaType.parse("application/json");
+		MediaType mediaType = MediaType.parse("application/json"); 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String dateFromString=format.format(dateFrom).toString();
 		String dateToString=format.format(dateTo).toString();		
 		String mediaTypeString="{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"fromDayT00:00:00.000Z\",\"to\":\"toDayT23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";
+		System.out.println("Chi so indẽ trang");
+		
+		//System.out.println(mediaTypeString.substring(0, 17));
+		//mediaTypeString=mediaTypeString.replace("{\"pageNumber\":\"0\"","{\"pageNumber\":\"4\"");
+		
+		System.out.println(mediaTypeString);
 		mediaTypeString=mediaTypeString.replace("fromDay", dateFromString);
 		mediaTypeString=mediaTypeString.replace("toDay", dateToString);				
 		RequestBody body = RequestBody.create(mediaType,mediaTypeString);				
@@ -43,8 +50,18 @@ public class GetBidNotice {
 		  .build();
 		Response response = client.newCall(request).execute();
 		String jsonData = response.body().string();		   
-	    int  tmp= jsonData.lastIndexOf("totalPages");
-	    String temp3=jsonData.substring(8,tmp-2)+"}";
+	    int  tmp= jsonData.lastIndexOf("totalPages"); // tìm kiếm tổng số bản ghi và tổng số trang
+	    int indexSpace=jsonData.indexOf(":", tmp);
+	    int indexComma=jsonData.indexOf(",", tmp);
+	    String totalPageString= jsonData.substring(indexSpace+1, indexComma);
+	    System.out.println("chi so totalPage");
+	    System.out.println(totalPageString);
+		System.out.println(tmp);
+		
+		int tmp1=jsonData.indexOf("totalElements");
+		System.out.println(tmp1);
+	    
+	    String temp3=jsonData.substring(8,tmp-2)+"}"; // chi lấy chuổi chứa dữ liệu thông báo mời thầu
 	    JSONObject jobject = new JSONObject(temp3);			    
 	    JSONArray Jarray = jobject.getJSONArray("content");  //2023-06-28T09:00:00
 	    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -57,7 +74,8 @@ public class GetBidNotice {
 			tmpString=reExcuteString(tmpString);
 			BidsNotice bidsNotice= objectMapper.readValue(tmpString, BidsNotice.class);
 			if(bidsNoticeRepostory.existsById(bidsNotice.getNotifyNo())) { 
-				System.out.println("Đã tồn tại thông báo mời thầu");	
+				System.out.println("Đã tồn tại thông báo mời thầu");
+				System.out.println(bidsNotice.getNotifyNo());
 				continue;}			
 			//bidsNoticeRepostory.save(bidsNotice);
 			lisBidsNotices.add(bidsNotice);
@@ -70,6 +88,7 @@ public class GetBidNotice {
 	}
 	
 	private static String reExcuteString(String objectString) { // tiền xử lý data json
+		
 		int tmp=objectString.indexOf("\"pvccNew\":");   // xoá key pvccNew
 		int tmp2= objectString.indexOf("],", tmp);
 		String firString=objectString.substring(0, tmp);

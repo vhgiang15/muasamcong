@@ -23,7 +23,7 @@ public class BidsNotice {
 	@Column( name="bid_mode", columnDefinition = "NVARCHAR(20)")
 	private String bidMode; // phương thức LCNT
 	
-	@Column( name="bid_name")
+	@Column( name="bid_name", columnDefinition = "TEXT(500)")
 	private String bidName; // tên gói thầu
 	
 	@Column( name="invest_field", columnDefinition = "NVARCHAR(5)")

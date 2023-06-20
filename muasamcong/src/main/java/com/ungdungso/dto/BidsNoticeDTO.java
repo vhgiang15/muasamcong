@@ -13,10 +13,6 @@ import com.ungdungso.repository.InvestFieldRepository;
 
 public class BidsNoticeDTO {
 	@Autowired
-	private InvestFieldRepository investFieldRepository;
-	@Autowired
-	private BidStatusRepository bidStatusRepository;
-	@Autowired
 	private BidFormRepository bidFormRepository;
 	
 
@@ -145,7 +141,7 @@ public class BidsNoticeDTO {
 	}	
 	
 	
-	public void convertBidNoticeToDTO (BidsNotice bidsNotice) {
+	public void convertBidNoticeToDTO (BidsNotice bidsNotice, InvestFieldRepository investFieldRepository,BidStatusRepository bidStatusRepository ) {
 		BidsNoticeDTO bidsNoticeDTO= new BidsNoticeDTO();
 		notifyNo=bidsNotice.getNotifyNo();
 		notifyNoStand= bidsNotice.getNotifyNoStand();
@@ -158,7 +154,9 @@ public class BidsNoticeDTO {
 		isInternet = "Qua mạng";
 		System.out.println("---------------------in ra");
 		System.out.println(bidsNotice.getInvestField());
-		investField =investFieldRepository.queryName(bidsNotice.getInvestField());
+		//investField =investFieldRepository.queryName(bidsNotice.getInvestField());		
+		investField =investFieldRepository.findById(bidsNotice.getInvestField()).get().getNameInvestField();	
+		System.out.println(investField);
 		
 		//status=bidStatusRepository.findById(bidsNotice.getStatus()).get().getStatusName();
 		//bidForm=bidFormRepository.findById(bidsNotice.getBidForm()).get().getNameBidForm()	;
