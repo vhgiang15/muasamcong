@@ -26,7 +26,7 @@ public class BidsNotice {
 	@Column( name="bid_name", columnDefinition = "TEXT(500)")
 	private String bidName; // tên gói thầu
 	
-	@Column( name="invest_field", columnDefinition = "NVARCHAR(5)")
+	@Column( name="invest_field", columnDefinition = "NVARCHAR(10)")
 	private String investField; // lĩnh vực
 	
 	@Column( name="is_internet", columnDefinition = "NVARCHAR(10)")

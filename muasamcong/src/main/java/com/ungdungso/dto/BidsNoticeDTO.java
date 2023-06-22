@@ -1,24 +1,11 @@
 package com.ungdungso.dto;
 
 import java.text.SimpleDateFormat;
-
-import org.hibernate.query.sqm.mutation.internal.MultiTableSqmMutationConverter;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.ungdungso.model.BidsNotice;
-import com.ungdungso.repository.BidFormRepository;
-import com.ungdungso.repository.BidStatusRepository;
-import com.ungdungso.repository.InvestFieldRepository;
+import com.ungdungso.utility.Common;
 
 
 public class BidsNoticeDTO {
-	@Autowired
-	private BidFormRepository bidFormRepository;
-	
-
-	//this.planNo = planNo;
-
-
 	private String notifyNo; // Số thông báo mời thầu
 	private String notifyNoStand;
 	private String bidName; // tên gói thầu
@@ -141,8 +128,8 @@ public class BidsNoticeDTO {
 	}	
 	
 	
-	public void convertBidNoticeToDTO (BidsNotice bidsNotice, InvestFieldRepository investFieldRepository,BidStatusRepository bidStatusRepository ) {
-		BidsNoticeDTO bidsNoticeDTO= new BidsNoticeDTO();
+	public void convertBidNoticeToDTO (BidsNotice bidsNotice) {
+		Common.setHashMap();
 		notifyNo=bidsNotice.getNotifyNo();
 		notifyNoStand= bidsNotice.getNotifyNoStand();
 		bidName=bidsNotice.getBidName();
@@ -151,18 +138,10 @@ public class BidsNoticeDTO {
 		SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd-MM-yyyy");
 		publicDate=formatDate.format(bidsNotice.getPublicDate()).toString();		
 		bidCloseDate =formatDate.format(bidsNotice.getBidCloseDate()).toString();
-		isInternet = "Qua mạng";
-		System.out.println("---------------------in ra");
-		System.out.println(bidsNotice.getInvestField());
-		//investField =investFieldRepository.queryName(bidsNotice.getInvestField());		
-		investField =investFieldRepository.findById(bidsNotice.getInvestField()).get().getNameInvestField();	
-		System.out.println(investField);
-		
-		//status=bidStatusRepository.findById(bidsNotice.getStatus()).get().getStatusName();
-		//bidForm=bidFormRepository.findById(bidsNotice.getBidForm()).get().getNameBidForm()	;
-		//this.planNo = planNo;
-		//this.bidPrice = bidPrice;	
-		//return bidsNoticeDTO;
+		isInternet =Common.hashMapInternet.get(bidsNotice.getIsInternet());
+		investField=Common.hashMapInvestField.get(bidsNotice.getInvestField());
+		status=Common.hashMapBidStatus.get(bidsNotice.getStatus());
+		bidForm=Common.hashMapBidForm.get(bidsNotice.getBidForm());
 		
 	}
 
