@@ -56,12 +56,6 @@ public class BidsNotice {
 		
 	@Column( name="plan_No", columnDefinition = "NVARCHAR(20)")
 	private String planNo;				// số KHLCNT
-	
-	@Column( name="district_code")     // địa điểm cấp huyện thực hiện thầu
-	private int districtCode;	
-	
-	@Column( name="prov_code")        // địa điểm cấp tỉnh thực hiện thầu
-	private int provCode;	
 
 	public BidsNotice() {
 		super();
@@ -70,7 +64,7 @@ public class BidsNotice {
 	public BidsNotice(String notifyNo, Date publicDate, Date bidCloseDate, String bidForm, String bidMode,
 			String bidName, String investField, int isInternet, String procuringEntityCode, String procuringEntityName,
 			String investorName, String notifyVersion, String notifyNoStand, String status, Date bidOpenDate,
-			String planNo, int districtCode, int provCode) {
+			String planNo) {
 		super();
 		this.notifyNo = notifyNo;
 		this.publicDate = publicDate;
@@ -88,8 +82,6 @@ public class BidsNotice {
 		this.status = status;
 		this.bidOpenDate = bidOpenDate;
 		this.planNo = planNo;
-		this.districtCode = districtCode;
-		this.provCode = provCode;
 	}
 
 	public String getNotifyNo() {
@@ -220,19 +212,5 @@ public class BidsNotice {
 		this.planNo = planNo;
 	}
 
-	public int getDistrictCode() {
-		return districtCode;
-	}
-
-	public void setDistrictCode(int districtCode) {
-		this.districtCode = districtCode;
-	}
-
-	public int getProvCode() {
-		return provCode;
-	}
-
-	public void setProvCode(int provCode) {
-		this.provCode = provCode;
-	}	
+	
 }

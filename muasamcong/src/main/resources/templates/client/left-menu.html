@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>VTT-STG</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+<script th:src="@{/js/script.js}"></script>
+<link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+<body>
+    <div class="dashboard-nav" th:fragment="left-menu">
+        <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
+        		<a href="#" class="brand-logo"><i class="fas fa-anchor"></i> <span>BRAND</span></a>
+        </header>
+        <nav class="dashboard-nav-list">
+        	<a th:href="@{/user/dashboard}" id="dashboard" class="dashboard-nav-item "><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        	<a th:href="@{/user/notice-today}" id="notice-today" class="dashboard-nav-item"><i class="fas fa-file-upload"></i> TBMT hôm nay </a>
+        	<a th:href="@{/user/search}" id="search" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Tìm kiếm </a>
+            <div class='dashboard-nav-dropdown'>
+            	<a href="#!" id="notice-manage" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Quản lý TBMT </a>
+                <div class='dashboard-nav-dropdown-menu'>
+                		<a href="#" class="dashboard-nav-dropdown-item">Chưa đóng thầu</a>
+                		<a href="#" class="dashboard-nav-dropdown-item">Đã đóng thầu</a>
+                		<a href="#" class="dashboard-nav-dropdown-item">Đã có KQLCNT</a>
+                		<a href="#" class="dashboard-nav-dropdown-item">Video</a>
+                </div>
+            </div>
+			
+            <div class='dashboard-nav-dropdown'>
+            	<a href="#!" id="report"  class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-money-check-alt"></i> Báo cáo </a>
+                <div class='dashboard-nav-dropdown-menu'>
+                	<a href="#" class="dashboard-nav-dropdown-item">All</a>
+                	<a href="#" class="dashboard-nav-dropdown-item">Recent</a>
+                    <a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
+                </div>
+            </div>
+            <a href="#" id="setting" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a>
+            <a href="#" id="profile" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
+          <div class="nav-item-divider"></div>
+          <a href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Đăng xuất </a>
+        </nav>
+    </div>   
+</body>
+
+
+</html>

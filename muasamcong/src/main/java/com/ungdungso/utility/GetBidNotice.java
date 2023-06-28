@@ -2,10 +2,16 @@ package com.ungdungso.utility;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -14,27 +20,32 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.ungdungso.model.BidsNotice;
 import com.ungdungso.model.District;
+import com.ungdungso.model.LocationBids;
+import com.ungdungso.model.Province;
 import com.ungdungso.repository.BidsNoticeRepostory;
 import com.ungdungso.repository.DistricRepository;
+import com.ungdungso.repository.LocationBidsRepository;
+import com.ungdungso.repository.ProvinceRepository;
 
 public class GetBidNotice {
 	private static int totalPage; //số lượng trang trả về khi get API
-	private static int totalElement; //số lượng thông báo mời thầu khi get API	
+	private static int totalElement; //số lượng thông báo mời thầu khi get API, xoá tham số provinceRepository và districRepository sau khi có đủ 2 thông số này trong databá
 	
 	// Lưu thông báo mời thầu tất cả các trang
-	public static void getBidsNoticeToDay(DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory) throws IOException {
+	public static void getBidsNoticeToDay(DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository,LocationBidsRepository locationBidsRepository) throws IOException {
 		Date today= new Date();
 		GetBidNotice.getTotalPageandElement(today);
+		System.out.println("-------------------------");
+		System.out.println(GetBidNotice.totalPage);
+		System.out.println(GetBidNotice.totalElement);
 				for(int i=0; i<totalPage;i++) {
-					getBidsNoticedbyDate(today,i,districRepository, bidsNoticeRepostory);			
-		}
-		
+					getBidsNoticedbyDate(today,i,districRepository, bidsNoticeRepostory,provinceRepository, locationBidsRepository);			
+		}		
 	}
 	//Lưu thông báo mời thầu của 1 trang
 	
-	private static void getBidsNoticedbyDate( Date today,int page, DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory) throws IOException
-	{	
-		
+	private static void getBidsNoticedbyDate( Date today,int page, DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository,LocationBidsRepository locationBidsRepository) throws IOException
+	{			
 		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json"); 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -58,24 +69,43 @@ public class GetBidNotice {
 		String jsonData = response.body().string();		   
 	    int  tmp= jsonData.lastIndexOf("totalPages");  
 	    String temp3=jsonData.substring(8,tmp-2)+"}"; // chi lấy chuổi chứa dữ liệu thông báo mời thầu
+	    
+	    System.out.println(temp3);
 	    JSONObject jobject = new JSONObject(temp3);			    
 	    JSONArray Jarray = jobject.getJSONArray("content");  //2023-06-28T09:00:00
 	    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 	    ObjectMapper objectMapper = new ObjectMapper();
 	    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false); 
 	    objectMapper.setDateFormat(formatDate);
+
 		for(int i=0; i<Jarray.length(); i++) { 				
 			String tmpString=Jarray.get(i).toString();
-			tmpString=reExcuteString(tmpString);
-			BidsNotice bidsNotice= objectMapper.readValue(tmpString, BidsNotice.class);
+			
+			
+			String jsonString =reExcuteString(tmpString);
+			
+			BidsNotice bidsNotice= objectMapper.readValue(jsonString, BidsNotice.class);
+			
+			List<LocationBids> location=getLocation(tmpString, bidsNotice.getNotifyNo());
+			System.out.println("So luong dia diem:" +location.size());
+			
 			if(bidsNoticeRepostory.existsById(bidsNotice.getNotifyNo())) { 
 				System.out.println("Đã tồn tại thông báo mời thầu");
 				continue;} else {
 				bidsNoticeRepostory.save(bidsNotice);
+				for (LocationBids locationBids : location) {
+				
+					locationBidsRepository.save(locationBids);
+					
+				}
 				}			
 			District district=objectMapper.readValue(tmpString, District.class);
 			if(!districRepository.existsById(district.getDistrictCode())) {
 				districRepository.save(district);
+			}
+			Province province=objectMapper.readValue(tmpString, Province.class);
+			if(!provinceRepository.existsById(province.getProvCode())) {
+				provinceRepository.save(province);
 			}
 		}						
 	}
@@ -111,24 +141,68 @@ public class GetBidNotice {
 	} 
 	
 	private static String reExcuteString(String objectString) { // tiền xử lý data json, đầu ra là chuối json chỉ chứa dữ liệu thông báo mời thầu	
-		int tmp=objectString.indexOf("\"pvccNew\":");   // xoá key pvccNew
-		int tmp2= objectString.indexOf("],", tmp);
-		String firString=objectString.substring(0, tmp);
-		String lastString=objectString.substring(tmp2+2);
+		int tmp1=-1;
+		int tmp2=-1;
+		String firString="";
+		String lastString="";		
+		tmp1=objectString.indexOf("\"pvccNew\":");   // xoá key pvccNew		
+		if(tmp1!=-1) {
+		tmp2=objectString.indexOf("\"bidCloseDate\":");
+		firString=objectString.substring(0, tmp1);	
+		lastString=objectString.substring(tmp2);
 		objectString=firString+lastString;
-		tmp=objectString.indexOf("\"goods\":");		//xoá key goods
-		tmp2= objectString.indexOf("],", tmp);
-		firString=objectString.substring(0, tmp);
-		lastString=objectString.substring(tmp2+2);
 		objectString=firString+lastString;
-		objectString=objectString.replace("\"locations\":", "");// xoá key locations
-		objectString=objectString.replace("{", "");
-		objectString=objectString.replace("}", "");
-		objectString=objectString.replace("[", "");
-		objectString=objectString.replace("]", "");
-		objectString="{"+objectString+"}";
-		return objectString;
+		}
+		//System.out.println("Cat bo pvccNew");
+		//System.out.println(objectString);
 		
+		tmp1=objectString.indexOf("\"goods\":"); //xoá key goods
+		if(tmp1!=-1) {
+		tmp2= objectString.indexOf("\"publicDate\":");
+		firString=objectString.substring(0, tmp1);
+		lastString=objectString.substring(tmp2);
+		objectString=firString+lastString;
+		}
+		//System.out.println("Cat bo good");
+		//System.out.println(objectString);
+		
+		tmp1=objectString.indexOf("\"locations\":");		// xoá location
+		if(tmp1!=-1) {
+			tmp2= objectString.indexOf("\"notifyVersion\":");
+			firString=objectString.substring(0,tmp1);
+			lastString=objectString.substring(tmp2);
+			objectString=firString+lastString;
+		}		
+		objectString=objectString.replace("[","");
+		objectString=objectString.replace("]","");
+		//System.out.println("Chuoi cuoi cung");
+		System.out.println(objectString);		
+		return objectString;		
+	}
+	
+	private static List<LocationBids> getLocation(String objectString, String notifyNo) throws JsonMappingException, JsonProcessingException
+	{
+		List<LocationBids> list = new ArrayList<>();
+		int tmp1=objectString.indexOf("\"locations\":");		// xoá location
+		String locationString="";
+		if(tmp1!=-1) {
+			int tmp2= objectString.indexOf("\"notifyVersion\":");
+			locationString="{"+objectString.substring(tmp1, tmp2-1)+"}";
+		}
+	if(locationString.length()==0) { return list;}	
+    JSONObject jobject = new JSONObject(locationString);			    
+    JSONArray Jarray = jobject.getJSONArray("locations");  //2023-06-28T09:00:00
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);   
+	for(int i=0; i<Jarray.length(); i++) { 				
+		String tmpString=Jarray.get(i).toString();	
+		System.out.println(tmpString);	
+		LocationBids locationBids= objectMapper.readValue(tmpString, LocationBids.class);
+		locationBids.setNotifyNo(notifyNo);
+		System.out.println(locationBids.toString());	
+		list.add(locationBids);		
+	}
+	return list;
 	}
 
 }

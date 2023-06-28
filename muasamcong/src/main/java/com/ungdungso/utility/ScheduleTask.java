@@ -6,6 +6,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import com.ungdungso.repository.BidsNoticeRepostory;
 import com.ungdungso.repository.DistricRepository;
+import com.ungdungso.repository.LocationBidsRepository;
+import com.ungdungso.repository.ProvinceRepository;
 
 @Component
 @EnableScheduling 
@@ -14,8 +16,14 @@ public class ScheduleTask {
 	private BidsNoticeRepostory bidsNoticeRepostory;
 	@Autowired
 	private DistricRepository districRepository;
-	@Scheduled(cron = "10 * * * * ?") 
+	
+	@Autowired
+	private ProvinceRepository provinceRepository;
+	
+	@Autowired
+	private LocationBidsRepository locationBidsRepository;
+	@Scheduled(cron = "59 * * * * ?") 
 	public void scheduleGetBidNotice() throws IOException {
-		GetBidNotice.getBidsNoticeToDay(districRepository, bidsNoticeRepostory);			
+		GetBidNotice.getBidsNoticeToDay(districRepository, bidsNoticeRepostory,provinceRepository, locationBidsRepository);			
 }
 }

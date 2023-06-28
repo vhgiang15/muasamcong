@@ -13,41 +13,7 @@
 </head>
 <body>
 <div class='dashboard'>
-
-    <div class="dashboard-nav">
-        <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
-        		<a href="#" class="brand-logo"><i class="fas fa-anchor"></i> <span>BRAND</span></a>
-        </header>
-        <nav class="dashboard-nav-list">
-        	<a href="/dashboard" id="dashboard" class="dashboard-nav-item"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-        	<a href="/notice-today" id="notice-today" class="dashboard-nav-item"><i class="fas fa-file-upload"></i> TBMT hôm nay </a>
-        	<a href="#" id="search" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Tìm kiếm </a>
-            <div class='dashboard-nav-dropdown'>
-            	<a href="#!" id="notice-manage" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-photo-video"></i> Quản lý TBMT </a>
-                <div class='dashboard-nav-dropdown-menu'>
-                		<a href="#" class="dashboard-nav-dropdown-item">Chưa đóng thầu</a>
-                		<a href="#" class="dashboard-nav-dropdown-item">Đã đóng thầu</a>
-                		<a href="#" class="dashboard-nav-dropdown-item">Đã có KQLCNT</a>
-                		<a href="#" class="dashboard-nav-dropdown-item">Video</a>
-                </div>
-            </div>
-			
-            <div class='dashboard-nav-dropdown'>
-            	<a href="#!" id="report"  class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-money-check-alt"></i> Báo cáo </a>
-                <div class='dashboard-nav-dropdown-menu'>
-                	<a href="#" class="dashboard-nav-dropdown-item">All</a>
-                	<a href="#" class="dashboard-nav-dropdown-item">Recent</a>
-                    <a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
-                </div>
-            </div>
-            <a href="#" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a>
-            <a href="#" id="profile" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
-          <div class="nav-item-divider"></div>
-          <a href="#" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Đăng xuất </a>
-        </nav>
-    </div>
-    
-    
+	<div th:replace="/client/left-menu :: left-menu"></div>
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'>
 			<div class="row">
@@ -68,7 +34,7 @@
             		<div class="row">
             			<div class="col-md-8">
             				<a href="https://muasamcong.mpi.gov.vn/web/guest/contractor-selection?p_p_id=egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2&amp;p_p_lifecycle=0&amp;p_p_state=normal&amp;p_p_mode=view&amp;_egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2_render=detail&amp;type=es-notify-contractor&amp;stepCode=notify-contractor-step-1-tbmt&amp;id=f4d29c1b-45ad-43f4-b5f5-9bdc5007ba63&amp;notifyId=f4d29c1b-45ad-43f4-b5f5-9bdc5007ba63&amp;inputResultId=undefined&amp;bidOpenId=undefined&amp;techReqId=undefined&amp;bidPreNotifyResultId=undefined&amp;bidPreOpenId=undefined&amp;processApply=LDT&amp;bidMode=1_MTHS&amp;notifyNo=IB2300117648&amp;planNo=PL2300087853&amp;pno=undefined&amp;step=tbmt">
-            		  			<span class="text-primary h6"> Công tác thu gom, vận chuyển rác 06 phường: Trảng Bàng - Gia Lộc - An Tịnh - Lộc Hưng - An Hòa - Gia Bình - Công tác quét, gom rác trên hè, đường phố bằng thủ công </S>
+            		  			<span class="text-primary h6"> Công tác thu gom, vận chuyển rác 06 phường: Trảng Bàng - Gia Lộc - An Tịnh - Lộc Hưng - An Hòa - Gia Bình - Công tác quét, gom rác trên hè, đường phố bằng thủ công </span>
             				
             				</a> 
             				<div class="row">
@@ -112,7 +78,7 @@
             		<div class="row">
             			<div class="col-md-8">
             				<a href="https://muasamcong.mpi.gov.vn/web/guest/contractor-selection?p_p_id=egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2&amp;p_p_lifecycle=0&amp;p_p_state=normal&amp;p_p_mode=view&amp;_egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2_render=detail&amp;type=es-notify-contractor&amp;stepCode=notify-contractor-step-1-tbmt&amp;id=f4d29c1b-45ad-43f4-b5f5-9bdc5007ba63&amp;notifyId=f4d29c1b-45ad-43f4-b5f5-9bdc5007ba63&amp;inputResultId=undefined&amp;bidOpenId=undefined&amp;techReqId=undefined&amp;bidPreNotifyResultId=undefined&amp;bidPreOpenId=undefined&amp;processApply=LDT&amp;bidMode=1_MTHS&amp;notifyNo=IB2300117648&amp;planNo=PL2300087853&amp;pno=undefined&amp;step=tbmt">
-            		  			<span class="text-primary h6"> Công tác thu gom, vận chuyển rác 06 phường: Trảng Bàng - Gia Lộc - An Tịnh - Lộc Hưng - An Hòa - Gia Bình - Công tác quét, gom rác trên hè, đường phố bằng thủ công </S>
+            		  			<span class="text-primary h6"> Công tác thu gom, vận chuyển rác 06 phường: Trảng Bàng - Gia Lộc - An Tịnh - Lộc Hưng - An Hòa - Gia Bình - Công tác quét, gom rác trên hè, đường phố bằng thủ công </span>
             				
             				</a> 
             				<div class="row">
@@ -158,7 +124,7 @@
             		<div class="row">
             			<div class="col-md-8">
             				<a href="https://muasamcong.mpi.gov.vn/web/guest/contractor-selection?p_p_id=egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2&amp;p_p_lifecycle=0&amp;p_p_state=normal&amp;p_p_mode=view&amp;_egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2_render=detail&amp;type=es-notify-contractor&amp;stepCode=notify-contractor-step-1-tbmt&amp;id=f4d29c1b-45ad-43f4-b5f5-9bdc5007ba63&amp;notifyId=f4d29c1b-45ad-43f4-b5f5-9bdc5007ba63&amp;inputResultId=undefined&amp;bidOpenId=undefined&amp;techReqId=undefined&amp;bidPreNotifyResultId=undefined&amp;bidPreOpenId=undefined&amp;processApply=LDT&amp;bidMode=1_MTHS&amp;notifyNo=IB2300117648&amp;planNo=PL2300087853&amp;pno=undefined&amp;step=tbmt">
-            		  			<span class="text-primary h6"> Công tác thu gom, vận chuyển rác 06 phường: Trảng Bàng - Gia Lộc - An Tịnh - Lộc Hưng - An Hòa - Gia Bình - Công tác quét, gom rác trên hè, đường phố bằng thủ công </S>
+            		  			<span class="text-primary h6"> Công tác thu gom, vận chuyển rác 06 phường: Trảng Bàng - Gia Lộc - An Tịnh - Lộc Hưng - An Hòa - Gia Bình - Công tác quét, gom rác trên hè, đường phố bằng thủ công </span>
             				
             				</a> 
             				<div class="row">
@@ -190,20 +156,21 @@
 					</div>
 					</div>
 				</div> 
-			</div>
-			
-			
-			
-			
-			
-            
-            
-            
-            
+			</div>            
         </div>
     </div>
     
 </div>
+
+<script>
+$("#dashboard").addClass('active');
+$("#notice-today").removeClass('active');
+$("#search").removeClass('active');
+$("#notice-manage").removeClass('active');
+$("#report").removeClass('active');
+$("#setting").removeClass('active');
+$("#profile").removeClass('active');
+</script>
 
 </body>
 </html>
