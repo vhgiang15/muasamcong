@@ -93,21 +93,21 @@ public class GetBidNotice {
 				System.out.println("Đã tồn tại thông báo mời thầu");
 				continue;} else {
 				bidsNoticeRepostory.save(bidsNotice);
-				for (LocationBids locationBids : location) {
-				
+				for (LocationBids locationBids : location) {				
 					locationBidsRepository.save(locationBids);
 					
-				}
-				}			
-			District district=objectMapper.readValue(tmpString, District.class);
-			if(!districRepository.existsById(district.getDistrictCode())) {
-				districRepository.save(district);
+					Province province= new Province(locationBids.getProvCode(), locationBids.getProvName());
+					if(!provinceRepository.existsById(province.getProvCode())) {
+						provinceRepository.save(province);
+					}
+					District district= new District(locationBids.getDistrictCode(),locationBids.getDistrictName(), locationBids.getProvCode(),locationBids.getProvName());
+					if(!districRepository.existsById(district.getDistrictCode())&(district.getDistrictCode()!=0)) {
+						districRepository.save(district);				
+					}
+				}						
 			}
-			Province province=objectMapper.readValue(tmpString, Province.class);
-			if(!provinceRepository.existsById(province.getProvCode())) {
-				provinceRepository.save(province);
-			}
-		}						
+		}
+					
 	}
 	
 	private static void getTotalPageandElement(Date today) throws IOException {		

@@ -50,4 +50,7 @@ function searchBidsNotice(obj)
                         $('#result').html(result);
                     }
                 });                                                                                 
-}   
+} 
+
+
+  

@@ -22,3 +22,32 @@ $(document).ready(function () {
     
     
 });
+
+
+function todayBidsNotice(obj)
+{	    var page=obj.value;
+                   $.ajax({
+                    url : "/user/get-bidsnotice-today-bypage",
+                    type : "get",
+                    dataType:"text",
+                    data : {page                     
+                    },
+                    success : function (result){
+                        $('#result').html(result);
+                    }
+                });                                                                                 
+}   
+ 
+function searchBidsNotice(obj)
+{	    var page=obj.value;
+                   $.ajax({
+                    url : "/user/get-bidsnotice-today-bypage",
+                    type : "get",
+                    dataType:"text",
+                    data : {page                     
+                    },
+                    success : function (result){
+                        $('#result').html(result);
+                    }
+                });                                                                                 
+}   

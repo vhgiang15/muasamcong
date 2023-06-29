@@ -12,9 +12,7 @@
 <link rel="stylesheet" th:href="@{/css/style.css}">
 
 </head>
-<body>
-<div class='dashboard'>
-<div th:replace="/client/left-menu :: left-menu"></div>
+<body>               
     <div class='dashboard-app'>
         <header class='dashboard-toolbar'>
 			<div class="row">
@@ -23,7 +21,20 @@
                         <h5>Danh sách gói thầu đăng tải ngày hôm nay</h5>
                 </div>
 			</div>
-   		</header>
+					<div class="container mt-3">
+		<ul class="pagination d-flex justify-content-center">
+			<li class="page-item"><button type="button" class="btn btn-link btn-sm" value="1" onclick="todayBidsNotice(this)">Đầu</button></li>
+			
+			<li class="page-item" th:if="${indexPage>1}"><button type="button" class="btn btn-link btn-sm" th:value="${(indexPage-1)}" th:onclick="todayBidsNotice(this)">Trước</button></li>
+			
+			<li class="page-item"><button type="button" class="btn btn-link btn-sm"> <span th:text="${indexPage}"></span> of <span th:text="${totalPage}"></span></button></li>
+			
+			<li class="page-item" th:if="${indexPage<totalPage}"><button type="button" class="btn btn-link btn-sm" th:value="${(indexPage+1)}" th:onclick="todayBidsNotice(this)">Sau</button></li>
+			
+			<li class="page-item"><button type="button" class="btn btn-link btn-sm" th:value="${totalPage}" th:onclick="todayBidsNotice(this)">Cuối</button></li>
+		</ul>
+	</div>
+   </header>
         <div class='dashboard-content'>                    
    				<div class="card border-left-primary shadow m-3 p-1" th:each="o : ${listDTO}">
             		<div class="card-body">
@@ -41,7 +52,7 @@
             					<div class="col-md-8">
             						<p> <strong> Bên mời thầu:</strong> <span th:text="${o.procuringEntityName}"></span></p> 
             						<p> <strong> Chủ đầu tư:</strong> Chủ đầu tư: <span th:text="${o.investorName}"></span></p> 
-            						<p> <strong>Ngày đăng tải TBMT:</strong><span th:text=" ${o.publicDate}"></span></p> 
+            						<p> <strong>Ngày đăng tải TBMT:</strong><span th:text="${o.publicDate}"></span></p> 
             					</div> 
             					
             					<div class="col-md-4 content__body__left__item__infor__contract__other">
@@ -67,19 +78,7 @@
 				</div> 
 			</div> 			         
         </div>
-    </div>
-
-    
-</div>
-<script>
-$("#dashboard").removeClass('active');
-$("#notice-today").addClass('active');
-$("#search").removeClass('active');
-$("#notice-manage").removeClass('active');
-$("#report").removeClass('active');
-$("#setting").removeClass('active');
-$("#profile").removeClass('active');
-</script>
-
+    </div>           
+            
 </body>
 </html>
