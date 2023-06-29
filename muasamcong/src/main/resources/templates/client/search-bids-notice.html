@@ -36,7 +36,7 @@
 					
 					<div class="col-sm-12 col-lg-2">
 						<label>Tỉnh</label> 										
-						<select class="form-select" name="province" id="provinceAdmin">
+						<select class="form-select" name="province" id="procode">
     						<option value="0">Chọn tỉnh</option>
     						<option th:each="option : ${listProvince}" th:value="${option.provCode}" th:text="${option.provName}"></option>
 						</select>
@@ -53,10 +53,11 @@
 					<div class="col-sm-12 col-lg-2 mt-4">
 						<button type="button" id="btn-search"
 							class="btn btn-primary btn-dove" th:value="1"
-							onclick="searchbids()">Tìm kiếm</button>
+							onclick="searchBidsNotice()">Tìm kiếm</button>
 					</div>
 				</div>
-			</form>                  
+			</form> 
+			<div id="result"></div>                 
 
 						         
         </div>
@@ -64,6 +65,7 @@
 
     
 </div>
+
 <script>
 $("#dashboard").removeClass('active');
 $("#notice-today").removeClass('active');
@@ -72,7 +74,9 @@ $("#notice-manage").removeClass('active');
 $("#report").removeClass('active');
 $("#setting").removeClass('active');
 $("#profile").removeClass('active');
+</script>
 
+<script>
 flatpickr("#datefrom", {
 	dateFormat: "d-m-Y",
 	});
@@ -80,7 +84,6 @@ flatpickr("#datefrom", {
 flatpickr("#dateto", {
 	dateFormat: "d-m-Y",
 	});
-
 </script>
 
 

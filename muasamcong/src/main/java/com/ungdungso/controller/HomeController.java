@@ -43,13 +43,13 @@ public class HomeController {
 	}
 	
 	@GetMapping(value = { "/user/search"})
-	public ModelAndView searchBidsNotice(Authentication authentication) {
+	public ModelAndView searchBidsNotice1(Authentication authentication) {
 		ModelAndView model= new ModelAndView("client/search-bids-notice");
 		List<Province> list= provinceRepository.findAll();
 		model.addObject("listProvince", list);
 		
 	return  model;
-	}
+	}  
 	
 	
 }

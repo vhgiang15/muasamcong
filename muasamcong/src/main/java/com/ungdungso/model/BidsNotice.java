@@ -56,6 +56,9 @@ public class BidsNotice {
 		
 	@Column( name="plan_No", columnDefinition = "NVARCHAR(20)")
 	private String planNo;				// số KHLCNT
+	
+	@Column( name="location")
+	private String location;
 
 	public BidsNotice() {
 		super();
@@ -64,7 +67,7 @@ public class BidsNotice {
 	public BidsNotice(String notifyNo, Date publicDate, Date bidCloseDate, String bidForm, String bidMode,
 			String bidName, String investField, int isInternet, String procuringEntityCode, String procuringEntityName,
 			String investorName, String notifyVersion, String notifyNoStand, String status, Date bidOpenDate,
-			String planNo) {
+			String planNo, String location) {
 		super();
 		this.notifyNo = notifyNo;
 		this.publicDate = publicDate;
@@ -82,6 +85,7 @@ public class BidsNotice {
 		this.status = status;
 		this.bidOpenDate = bidOpenDate;
 		this.planNo = planNo;
+		this.location=location;
 	}
 
 	public String getNotifyNo() {
@@ -211,6 +215,16 @@ public class BidsNotice {
 	public void setPlanNo(String planNo) {
 		this.planNo = planNo;
 	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+	
 
 	
 }

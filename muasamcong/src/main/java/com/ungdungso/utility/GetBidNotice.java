@@ -20,11 +20,9 @@ import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.ungdungso.model.BidsNotice;
 import com.ungdungso.model.District;
-import com.ungdungso.model.LocationBids;
 import com.ungdungso.model.Province;
 import com.ungdungso.repository.BidsNoticeRepostory;
 import com.ungdungso.repository.DistricRepository;
-import com.ungdungso.repository.LocationBidsRepository;
 import com.ungdungso.repository.ProvinceRepository;
 
 public class GetBidNotice {
@@ -32,19 +30,19 @@ public class GetBidNotice {
 	private static int totalElement; //số lượng thông báo mời thầu khi get API, xoá tham số provinceRepository và districRepository sau khi có đủ 2 thông số này trong databá
 	
 	// Lưu thông báo mời thầu tất cả các trang
-	public static void getBidsNoticeToDay(DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository,LocationBidsRepository locationBidsRepository) throws IOException {
+	public static void getBidsNoticeToDay(DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository) throws IOException {
 		Date today= new Date();
 		GetBidNotice.getTotalPageandElement(today);
 		System.out.println("-------------------------");
 		System.out.println(GetBidNotice.totalPage);
 		System.out.println(GetBidNotice.totalElement);
 				for(int i=0; i<totalPage;i++) {
-					getBidsNoticedbyDate(today,i,districRepository, bidsNoticeRepostory,provinceRepository, locationBidsRepository);			
+					getBidsNoticedbyDate(today,i,districRepository, bidsNoticeRepostory,provinceRepository);			
 		}		
 	}
 	//Lưu thông báo mời thầu của 1 trang
 	
-	private static void getBidsNoticedbyDate( Date today,int page, DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository,LocationBidsRepository locationBidsRepository) throws IOException
+	private static void getBidsNoticedbyDate( Date today,int page, DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository) throws IOException
 	{			
 		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json"); 
@@ -79,32 +77,28 @@ public class GetBidNotice {
 	    objectMapper.setDateFormat(formatDate);
 
 		for(int i=0; i<Jarray.length(); i++) { 				
-			String tmpString=Jarray.get(i).toString();
-			
-			
-			String jsonString =reExcuteString(tmpString);
-			
-			BidsNotice bidsNotice= objectMapper.readValue(jsonString, BidsNotice.class);
-			
-			List<LocationBids> location=getLocation(tmpString, bidsNotice.getNotifyNo());
-			System.out.println("So luong dia diem:" +location.size());
-			
+			String tmpString=Jarray.get(i).toString();			
+			String jsonString =reExcuteString(tmpString);			
+			BidsNotice bidsNotice= objectMapper.readValue(jsonString, BidsNotice.class);			
+			List<District> location=getLocation(tmpString);
+			System.out.println("So luong dia diem:" +location.size());			
 			if(bidsNoticeRepostory.existsById(bidsNotice.getNotifyNo())) { 
 				System.out.println("Đã tồn tại thông báo mời thầu");
-				continue;} else {
-				bidsNoticeRepostory.save(bidsNotice);
-				for (LocationBids locationBids : location) {				
-					locationBidsRepository.save(locationBids);
-					
-					Province province= new Province(locationBids.getProvCode(), locationBids.getProvName());
+				continue;} else {					
+				bidsNoticeRepostory.save(bidsNotice);				
+				String locationBids="";
+				for (District district : location) {				
+					locationBids=locationBids+district.getProvCode()+"-"+district.getDistrictCode()+";";					
+					Province province= new Province(district.getProvCode(), district.getProvName());
 					if(!provinceRepository.existsById(province.getProvCode())) {
 						provinceRepository.save(province);
-					}
-					District district= new District(locationBids.getDistrictCode(),locationBids.getDistrictName(), locationBids.getProvCode(),locationBids.getProvName());
+					}				
 					if(!districRepository.existsById(district.getDistrictCode())&(district.getDistrictCode()!=0)) {
 						districRepository.save(district);				
 					}
-				}						
+				}				
+				bidsNotice.setLocation(locationBids);
+				bidsNoticeRepostory.save(bidsNotice);				
 			}
 		}
 					
@@ -180,9 +174,9 @@ public class GetBidNotice {
 		return objectString;		
 	}
 	
-	private static List<LocationBids> getLocation(String objectString, String notifyNo) throws JsonMappingException, JsonProcessingException
+	private static List<District> getLocation(String objectString) throws JsonMappingException, JsonProcessingException
 	{
-		List<LocationBids> list = new ArrayList<>();
+		List<District> list = new ArrayList<>();
 		int tmp1=objectString.indexOf("\"locations\":");		// xoá location
 		String locationString="";
 		if(tmp1!=-1) {
@@ -197,10 +191,8 @@ public class GetBidNotice {
 	for(int i=0; i<Jarray.length(); i++) { 				
 		String tmpString=Jarray.get(i).toString();	
 		System.out.println(tmpString);	
-		LocationBids locationBids= objectMapper.readValue(tmpString, LocationBids.class);
-		locationBids.setNotifyNo(notifyNo);
-		System.out.println(locationBids.toString());	
-		list.add(locationBids);		
+		District district= objectMapper.readValue(tmpString, District.class);
+		list.add(district);		
 	}
 	return list;
 	}

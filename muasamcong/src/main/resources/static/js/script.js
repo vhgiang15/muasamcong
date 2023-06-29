@@ -38,13 +38,20 @@ function todayBidsNotice(obj)
                 });                                                                                 
 }   
  
-function searchBidsNotice(obj)
-{	    var page=obj.value;
+
+function searchBidsNotice()
+
+{	    
+	var noticeNo=$("#notice-no").val();
+	var proCode=$("#procode").val();
+	var dateFrom=$("#datefrom").val();
+	var dateTo=$("#dateto").val();
+
                    $.ajax({
-                    url : "/user/get-bidsnotice-today-bypage",
+                    url : "/user/search-bidsnotice",
                     type : "get",
                     dataType:"text",
-                    data : {page                     
+                    data : {noticeNo, proCode, dateFrom, dateTo                     
                     },
                     success : function (result){
                         $('#result').html(result);
