@@ -36,30 +36,30 @@
 					
 					<div class="col-sm-12 col-lg-2">
 						<label>Tỉnh</label> 										
-						<select class="form-select" name="province" id="procode">
+						<select class="form-select" name="province" id="procode" onchange="enablesearch()">
     						<option value="0">Chọn tỉnh</option>
     						<option th:each="option : ${listProvince}" th:value="${option.provCode}" th:text="${option.provName}"></option>
 						</select>
 					</div>					
 					<div class="col-sm-12 col-lg-2">
 						<label>Từ ngày *</label> <input id="datefrom" class="form-control"
-							th:value="${dateFrom}" name="date-from" required>
+							th:value="${#dates.format(fromDate, 'dd-MM-yyyy')}" name="date-from" onchange="checkday()" required>
 					</div>
 					<div class="col-sm-12 col-lg-2">
 						<label>Đến ngày *</label> <input id="dateto" class="form-control"
-							name="date-to" th:value="${dateTo}" required>
+							name="date-to" th:value="${#dates.format(toDate, 'dd-MM-yyyy')}" onchange="checkday()" required>
 					</div>
 
 					<div class="col-sm-12 col-lg-2 mt-4">
 						<button type="button" id="btn-search"
-							class="btn btn-primary btn-dove" th:value="1"
+							class="btn btn-primary btn-dove disabled" th:value="1"
 							onclick="searchBidsNotice()">Tìm kiếm</button>
 					</div>
+					<div id="test"></div>"
+					<div id="demo"></div>"
 				</div>
 			</form> 
-			<div id="result"></div>                 
-
-						         
+			<div id="result-search"></div>                 						         
         </div>
     </div>
 

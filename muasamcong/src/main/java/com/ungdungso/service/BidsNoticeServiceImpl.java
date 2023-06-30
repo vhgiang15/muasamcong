@@ -53,16 +53,27 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 		return bidsNoticeRepostory.queryCountGetBidsNotices(fromDateString, toDateString);
 	}
 	@Override
-	public List<BidsNotice> searchBidsNotices(String notifyNo, int provCode, String fromDate, String toDate) {
+	public List<BidsNotice> searchBidsNotices(String notifyNo, int provCode, Date fromDate, Date toDate) {
 		
 		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 		
 		
 		String fromDateString=formatDate.format(fromDate).toString()+" 00:00:00.000000"; //2023-06-19 00:00:00.000000
 		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";
-		String location=provCode+"%";
+		String location="";
+		if(provCode==0) {
+			location="%";
+			
+		} else { location="%"+provCode+"-%";}
+			
+		if(notifyNo.equals("all")) {
+			notifyNo="%";
+		}
+		
+		System.out.println("fromDateString "+ fromDateString);
+		System.out.println("toDateString "+ toDateString);
+		System.out.println("location "+ location);		
 		List<BidsNotice> list=bidsNoticeRepostory.querySearchBidsNotices(notifyNo, location, fromDateString, toDateString);		
-		// TODO Auto-generated method stub
-		return null;
+		return list;
 	}
 }

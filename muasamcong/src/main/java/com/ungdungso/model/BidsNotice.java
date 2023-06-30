@@ -57,7 +57,7 @@ public class BidsNotice {
 	@Column( name="plan_No", columnDefinition = "NVARCHAR(20)")
 	private String planNo;				// số KHLCNT
 	
-	@Column( name="location")
+	@Column( name="location", columnDefinition = "TEXT(1000)")
 	private String location;
 
 	public BidsNotice() {

@@ -13,6 +13,7 @@ import com.ungdungso.model.Province;
 import com.ungdungso.repository.ProvinceRepository;
 import com.squareup.okhttp.RequestBody;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -47,6 +48,11 @@ public class HomeController {
 		ModelAndView model= new ModelAndView("client/search-bids-notice");
 		List<Province> list= provinceRepository.findAll();
 		model.addObject("listProvince", list);
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		System.out.println(fromDate);
+		model.addObject("fromDate",fromDate);
+		model.addObject("toDate",toDate);
 		
 	return  model;
 	}  

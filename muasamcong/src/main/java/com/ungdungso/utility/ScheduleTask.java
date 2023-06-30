@@ -19,7 +19,7 @@ public class ScheduleTask {
 	@Autowired
 	private ProvinceRepository provinceRepository;
 
-	@Scheduled(cron = "59 59 * * * ?") 
+	@Scheduled(cron = "59 * * * * ?") 
 	public void scheduleGetBidNotice() throws IOException {
 		GetBidNotice.getBidsNoticeToDay(districRepository, bidsNoticeRepostory,provinceRepository);			
 }

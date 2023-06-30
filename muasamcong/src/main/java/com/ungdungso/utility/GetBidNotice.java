@@ -37,7 +37,7 @@ public class GetBidNotice {
 		System.out.println(GetBidNotice.totalPage);
 		System.out.println(GetBidNotice.totalElement);
 				for(int i=0; i<totalPage;i++) {
-					getBidsNoticedbyDate(today,i,districRepository, bidsNoticeRepostory,provinceRepository);			
+					getBidsNoticedbyDate(today,i,districRepository, bidsNoticeRepostory,provinceRepository);
 		}		
 	}
 	//Lưu thông báo mời thầu của 1 trang
@@ -47,11 +47,17 @@ public class GetBidNotice {
 		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json"); 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		String todayString=format.format(today).toString();	
+		String todayString=format.format(today).toString();
+		
+		String fromDateString="2023-01-01";
+		String toDateString="2023-06-30";
+
+		
 		String mediaTypeString="{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"todayT00:00:00.000Z\",\"to\":\"todayT23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";		
 		String indexString="{\"pageNumber\":\""+page+"\"";		
 		mediaTypeString=mediaTypeString.replace("{\"pageNumber\":\"0\"",indexString);		
-		mediaTypeString=mediaTypeString.replace("today", todayString);				
+		mediaTypeString=mediaTypeString.replace("today", todayString);
+		
 		RequestBody body = RequestBody.create(mediaType,mediaTypeString);				
 		Request request = new Request.Builder()
 		  .url("https://muasamcong.mpi.gov.vn/o/egp-portal-contractor-selection-v2/services/smart/search")
@@ -66,8 +72,7 @@ public class GetBidNotice {
 		Response response = client.newCall(request).execute();
 		String jsonData = response.body().string();		   
 	    int  tmp= jsonData.lastIndexOf("totalPages");  
-	    String temp3=jsonData.substring(8,tmp-2)+"}"; // chi lấy chuổi chứa dữ liệu thông báo mời thầu
-	    
+	    String temp3=jsonData.substring(8,tmp-2)+"}"; // chi lấy chuổi chứa dữ liệu thông báo mời thầu	    
 	    System.out.println(temp3);
 	    JSONObject jobject = new JSONObject(temp3);			    
 	    JSONArray Jarray = jobject.getJSONArray("content");  //2023-06-28T09:00:00
@@ -81,7 +86,8 @@ public class GetBidNotice {
 			String jsonString =reExcuteString(tmpString);			
 			BidsNotice bidsNotice= objectMapper.readValue(jsonString, BidsNotice.class);			
 			List<District> location=getLocation(tmpString);
-			System.out.println("So luong dia diem:" +location.size());			
+			System.out.println("So luong dia diem:" +location.size());		 
+			
 			if(bidsNoticeRepostory.existsById(bidsNotice.getNotifyNo())) { 
 				System.out.println("Đã tồn tại thông báo mời thầu");
 				continue;} else {					
@@ -90,7 +96,7 @@ public class GetBidNotice {
 				for (District district : location) {				
 					locationBids=locationBids+district.getProvCode()+"-"+district.getDistrictCode()+";";					
 					Province province= new Province(district.getProvCode(), district.getProvName());
-					if(!provinceRepository.existsById(province.getProvCode())) {
+					if(!provinceRepository.existsById(province.getProvCode())&(province.getProvCode()!=0)) {
 						provinceRepository.save(province);
 					}				
 					if(!districRepository.existsById(district.getDistrictCode())&(district.getDistrictCode()!=0)) {
@@ -168,9 +174,7 @@ public class GetBidNotice {
 			objectString=firString+lastString;
 		}		
 		objectString=objectString.replace("[","");
-		objectString=objectString.replace("]","");
-		//System.out.println("Chuoi cuoi cung");
-		System.out.println(objectString);		
+		objectString=objectString.replace("]","");	
 		return objectString;		
 	}
 	
@@ -183,6 +187,8 @@ public class GetBidNotice {
 			int tmp2= objectString.indexOf("\"notifyVersion\":");
 			locationString="{"+objectString.substring(tmp1, tmp2-1)+"}";
 		}
+		
+		
 	if(locationString.length()==0) { return list;}	
     JSONObject jobject = new JSONObject(locationString);			    
     JSONArray Jarray = jobject.getJSONArray("locations");  //2023-06-28T09:00:00
@@ -190,7 +196,6 @@ public class GetBidNotice {
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);   
 	for(int i=0; i<Jarray.length(); i++) { 				
 		String tmpString=Jarray.get(i).toString();	
-		System.out.println(tmpString);	
 		District district= objectMapper.readValue(tmpString, District.class);
 		list.add(district);		
 	}

@@ -9,6 +9,6 @@ public interface BidsNoticeService {
 	public List<BidsNotice> getBidsNoticesByDate(Date fromDate, Date toDate);
 	public List<BidsNotice> getBidsNoticesByDateByPage(Date fromDate, Date toDate, int page);
 	public int countBidsNotice(Date fromDate, Date toDate);
-	public List<BidsNotice> searchBidsNotices(String notifyNo, int provCode, String fromDate, String toDate);
+	public List<BidsNotice> searchBidsNotices(String notifyNo, int provCode, Date fromDate, Date toDate);
 	
 }
