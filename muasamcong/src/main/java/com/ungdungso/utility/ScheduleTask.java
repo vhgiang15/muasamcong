@@ -1,5 +1,9 @@
 package com.ungdungso.utility;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,7 +24,15 @@ public class ScheduleTask {
 	private ProvinceRepository provinceRepository;
 
 	@Scheduled(cron = "59 * * * * ?") 
-	public void scheduleGetBidNotice() throws IOException {
-		GetBidNotice.getBidsNoticeToDay(districRepository, bidsNoticeRepostory,provinceRepository);			
+	public void scheduleGetBidNotice() throws IOException, ParseException {
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2023-01-01";
+		String toString="2023-06-30";
+		fromDate=format.parse(fromString);
+		toDate= format.parse(toString);
+		
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);			
 }
 }

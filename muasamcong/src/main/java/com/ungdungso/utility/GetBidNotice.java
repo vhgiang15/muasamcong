@@ -30,33 +30,32 @@ public class GetBidNotice {
 	private static int totalElement; //số lượng thông báo mời thầu khi get API, xoá tham số provinceRepository và districRepository sau khi có đủ 2 thông số này trong databá
 	
 	// Lưu thông báo mời thầu tất cả các trang
-	public static void getBidsNoticeToDay(DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository) throws IOException {
-		Date today= new Date();
-		GetBidNotice.getTotalPageandElement(today);
+	public static void getBidsNoticeToDay(Date fromDate, Date toDate,DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository) throws IOException {
+		GetBidNotice.getTotalPageandElement(fromDate, toDate);
 		System.out.println("-------------------------");
 		System.out.println(GetBidNotice.totalPage);
 		System.out.println(GetBidNotice.totalElement);
 				for(int i=0; i<totalPage;i++) {
-					getBidsNoticedbyDate(today,i,districRepository, bidsNoticeRepostory,provinceRepository);
+					getBidsNoticedbyDate(fromDate,toDate,i,districRepository, bidsNoticeRepostory,provinceRepository);
 		}		
 	}
 	//Lưu thông báo mời thầu của 1 trang
 	
-	private static void getBidsNoticedbyDate( Date today,int page, DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository) throws IOException
+	private static void getBidsNoticedbyDate(Date fromDate, Date toDate,int page, DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository) throws IOException
 	{			
 		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json"); 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		String todayString=format.format(today).toString();
+		String fromDateString=format.format(fromDate).toString();
+		String toDateString=format.format(toDate).toString();
 		
-		String fromDateString="2023-01-01";
-		String toDateString="2023-06-30";
-
-		
-		String mediaTypeString="{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"todayT00:00:00.000Z\",\"to\":\"todayT23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";		
+		String mediaTypeString="{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"fromdateT00:00:00.000Z\",\"to\":\"todateT23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";		
 		String indexString="{\"pageNumber\":\""+page+"\"";		
 		mediaTypeString=mediaTypeString.replace("{\"pageNumber\":\"0\"",indexString);		
-		mediaTypeString=mediaTypeString.replace("today", todayString);
+		
+		mediaTypeString=mediaTypeString.replace("fromdate", fromDateString); 
+		mediaTypeString=mediaTypeString.replace("todate", toDateString); 
+		
 		
 		RequestBody body = RequestBody.create(mediaType,mediaTypeString);				
 		Request request = new Request.Builder()
@@ -110,13 +109,19 @@ public class GetBidNotice {
 					
 	}
 	
-	private static void getTotalPageandElement(Date today) throws IOException {		
+	private static void getTotalPageandElement(Date fromDate, Date toDate) throws IOException {		
 		OkHttpClient client = new OkHttpClient();
 		MediaType mediaType = MediaType.parse("application/json"); 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		String todayString=format.format(today).toString();	
-		String mediaTypeString="{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"todayT00:00:00.000Z\",\"to\":\"todayT23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";
-		mediaTypeString=mediaTypeString.replace("today", todayString);				
+		String fromDateString=format.format(fromDate).toString();
+		String toDateString=format.format(toDate).toString();
+		
+		String mediaTypeString="{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"fromdateT00:00:00.000Z\",\"to\":\"todateT23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";
+		
+		mediaTypeString=mediaTypeString.replace("fromdate", fromDateString); 
+		mediaTypeString=mediaTypeString.replace("todate", toDateString); 
+		
+		
 		RequestBody body = RequestBody.create(mediaType,mediaTypeString);				
 		Request request = new Request.Builder()
 		  .url("https://muasamcong.mpi.gov.vn/o/egp-portal-contractor-selection-v2/services/smart/search")
