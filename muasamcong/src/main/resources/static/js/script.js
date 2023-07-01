@@ -83,12 +83,52 @@ function checkday()
 	var millisBetween = endDay.getTime() - startDay.getTime();
 	var days = millisBetween / (1000 * 3600 * 24);	
 	var diff=Math.round(Math.abs(days))+1;			
-	if(diff<=30)
+	if(diff<=31)
 	{
 		$("#btn-search").removeClass('disabled');
 	} else {
 		$("#btn-search").addClass('disabled');		
 	}                                                                               
+} 
+
+function checkdayreport()
+
+{	    
+	var dateFrom=$("#datefrom").val();
+	var dateTo=$("#dateto").val();
+	var tmp1=dateFrom.substring(3,5)+"/"+dateFrom.substring(0,2)+"/"+dateFrom.substring(6,11)
+	var tmp2=dateTo.substring(3,5)+"/"+dateTo.substring(0,2)+"/"+dateTo.substring(6,11)
+	var startDay = new Date(tmp1);
+	var endDay = new Date(tmp2);	
+	var millisBetween = endDay.getTime() - startDay.getTime();
+	var days = millisBetween / (1000 * 3600 * 24);	
+	var diff=Math.round(Math.abs(days))+1;			
+	if(diff<=93)
+	{
+		$("#btn-search").removeClass('disabled');
+	} else {
+		$("#btn-search").addClass('disabled');		
+	}                                                                               
+} 
+
+
+function reportdetail()
+
+{	
+	var provCode=$("#provcode").val();    
+	var dateFrom=$("#datefrom").val();
+	var dateTo=$("#dateto").val();
+	var investFeild=$("#investfield").val();
+	 $.ajax({
+                    url : "/user/export-report-detail",
+                    type : "get",
+                    dataType:"text",
+                    data : {provCode,dateFrom, dateTo,investFeild                     
+                    },
+                    success : function (result){
+                        $('#result-search').html(result);
+                    }
+                }); 	                                                                         
 } 
 
 

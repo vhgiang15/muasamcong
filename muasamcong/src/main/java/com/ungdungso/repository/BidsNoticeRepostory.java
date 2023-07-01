@@ -20,4 +20,7 @@ public interface BidsNoticeRepostory extends JpaRepository<BidsNotice, String>{
 	
 	@Query(value="select * from bids_notice where notify_no like :cnotifyNo and location like :clocation and (public_date between :cfromDay and :ctoDay)", nativeQuery = true)
 	List<BidsNotice> querySearchBidsNotices(@Param("cnotifyNo") String notifyNo,@Param("clocation") String location,@Param("cfromDay") String fromDay, @Param("ctoDay") String toDay);
+	
+	@Query(value="select * from bids_notice where location like :clocation and (public_date between :cfromDay and :ctoDay) and invest_field like :cinvestField order by public_date", nativeQuery = true)
+	List<BidsNotice> queryReportBidsNotices(@Param("clocation") String location,@Param("cfromDay") String fromDay, @Param("ctoDay") String toDay, @Param("cinvestField") String investField);
 }

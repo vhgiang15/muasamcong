@@ -14,12 +14,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ungdungso.dto.BidsNoticeDTO;
 import com.ungdungso.model.BidsNotice;
+import com.ungdungso.repository.DistricRepository;
+import com.ungdungso.repository.ProvinceRepository;
 import com.ungdungso.service.BidsNoticeService;
 @Controller
 public class BidsNoticeController {
 	
 	@Autowired
 	private BidsNoticeService bidsNoticeService;
+	
+	@Autowired
+	private  ProvinceRepository provinceRepository;
+	@Autowired
+	private DistricRepository districRepository;
+	
 	@GetMapping(value = { "/user/search-bidsnotice"})
 	public ModelAndView searchBidsNotice(
 			@RequestParam(value = "noticeNo", defaultValue = "all") String noticeNo ,
@@ -41,7 +49,7 @@ public class BidsNoticeController {
 		List<BidsNoticeDTO> listDTO= new ArrayList<>();
 		for (BidsNotice bidsNotice : list) {
 			BidsNoticeDTO bidsNoticeDTO= new BidsNoticeDTO();			
-			bidsNoticeDTO.convertBidNoticeToDTO(bidsNotice);
+			bidsNoticeDTO.convertBidNoticeToDTO(bidsNotice,districRepository,provinceRepository);
 			listDTO.add(bidsNoticeDTO);	
 		}
 		model.addObject("listDTO",listDTO);			

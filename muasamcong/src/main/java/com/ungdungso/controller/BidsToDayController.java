@@ -12,12 +12,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ungdungso.dto.BidsNoticeDTO;
 import com.ungdungso.model.BidsNotice;
+import com.ungdungso.repository.DistricRepository;
+import com.ungdungso.repository.ProvinceRepository;
 import com.ungdungso.service.BidsNoticeService;
 
 @Controller
 public class BidsToDayController {
 	@Autowired
 	private BidsNoticeService bidsNoticeService;
+	
+	@Autowired
+	private  ProvinceRepository provinceRepository;
+	@Autowired
+	private DistricRepository districRepository;
 
 	@GetMapping(value = { "/user/notice-today"})
 	public ModelAndView bidsNoticeToDay()  {
@@ -29,19 +36,15 @@ public class BidsToDayController {
 		List<BidsNoticeDTO> listDTO= new ArrayList<>();
 		for (BidsNotice bidsNotice : list) {
 			BidsNoticeDTO bidsNoticeDTO= new BidsNoticeDTO();			
-			bidsNoticeDTO.convertBidNoticeToDTO(bidsNotice);
-			listDTO.add(bidsNoticeDTO);
-			System.out.println(bidsNoticeDTO.getBidName());
-			
+			bidsNoticeDTO.convertBidNoticeToDTO(bidsNotice,districRepository,provinceRepository);
+			listDTO.add(bidsNoticeDTO);		
 		}
-		int totalPage=bidsNoticeService.countBidsNotice(todayDate, todayDate)/10;
-		if(totalPage%10 !=0) {totalPage++;}		
+
 		System.out.println("Today page 0--------------");
 		System.out.println(listDTO.size());
 		model.addObject("listDTO",listDTO);	
-		model.addObject("indexPage",1);
-		model.addObject("totalPage",totalPage);
-		model.addObject("display","show");			
+		model.addObject("totalBid",list.size());	
+		
 	return  model;
 	}
 	

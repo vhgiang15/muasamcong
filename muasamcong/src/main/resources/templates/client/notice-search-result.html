@@ -13,49 +13,58 @@
 
 </head>
 <body>               
-        <div class='dashboard-content'>                    
+                  
    				<div class="card border-left-primary shadow m-3 p-1" th:each="o : ${listDTO}">
             		<div class="card-body">
 						<div class="row no-gutters align-items-center">
-            			<div class="d-flex justify-content-between align-items-center">
-            				<p class="text-xs font-weight-bold text-danger text-uppercase mb-1"> Mã TBMT: <span th:text="${o.notifyNoStand}"></span></p> 
-            				<span class="text-danger" th:text="${o.status}"></span>
-            			</div>
-            		<div class="row">
-            			<div class="col-md-8">
-            				<a href="https://muasamcong.mpi.gov.vn/web/guest/contractor-selection?p_p_id=egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2&amp;p_p_lifecycle=0&amp;p_p_state=normal&amp;p_p_mode=view&amp;_egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2_render=detail&amp;type=es-notify-contractor&amp;stepCode=notify-contractor-step-1-tbmt&amp;id=f4d29c1b-45ad-43f4-b5f5-9bdc5007ba63&amp;notifyId=f4d29c1b-45ad-43f4-b5f5-9bdc5007ba63&amp;inputResultId=undefined&amp;bidOpenId=undefined&amp;techReqId=undefined&amp;bidPreNotifyResultId=undefined&amp;bidPreOpenId=undefined&amp;processApply=LDT&amp;bidMode=1_MTHS&amp;notifyNo=IB2300117648&amp;planNo=PL2300087853&amp;pno=undefined&amp;step=tbmt">
-            		  			<span class="text-primary h6" th:text="${o.bidName}"></span>            				
-            				</a> 
-            				<div class="row">
-            					<div class="col-md-8">
-            						<p> <strong> Bên mời thầu:</strong> <span th:text="${o.procuringEntityName}"></span></p> 
-            						<p> <strong> Chủ đầu tư:</strong> Chủ đầu tư: <span th:text="${o.investorName}"></span></p> 
-            						<p> <strong>Ngày đăng tải TBMT:</strong><span th:text="${o.publicDate}"></span></p> 
-            					</div> 
-            					
-            					<div class="col-md-4 content__body__left__item__infor__contract__other">
-            						<h6><strong>Lĩnh vực:</strong> <span th:text="${o.investField}"></span></h6> 
-            						<h6><strong> Địa điểm:</strong> <span th:text="${o.investField}"></span></h6>
-            					</div>
-            				</div>
-            			</div> 
-            			<div class="col-md-2">
-            				<div class="row">
-               					<p><strong>Thời điểm đóng thầu</strong></p> 
-            					<h5 th:text="${o.bidCloseDate}"></h5> 
-            					<p><strong>Hình thức dự thầu</strong></p> 
-            					<h6 th:text="${o.isInternet}">Qua mạng</h6>
-            				</div>
-            			</div> 
-            			<div class="col-lg-2">
-            				<div class="p-0">
-							</div>
-						</div>
-					</div>
+		            			<div class="d-flex justify-content-between align-items-center">
+		            				<p class="text-xs font-weight-bold text-danger text-uppercase mb-1"> Mã TBMT: <span th:text="${o.notifyNoStand}"></span></p> 
+		            				<span class="text-danger" th:text="${o.status}"></span>
+		            			</div>
+			            		<div class="row">
+			            			<div class="col-md-8">
+			            				<a href="https://muasamcong.mpi.gov.vn/web/guest/contractor-selection?p_p_id=egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2&amp;p_p_lifecycle=0&amp;p_p_state=normal&amp;p_p_mode=view&amp;_egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2_render=detail&amp;type=es-notify-contractor&amp;stepCode=notify-contractor-step-1-tbmt&amp;id=f4d29c1b-45ad-43f4-b5f5-9bdc5007ba63&amp;notifyId=f4d29c1b-45ad-43f4-b5f5-9bdc5007ba63&amp;inputResultId=undefined&amp;bidOpenId=undefined&amp;techReqId=undefined&amp;bidPreNotifyResultId=undefined&amp;bidPreOpenId=undefined&amp;processApply=LDT&amp;bidMode=1_MTHS&amp;notifyNo=IB2300117648&amp;planNo=PL2300087853&amp;pno=undefined&amp;step=tbmt">
+			            		  			<span class="text-primary h6" th:text="${o.bidName}"></span>            				
+			            				</a> 
+			            				<div class="row">
+			            					<div class="col-md-8">
+			            						<p> <strong> Bên mời thầu: </strong> <span th:text="${o.procuringEntityName}"></span></p> 
+			            						<p> <strong> Chủ đầu tư: </strong><span th:text="${o.investorName}"></span></p> 
+			            						<p> <strong>Ngày đăng tải TBMT: </strong><span th:text="${o.publicDate}"></span></p> 
+			            					</div> 
+			            					
+			            					<div class="col-md-4 content__body__left__item__infor__contract__other">
+			            						<h6><strong>Lĩnh vực: </strong> <span th:text="${o.investField}"></span></h6> 
+			            						<h6><strong> Địa điểm: </strong> <span th:text="${o.location}"></span></h6>
+			            					</div>
+			            				</div>
+			            			</div> 
+			            			<div class="col-md-2">
+			            				<div class="row">
+			               					<p><strong>Thời điểm đóng thầu</strong></p> 
+			            					<h5 th:text="${o.bidCloseDate}"></h5> 
+			            					<p><strong>Hình thức dự thầu</strong></p> 
+			            					<h6 th:text="${o.isInternet}">Qua mạng</h6>
+			            				</div>
+			            			</div> 
+			            			<div class="col-lg-2">
+			            				<div class="p-0" th:unless="${o.contractorName=='NOT'}">
+			            				<p>Nhà thầu trúng thầu</p>
+			            				<h6><strong th:text="${o.contractorName}"> </strong></h6> 
+			            				<p>Giá trúng thầu</p>
+			            				<h6><strong th:text="${#numbers.formatInteger(o.bidWinningPrice,3,'POINT')}"> </strong><span> VND</span></h6> 
+			            				
+			            				<p>Ngày phê duyệt KQLCNT</p>
+			            				<h6><strong th:text="${o.decisionDate}"> </strong></h6> 
+			            					            				
+										</div>
+									</div>
+									
+								</div>
 					</div>
 				</div> 
 			</div> 			         
-        </div>
+
           
             
 </body>

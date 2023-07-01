@@ -10,5 +10,6 @@ public interface BidsNoticeService {
 	public List<BidsNotice> getBidsNoticesByDateByPage(Date fromDate, Date toDate, int page);
 	public int countBidsNotice(Date fromDate, Date toDate);
 	public List<BidsNotice> searchBidsNotices(String notifyNo, int provCode, Date fromDate, Date toDate);
+	public List<BidsNotice> reportBidsNotices(int provCode, Date fromDate, Date toDate, String investField);
 	
 }

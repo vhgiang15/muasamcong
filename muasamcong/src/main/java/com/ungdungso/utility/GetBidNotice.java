@@ -81,18 +81,30 @@ public class GetBidNotice {
 	    objectMapper.setDateFormat(formatDate);
 
 		for(int i=0; i<Jarray.length(); i++) { 				
-			String tmpString=Jarray.get(i).toString();			
-			String jsonString =reExcuteString(tmpString);			
-			BidsNotice bidsNotice= objectMapper.readValue(jsonString, BidsNotice.class);			
-			List<District> location=getLocation(tmpString);
-			System.out.println("So luong dia diem:" +location.size());		 
+			String tmpString=Jarray.get(i).toString();
+			System.out.println("string chưa tien xử lý:  "+ tmpString);
+			String jsonString =reExcuteString(tmpString);
 			
+			System.out.println("json to get bids " +jsonString);
+			BidsNotice bidsNotice= objectMapper.readValue(jsonString, BidsNotice.class);
+			
+			List<District> location=getLocation(tmpString);
+			
+			System.out.println("So luong dia diem:" +location.size());
+			
+			System.out.println("so thong boa moi thau: "+ bidsNotice.getNotifyNo());
 			if(bidsNoticeRepostory.existsById(bidsNotice.getNotifyNo())) { 
 				System.out.println("Đã tồn tại thông báo mời thầu");
-				continue;} else {					
-				bidsNoticeRepostory.save(bidsNotice);				
+				continue;} else {
+				System.out.println("--------------------trươc save bidNotice");	
+				bidsNoticeRepostory.save(bidsNotice);		
+				System.out.println("--------------------sau save bidNotice");	
 				String locationBids="";
-				for (District district : location) {				
+				for (District district : location) {
+					
+					System.out.println(district.getDistrictCode() +" ---"+district.getProvCode());
+					
+					
 					locationBids=locationBids+district.getProvCode()+"-"+district.getDistrictCode()+";";					
 					Province province= new Province(district.getProvCode(), district.getProvName());
 					if(!provinceRepository.existsById(province.getProvCode())&(province.getProvCode()!=0)) {
@@ -149,33 +161,58 @@ public class GetBidNotice {
 		int tmp1=-1;
 		int tmp2=-1;
 		String firString="";
-		String lastString="";		
-		tmp1=objectString.indexOf("\"pvccNew\":");   // xoá key pvccNew		
-		if(tmp1!=-1) {
-		tmp2=objectString.indexOf("\"bidCloseDate\":");
-		firString=objectString.substring(0, tmp1);	
-		lastString=objectString.substring(tmp2);
-		objectString=firString+lastString;
-		objectString=firString+lastString;
-		}
-		//System.out.println("Cat bo pvccNew");
-		//System.out.println(objectString);
+		String lastString="";
 		
-		tmp1=objectString.indexOf("\"goods\":"); //xoá key goods
+		tmp1=objectString.indexOf("pvccNew"); // kiểm tra trong json có pvccNew không,nếu không thì ko thaoo tác cắt pvccNew
+		
+		if(tmp1!=-1) { 
+		
+		tmp1=objectString.indexOf("\"pvccNew\":[],");   // xoá key pvccNew	
 		if(tmp1!=-1) {
-		tmp2= objectString.indexOf("\"publicDate\":");
-		firString=objectString.substring(0, tmp1);
-		lastString=objectString.substring(tmp2);
-		objectString=firString+lastString;
+			objectString=objectString.replace("\"pvccNew\":[],", "");
+		} else {
+			tmp1=objectString.indexOf("\"pvccNew\":");
+			tmp2=objectString.indexOf("}],",tmp1);
+			firString=objectString.substring(0, tmp1);	
+			lastString=objectString.substring(tmp2+3);
+			objectString=firString+lastString;
+			objectString=firString+lastString;
+			
 		}
-		//System.out.println("Cat bo good");
-		//System.out.println(objectString);
+		}
+	
+		System.out.println("Cat bo pvccNew");
+		System.out.println(objectString);
+		
+		//tmp1=objectString.indexOf("\"goods\":"); //xoá key goods
+		
+		tmp1= objectString.indexOf("\"goods\":[],");
+		if(tmp1!=-1) {
+		objectString=objectString.replace("\"goods\":[],","");
+		} else {
+			tmp1= objectString.indexOf("\"goods\":");
+			tmp2=objectString.indexOf("\"],", tmp1);
+			firString=objectString.substring(0, tmp1);
+			lastString=objectString.substring(tmp2+3);
+			objectString=firString+lastString;
+			
+		}
+		//System.out.println("index location trong phan xoa goods: "+tmp2);
+		
+
+		
+		
+		System.out.println("Cat bo good");
+		System.out.println(objectString);
+		
+		
 		
 		tmp1=objectString.indexOf("\"locations\":");		// xoá location
 		if(tmp1!=-1) {
-			tmp2= objectString.indexOf("\"notifyVersion\":");
+			tmp2= objectString.indexOf("}],", tmp1);
+			System.out.println("index location trong phan xoa location: "+tmp2);
 			firString=objectString.substring(0,tmp1);
-			lastString=objectString.substring(tmp2);
+			lastString=objectString.substring(tmp2+3);
 			objectString=firString+lastString;
 		}		
 		objectString=objectString.replace("[","");
@@ -187,12 +224,13 @@ public class GetBidNotice {
 	{
 		List<District> list = new ArrayList<>();
 		int tmp1=objectString.indexOf("\"locations\":");		// xoá location
+		System.out.println("index location trong phan get location: "+tmp1);
 		String locationString="";
 		if(tmp1!=-1) {
-			int tmp2= objectString.indexOf("\"notifyVersion\":");
-			locationString="{"+objectString.substring(tmp1, tmp2-1)+"}";
+			int tmp2= objectString.indexOf("}],", tmp1);
+			locationString="{"+objectString.substring(tmp1, tmp2+2)+"}";
 		}
-		
+		System.out.println("locatióntring: "+locationString);
 		
 	if(locationString.length()==0) { return list;}	
     JSONObject jobject = new JSONObject(locationString);			    
@@ -200,7 +238,8 @@ public class GetBidNotice {
     ObjectMapper objectMapper = new ObjectMapper();
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);   
 	for(int i=0; i<Jarray.length(); i++) { 				
-		String tmpString=Jarray.get(i).toString();	
+		String tmpString=Jarray.get(i).toString();
+		System.out.println("json location "+ tmpString);
 		District district= objectMapper.readValue(tmpString, District.class);
 		list.add(district);		
 	}

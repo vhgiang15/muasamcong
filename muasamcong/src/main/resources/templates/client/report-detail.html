@@ -22,44 +22,50 @@
 			<div class="row">
 				<div class="col-lg-3"><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a> </div>
 				<div class="col-lg-9">
-                        <h5>Chức năng tìm kiếm nhanh thông báo mời thầu</h5>
+                        <h5>Báo cáo chi tiết</h5>
                 </div>
 			</div>
    		</header>
         <div class='dashboard-content'>  
         	<form action="#" id="form-tim-kiem-lich-su" class="form-custom">
-				<div class="row">
-					<div class="col-sm-12 col-lg-2">
-						<label>Số TBMT</label> <input id="notice-no" class="form-control"
-							th:value="${notifyNo}" name="notice-no">
-					</div>
-					
+				<div class="row">				
 					<div class="col-sm-12 col-lg-2">
 						<label>Tỉnh</label> 										
-						<select class="form-select" name="province" id="procode" onchange="enablesearch()">
-    						<option value="0">Chọn tỉnh</option>
+						<select class="form-select" name="province" id="provcode" onchange="enablesearch()">
+    						<option value="0">Tất cả</option>
     						<option th:each="option : ${listProvince}" th:value="${option.provCode}" th:text="${option.provName}"></option>
 						</select>
 					</div>					
 					<div class="col-sm-12 col-lg-2">
 						<label>Từ ngày *</label> <input id="datefrom" class="form-control"
-							th:value="${#dates.format(fromDate, 'dd-MM-yyyy')}" name="date-from" onchange="checkday()" required>
+							th:value="${#dates.format(fromDate, 'dd-MM-yyyy')}" name="date-from" onchange="checkdayreport()" required>
 					</div>
 					<div class="col-sm-12 col-lg-2">
 						<label>Đến ngày *</label> <input id="dateto" class="form-control"
-							name="date-to" th:value="${#dates.format(toDate, 'dd-MM-yyyy')}" onchange="checkday()" required>
+							name="date-to" th:value="${#dates.format(toDate, 'dd-MM-yyyy')}" onchange="checkdayreport()" required>
+					</div>
+					
+					<div class="col-sm-12 col-lg-2">
+						<label>Lĩnh vực</label> 
+						<select class="form-select" name="invest-field" id="investfield">
+							<option value="all">Tất cả</option>
+    						<option value="XL">Xây lắp</option>
+    						<option value="TV">Tư vấn</option>
+    						<option value="PTV">Phi tư vấn</option>
+    						<option value="HH">Hàng hoá</option>
+    						<option value="HON_HOP">Hỗn hợp</option>
+						</select>
 					</div>
 
 					<div class="col-sm-12 col-lg-2 mt-4">
 						<button type="button" id="btn-search"
 							class="btn btn-primary btn-dove disabled" th:value="1"
-							onclick="searchBidsNotice()">Tìm kiếm</button>
+							onclick="reportdetail()">Báo cáo</button>
 					</div>
 				</div>
 			</form> 
                 						         
         </div>
-       <div id="result-search" class='dashboard-content'></div> 
     </div>
 
     

@@ -34,9 +34,9 @@
             <div class='dashboard-nav-dropdown'>
             	<a href="#!" id="report"  class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-money-check-alt"></i> Báo cáo </a>
                 <div class='dashboard-nav-dropdown-menu'>
-                	<a href="#" class="dashboard-nav-dropdown-item">All</a>
-                	<a href="#" class="dashboard-nav-dropdown-item">Recent</a>
-                    <a href="#" class="dashboard-nav-dropdown-item"> Projections</a>
+                	<a th:href="@{/user/report-statistical}"  class="dashboard-nav-dropdown-item">Thống kê</a>
+                	<a th:href="@{/user/report-detail}"  class="dashboard-nav-dropdown-item">Báo cáo chi tiết</a>
+                    <a href="#" class="dashboard-nav-dropdown-item">Nhà thầu</a>
                 </div>
             </div>
             <a href="#" id="setting" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a>

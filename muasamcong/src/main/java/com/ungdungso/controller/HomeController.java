@@ -52,10 +52,34 @@ public class HomeController {
 		Date toDate= new Date();
 		System.out.println(fromDate);
 		model.addObject("fromDate",fromDate);
-		model.addObject("toDate",toDate);
-		
+		model.addObject("toDate",toDate);	
 	return  model;
 	}  
 	
+	@GetMapping(value = { "/user/report-detail"})
+	public ModelAndView reportDetail(Authentication authentication) {
+		ModelAndView model= new ModelAndView("client/report-detail");
+		List<Province> list= provinceRepository.findAll();
+		model.addObject("listProvince", list);
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		System.out.println(fromDate);
+		model.addObject("fromDate",fromDate);
+		model.addObject("toDate",toDate);	
+	return  model;
+	} 
+	
+	@GetMapping(value = { "/user/report-statistical"})
+	public ModelAndView reportStatistica(Authentication authentication) {
+		ModelAndView model= new ModelAndView("client/report-statistical");
+		List<Province> list= provinceRepository.findAll();
+		model.addObject("listProvince", list);
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		System.out.println(fromDate);
+		model.addObject("fromDate",fromDate);
+		model.addObject("toDate",toDate);	
+	return  model;
+	} 
 	
 }
