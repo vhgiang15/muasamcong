@@ -184,13 +184,13 @@ public class BidsNoticeDTO {
 		procuringEntityName=bidsNotice.getProcuringEntityName();
 		investorName=bidsNotice.getInvestorName();
 		SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd-MM-yyyy");
-		System.out.println("số thong bao moi thau:"+ bidsNotice.getNotifyNo());
-		System.out.println("ngày thong bao moi thau:"+ bidsNotice.getPublicDate());
+		//System.out.println("số thong bao moi thau:"+ bidsNotice.getNotifyNo());
+		//System.out.println("ngày thong bao moi thau:"+ bidsNotice.getPublicDate());
 		
 		publicDate=formatDate.format(bidsNotice.getPublicDate()).toString();	
 		
-		System.out.println("ngày thong bao dong thau:"+ bidsNotice.getBidCloseDate());	
-		System.out.println("status:"+ bidsNotice.getStatus());
+		//System.out.println("ngày thong bao dong thau:"+ bidsNotice.getBidCloseDate());	
+		//System.out.println("status:"+ bidsNotice.getStatus());
 		
 		if(bidsNotice.getBidCloseDate()==null) {
 			bidCloseDate =formatDate.format(bidsNotice.getBidOpenDate()).toString();
@@ -198,7 +198,7 @@ public class BidsNoticeDTO {
 			bidCloseDate =formatDate.format(bidsNotice.getBidCloseDate()).toString();
 			
 		}
-		System.out.println("ngày thong bao dong thau:"+ bidCloseDate);	
+		//System.out.println("ngày thong bao dong thau:"+ bidCloseDate);	
 		isInternet =Common.hashMapInternet.get(bidsNotice.getIsInternet());
 		investField=Common.hashMapInvestField.get(bidsNotice.getInvestField());
 		status=Common.hashMapBidStatus.get(bidsNotice.getStatus());
@@ -223,19 +223,17 @@ public class BidsNoticeDTO {
 		String[] arrlocation=bidsNotice.getLocation().split(";");
 		location="";
 		for (String locationcode : arrlocation) {
-			System.out.println(locationcode);
+			//System.out.println(locationcode);
 			if(locationcode.length()>5) {
 			location=location+" "+ districRepository.findById(Integer.parseInt(locationcode.substring(4))).get().getDistrictName()+"-"+provinceRepository.findById(Integer.parseInt(locationcode.substring(0, 3))).get().getProvName()+"; ";
-		} else {
+			} else {
 			
-			location=location+" "+provinceRepository.findById(Integer.parseInt(locationcode.substring(0, 3))).get().getProvName();
+					location=location+" "+provinceRepository.findById(Integer.parseInt(locationcode.substring(0, 3))).get().getProvName();
+					}
 		}
 		}
-		}
+		link="https://muasamcong.mpi.gov.vn/web/guest/contractor-selection?_egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2_render=detail&type=es-notify-contractor&stepCode=notify-contractor-step-1-tbmt&id="+bidsNotice.getId()+"&notifyId="+bidsNotice.getNotifyId();
 
-
-		
-		
 		
 		
 	}

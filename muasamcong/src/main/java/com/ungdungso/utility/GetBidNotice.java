@@ -32,9 +32,9 @@ public class GetBidNotice {
 	// Lưu thông báo mời thầu tất cả các trang
 	public static void getBidsNoticeToDay(Date fromDate, Date toDate,DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository) throws IOException {
 		GetBidNotice.getTotalPageandElement(fromDate, toDate);
-		System.out.println("-------------------------");
-		System.out.println(GetBidNotice.totalPage);
-		System.out.println(GetBidNotice.totalElement);
+		//System.out.println("-------------------------");
+		//System.out.println(GetBidNotice.totalPage);
+		//System.out.println(GetBidNotice.totalElement);
 				for(int i=0; i<totalPage;i++) {
 					getBidsNoticedbyDate(fromDate,toDate,i,districRepository, bidsNoticeRepostory,provinceRepository);
 		}		
@@ -72,7 +72,7 @@ public class GetBidNotice {
 		String jsonData = response.body().string();		   
 	    int  tmp= jsonData.lastIndexOf("totalPages");  
 	    String temp3=jsonData.substring(8,tmp-2)+"}"; // chi lấy chuổi chứa dữ liệu thông báo mời thầu	    
-	    System.out.println(temp3);
+	   // System.out.println(temp3);
 	    JSONObject jobject = new JSONObject(temp3);			    
 	    JSONArray Jarray = jobject.getJSONArray("content");  //2023-06-28T09:00:00
 	    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -82,27 +82,27 @@ public class GetBidNotice {
 
 		for(int i=0; i<Jarray.length(); i++) { 				
 			String tmpString=Jarray.get(i).toString();
-			System.out.println("string chưa tien xử lý:  "+ tmpString);
+			//System.out.println("string chưa tien xử lý:  "+ tmpString);
 			String jsonString =reExcuteString(tmpString);
 			
-			System.out.println("json to get bids " +jsonString);
+			//System.out.println("json to get bids " +jsonString);
 			BidsNotice bidsNotice= objectMapper.readValue(jsonString, BidsNotice.class);
 			
 			List<District> location=getLocation(tmpString);
 			
-			System.out.println("So luong dia diem:" +location.size());
+			//System.out.println("So luong dia diem:" +location.size());
 			
-			System.out.println("so thong boa moi thau: "+ bidsNotice.getNotifyNo());
+			//System.out.println("so thong boa moi thau: "+ bidsNotice.getNotifyNo());
 			if(bidsNoticeRepostory.existsById(bidsNotice.getNotifyNo())) { 
-				System.out.println("Đã tồn tại thông báo mời thầu");
+				//System.out.println("Đã tồn tại thông báo mời thầu");
 				continue;} else {
-				System.out.println("--------------------trươc save bidNotice");	
+				//System.out.println("--------------------trươc save bidNotice");	
 				bidsNoticeRepostory.save(bidsNotice);		
-				System.out.println("--------------------sau save bidNotice");	
+				//System.out.println("--------------------sau save bidNotice");	
 				String locationBids="";
 				for (District district : location) {
 					
-					System.out.println(district.getDistrictCode() +" ---"+district.getProvCode());
+					//System.out.println(district.getDistrictCode() +" ---"+district.getProvCode());
 					
 					
 					locationBids=locationBids+district.getProvCode()+"-"+district.getDistrictCode()+";";					
@@ -181,8 +181,8 @@ public class GetBidNotice {
 		}
 		}
 	
-		System.out.println("Cat bo pvccNew");
-		System.out.println(objectString);
+		//System.out.println("Cat bo pvccNew");
+		//System.out.println(objectString);
 		
 		//tmp1=objectString.indexOf("\"goods\":"); //xoá key goods
 		
@@ -202,15 +202,15 @@ public class GetBidNotice {
 
 		
 		
-		System.out.println("Cat bo good");
-		System.out.println(objectString);
+		//System.out.println("Cat bo good");
+		//System.out.println(objectString);
 		
 		
 		
 		tmp1=objectString.indexOf("\"locations\":");		// xoá location
 		if(tmp1!=-1) {
 			tmp2= objectString.indexOf("}],", tmp1);
-			System.out.println("index location trong phan xoa location: "+tmp2);
+			//System.out.println("index location trong phan xoa location: "+tmp2);
 			firString=objectString.substring(0,tmp1);
 			lastString=objectString.substring(tmp2+3);
 			objectString=firString+lastString;
@@ -224,13 +224,13 @@ public class GetBidNotice {
 	{
 		List<District> list = new ArrayList<>();
 		int tmp1=objectString.indexOf("\"locations\":");		// xoá location
-		System.out.println("index location trong phan get location: "+tmp1);
+		//System.out.println("index location trong phan get location: "+tmp1);
 		String locationString="";
 		if(tmp1!=-1) {
 			int tmp2= objectString.indexOf("}],", tmp1);
 			locationString="{"+objectString.substring(tmp1, tmp2+2)+"}";
 		}
-		System.out.println("locatióntring: "+locationString);
+		//System.out.println("locatióntring: "+locationString);
 		
 	if(locationString.length()==0) { return list;}	
     JSONObject jobject = new JSONObject(locationString);			    
@@ -239,7 +239,7 @@ public class GetBidNotice {
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);   
 	for(int i=0; i<Jarray.length(); i++) { 				
 		String tmpString=Jarray.get(i).toString();
-		System.out.println("json location "+ tmpString);
+		//System.out.println("json location "+ tmpString);
 		District district= objectMapper.readValue(tmpString, District.class);
 		list.add(district);		
 	}

@@ -1,6 +1,7 @@
 package com.ungdungso.service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,8 +26,8 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 		//String toDateString="2023-06-24 23:59:59.000000";	
 		
 		List<BidsNotice> list=bidsNoticeRepostory.queryGetBidsNotices(fromDateString, toDateString);
-		System.out.println("Số lượng các thông báo mời thầu");
-		System.out.println(list.size());
+		//System.out.println("Số lượng các thông báo mời thầu");
+		//System.out.println(list.size());
 		return list;
 	}
 	@Override
@@ -70,9 +71,9 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 			notifyNo="%";
 		}
 		
-		System.out.println("fromDateString "+ fromDateString);
-		System.out.println("toDateString "+ toDateString);
-		System.out.println("location "+ location);		
+		//System.out.println("fromDateString "+ fromDateString);
+		//System.out.println("toDateString "+ toDateString);
+		//System.out.println("location "+ location);		
 		List<BidsNotice> list=bidsNoticeRepostory.querySearchBidsNotices(notifyNo, location, fromDateString, toDateString);		
 		return list;
 	}
@@ -94,4 +95,43 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 		
 		return list;
 	}
+	@Override
+	public List<BidsNotice> reportBidsNoticesbyKey(int provCodeKey, String typeInfo, String key, Date fromDate,	Date toDate, String investField) {
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");		
+		String fromDateString=formatDate.format(fromDate).toString()+" 00:00:00.000000"; //2023-06-19 00:00:00.000000
+		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";
+		String location="";
+		List<BidsNotice> list = new ArrayList<>();
+		if(provCodeKey==0) {
+			location="%";
+			
+		} else { location="%"+provCodeKey+"-%";}
+		
+		if(investField.equals("all")) {
+			investField="%";
+		}
+		
+		switch (typeInfo) {
+		case "CDT": {
+			
+			break;
+		}
+		
+		case "DVMT": {
+			
+			break;
+		}
+		
+		case "TGT": {
+			
+			break;
+		}
+		
+		case "DVTT": {
+			
+			break;
+		}		
+	}
+		return list;
+}
 }

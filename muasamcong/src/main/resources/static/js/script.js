@@ -125,11 +125,66 @@ function reportdetail()
                     dataType:"text",
                     data : {provCode,dateFrom, dateTo,investFeild                     
                     },
-                    success : function (result){
-                        $('#result-search').html(result);
-                    }
+
                 }); 	                                                                         
 } 
 
+
+function enablesearchkey()
+
+{	    
+	var typeInfo=$("#typeinfo").val();
+	var key=$("#keysearch").val();
+	
+	if((typeInfo!=0)&&(key.length>3))
+	{
+		$("#btn-search-key").removeClass('disabled');
+	} else {
+		$("#btn-search-key").addClass('disabled');		
+	}                                                                               
+} 
+
+
+function checkdayreportkey()
+
+{	    
+	var dateFrom=$("#datefromkey").val();
+	var dateTo=$("#datetokey").val();
+	var key=$("#keysearch").val();
+	var tmp1=dateFrom.substring(3,5)+"/"+dateFrom.substring(0,2)+"/"+dateFrom.substring(6,11)
+	var tmp2=dateTo.substring(3,5)+"/"+dateTo.substring(0,2)+"/"+dateTo.substring(6,11)
+	var startDay = new Date(tmp1);
+	var endDay = new Date(tmp2);	
+	var millisBetween = endDay.getTime() - startDay.getTime();
+	var days = millisBetween / (1000 * 3600 * 24);	
+	var diff=Math.round(Math.abs(days))+1;			
+	if(diff<=93)
+	{
+		$("#btn-search-key").removeClass('disabled');
+	} else {
+		$("#btn-search-key").addClass('disabled');		
+	}                                                                               
+} 
+
+
+function reportkey()
+
+{	
+	var provCodeKey=$("#provcodekey").val();  
+	var typeInfo=$("#typeinfo").val();  
+	var key=$("#keysearch").val();
+	var dateFrom=$("#datefromkey").val();
+	var dateTo=$("#datetokey").val();
+	var investFeild=$("#investfieldkey").val();
+	$("#test").text("xin chào");
+	 $.ajax({
+                    url : "/user/export-report-key",
+                    type : "get",
+                    dataType:"text",
+                    data : {provCodeKey,typeInfo,key,dateFrom, dateTo,investFeild                     
+                    },
+
+                }); 	                                                                         
+} 
 
   

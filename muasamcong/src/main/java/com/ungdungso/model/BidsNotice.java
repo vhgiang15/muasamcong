@@ -76,20 +76,24 @@ public class BidsNotice {
 	@Column( name="num_bidder_join")
 	private int numBidderJoin; // số lượng nhà thầu tham gia
 	
-	@Column( name="winning_code", columnDefinition = "NVARCHAR(100)")
+	@Column( name="winning_code", columnDefinition = "TEXT(1000)")
 	private String winningCode;
+	
+	@Column( name="id", columnDefinition = "TEXT(1000)")  // tham số cung cấp cho link TBMT trong DTO
+	private String id;
+	
+	@Column( name="notify_id", columnDefinition = "TEXT(1000)") //// tham số cung cấp cho link TBMT trong DTO
+	private String notifyId;
 
 	public BidsNotice() {
 		super();
 	}
 
-
-
 	public BidsNotice(String notifyNo, Date publicDate, Date bidCloseDate, String bidForm, String bidMode,
 			String bidName, String investField, int isInternet, String procuringEntityCode, String procuringEntityName,
 			String investorName, String notifyVersion, String notifyNoStand, String status, Date bidOpenDate,
 			String planNo, String location, BigInteger bidPrice, Date decisionDate, String contractorName,
-			BigInteger bidWinningPrice, int numBidderJoin, String winningCode) {
+			BigInteger bidWinningPrice, int numBidderJoin, String winningCode, String id, String notifyId) {
 		super();
 		this.notifyNo = notifyNo;
 		this.publicDate = publicDate;
@@ -114,9 +118,13 @@ public class BidsNotice {
 		this.bidWinningPrice = bidWinningPrice;
 		this.numBidderJoin = numBidderJoin;
 		this.winningCode = winningCode;
+		this.id = id;
+		this.notifyId = notifyId;
 	}
 
-
+	public String getNotifyNo() {
+		return notifyNo;
+	}
 
 	public void setNotifyNo(String notifyNo) {
 		this.notifyNo = notifyNo;
@@ -129,24 +137,6 @@ public class BidsNotice {
 	public void setPublicDate(Date publicDate) {
 		this.publicDate = publicDate;
 	}
-
-	public BigInteger getBidPrice() {
-		return bidPrice;
-	}
-
-
-
-	public void setBidPrice(BigInteger bidPrice) {
-		this.bidPrice = bidPrice;
-	}
-
-
-
-	public String getNotifyNo() {
-		return notifyNo;
-	}
-
-
 
 	public Date getBidCloseDate() {
 		return bidCloseDate;
@@ -268,6 +258,14 @@ public class BidsNotice {
 		this.location = location;
 	}
 
+	public BigInteger getBidPrice() {
+		return bidPrice;
+	}
+
+	public void setBidPrice(BigInteger bidPrice) {
+		this.bidPrice = bidPrice;
+	}
+
 	public Date getDecisionDate() {
 		return decisionDate;
 	}
@@ -308,6 +306,23 @@ public class BidsNotice {
 		this.winningCode = winningCode;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getNotifyId() {
+		return notifyId;
+	}
+
+	public void setNotifyId(String notifyId) {
+		this.notifyId = notifyId;
+	}
+
+	
 	
 	
 }

@@ -11,5 +11,6 @@ public interface BidsNoticeService {
 	public int countBidsNotice(Date fromDate, Date toDate);
 	public List<BidsNotice> searchBidsNotices(String notifyNo, int provCode, Date fromDate, Date toDate);
 	public List<BidsNotice> reportBidsNotices(int provCode, Date fromDate, Date toDate, String investField);
+	public List<BidsNotice> reportBidsNoticesbyKey(int provCodeKey,String typeInfo,String key, Date fromDate, Date toDate, String investField);
 	
 }
