@@ -23,23 +23,24 @@ public class ScheduleTask {
 	@Autowired
 	private ProvinceRepository provinceRepository;
 
-	@Scheduled(cron = "59 36 * * * ?") 
+	@Scheduled(cron = "59 15 * * * ?") 
 	public void scheduleGetBidNotice() throws IOException, ParseException {
 		Date fromDate= new Date();
 		Date toDate= new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		String fromString="2023-05-01";
-		String toString="2023-05-31";
+		String fromString="2022-12-01";
+		String toString="2022-12-31";
 		fromDate=format.parse(fromString);
 		toDate= format.parse(toString);	
 		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
 		System.out.println("hoàn thành lấy data");
 }
 	
-	@Scheduled(cron = "59 0 0 * * ?") 
+	@Scheduled(cron = "59 0 * * * ?") 
 	public void scheduleGetBidNoticeToday() throws IOException, ParseException {
 		Date fromDate= new Date();
 		Date toDate= new Date();
-		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);			
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
+		System.out.println("hoàn thành lấy data ngay");
 }
 }

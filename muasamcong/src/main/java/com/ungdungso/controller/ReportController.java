@@ -15,6 +15,7 @@ import com.ungdungso.model.BidsNotice;
 import com.ungdungso.repository.DistricRepository;
 import com.ungdungso.repository.ProvinceRepository;
 import com.ungdungso.service.BidsNoticeService;
+import com.ungdungso.utility.Export;
 import com.ungdungso.utility.ExportToExcell;
 
 @Controller
@@ -51,7 +52,8 @@ public class ReportController {
 			listDTO.add(bidsNoticeDTO);	
 		}		
 		final String excelFilePath = "C:/demo/books.xlsx";
-		ExportToExcell.writeExcel(listDTO, excelFilePath);
+		//ExportToExcell.writeExcel(listDTO, excelFilePath);
+		Export.writeExcel(listDTO);
 		System.out.println("hoan thanh");
 	}  
 	
