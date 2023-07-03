@@ -23,7 +23,7 @@ public class ScheduleTask {
 	@Autowired
 	private ProvinceRepository provinceRepository;
 
-	@Scheduled(cron = "59 15 * * * ?") 
+	@Scheduled(cron = "59 32 * * * ?") 
 	public void scheduleGetBidNotice() throws IOException, ParseException {
 		Date fromDate= new Date();
 		Date toDate= new Date();
@@ -36,7 +36,7 @@ public class ScheduleTask {
 		System.out.println("hoàn thành lấy data");
 }
 	
-	@Scheduled(cron = "59 0 * * * ?") 
+	@Scheduled(cron = "59 0 0 * * ?") 
 	public void scheduleGetBidNoticeToday() throws IOException, ParseException {
 		Date fromDate= new Date();
 		Date toDate= new Date();
