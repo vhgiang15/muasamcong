@@ -23,8 +23,34 @@ public class ScheduleTask {
 	@Autowired
 	private ProvinceRepository provinceRepository;
 
-	@Scheduled(cron = "59 32 * * * ?") 
+	//@Scheduled(cron = "59 40 21 * * ?") 
 	public void scheduleGetBidNotice() throws IOException, ParseException {
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2022-11-01";
+		String toString="2022-11-30";
+		fromDate=format.parse(fromString);
+		toDate= format.parse(toString);	
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
+		System.out.println("hoàn thành lấy data t11");
+}
+	
+	//@Scheduled(cron = "59 59 21 * * ?") 
+	public void scheduleGetBidNoticeT10() throws IOException, ParseException {
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2022-10-01";
+		String toString="2022-10-31";
+		fromDate=format.parse(fromString);
+		toDate= format.parse(toString);	
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
+		System.out.println("hoàn thành lấy data t10");
+}
+	
+	//@Scheduled(cron = "59 20 22 * * ?") 
+	public void scheduleGetBidNoticeT12() throws IOException, ParseException {
 		Date fromDate= new Date();
 		Date toDate= new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -33,10 +59,110 @@ public class ScheduleTask {
 		fromDate=format.parse(fromString);
 		toDate= format.parse(toString);	
 		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
-		System.out.println("hoàn thành lấy data");
+		System.out.println("hoàn thành lấy data t12");
 }
 	
-	@Scheduled(cron = "59 0 0 * * ?") 
+	
+	//@Scheduled(cron = "59 40 22 * * ?") 
+	public void scheduleGetBidNoticeT1() throws IOException, ParseException {
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2023-01-01";
+		String toString="2023-01-31";
+		fromDate=format.parse(fromString);
+		toDate= format.parse(toString);	
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
+		System.out.println("hoàn thành lấy data t1");
+}
+	
+	
+	//@Scheduled(cron = "59 00 23 * * ?") 
+	public void scheduleGetBidNoticeT2() throws IOException, ParseException {
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2023-02-01";
+		String toString="2023-02-28";
+		fromDate=format.parse(fromString);
+		toDate= format.parse(toString);	
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
+		System.out.println("hoàn thành lấy data t2");
+}
+	//@Scheduled(cron = "59 20 23 * * ?") 
+	public void scheduleGetBidNoticeT3() throws IOException, ParseException {
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2023-03-01";
+		String toString="2023-03-31";
+		fromDate=format.parse(fromString);
+		toDate= format.parse(toString);	
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
+		System.out.println("hoàn thành lấy data t3");
+}
+	
+	//@Scheduled(cron = "59 40 23 * * ?") 
+	public void scheduleGetBidNoticeT4() throws IOException, ParseException {
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2023-04-01";
+		String toString="2023-04-30";
+		fromDate=format.parse(fromString);
+		toDate= format.parse(toString);	
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
+		System.out.println("hoàn thành lấy data t4");
+}
+	
+	
+	//@Scheduled(cron = "59 00 00 * * ?") 
+	public void scheduleGetBidNoticeT5() throws IOException, ParseException {
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2023-05-01";
+		String toString="2023-05-31";
+		fromDate=format.parse(fromString);
+		toDate= format.parse(toString);	
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
+		System.out.println("hoàn thành lấy data t5");
+}
+	
+	//@Scheduled(cron = "59 20 00 * * ?") 
+	public void scheduleGetBidNoticeT6() throws IOException, ParseException {
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2023-06-01";
+		String toString="2023-06-31";
+		fromDate=format.parse(fromString);
+		toDate= format.parse(toString);	
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
+		System.out.println("hoàn thành lấy data t6");
+}
+	
+	@Scheduled(cron = "59 40 00 * * ?") 
+	public void scheduleGetBidNoticeT7() throws IOException, ParseException {
+		Date fromDate= new Date();
+		Date toDate= new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2023-07-01";
+		String toString="2023-07-05";
+		fromDate=format.parse(fromString);
+		toDate= format.parse(toString);	
+		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
+		System.out.println("hoàn thành lấy data t7");
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	//@Scheduled(cron = "59 0 0 * * ?") 
 	public void scheduleGetBidNoticeToday() throws IOException, ParseException {
 		Date fromDate= new Date();
 		Date toDate= new Date();
