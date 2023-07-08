@@ -34,23 +34,22 @@
 				<div class="row">				
 					<div class="col-sm-12 col-lg-2">
 						<label>Tỉnh</label> 										
-						<select class="form-select" name="province" id="provcode" onchange="enablesearch()">
-    						<option value="0">Tất cả</option>
+						<select class="form-select" name="province" id="provcode" onchange="getlink()">
     						<option th:each="option : ${listProvince}" th:value="${option.provCode}" th:text="${option.provName}"></option>
 						</select>
 					</div>					
 					<div class="col-sm-12 col-lg-2">
 						<label>Từ ngày *</label> <input id="datefrom" class="form-control"
-							th:value="${#dates.format(fromDate, 'dd-MM-yyyy')}" name="date-from" onchange="checkdayreport()" required>
+							th:value="${#dates.format(fromDate, 'dd-MM-yyyy')}" name="date-from" onchange="getlink()"required>
 					</div>
 					<div class="col-sm-12 col-lg-2">
 						<label>Đến ngày *</label> <input id="dateto" class="form-control"
-							name="date-to" th:value="${#dates.format(toDate, 'dd-MM-yyyy')}" onchange="checkdayreport()" required>
+							name="date-to" th:value="${#dates.format(toDate, 'dd-MM-yyyy')}" onchange="getlink()" required>
 					</div>
 					
 					<div class="col-sm-12 col-lg-2">
 						<label>Lĩnh vực</label> 
-						<select class="form-select" name="invest-field" id="investfield">
+						<select class="form-select" name="invest-field" id="investfield" onchange="getlink()"  >
 							<option value="all">Tất cả</option>
     						<option value="XL">Xây lắp</option>
     						<option value="TV">Tư vấn</option>
@@ -61,9 +60,7 @@
 					</div>
 
 					<div class="col-sm-12 col-lg-2 mt-4">
-						<button type="button" id="btn-search"
-							class="btn btn-primary btn-dove disabled" th:value="1"
-							onclick="reportdetail()">Báo cáo</button>
+						<a class="btn btn-primary disabled" id="link-search" href="#" role="button">Báo cáo</a>
 					</div>
 				</div>
 			</form> 

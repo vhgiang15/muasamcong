@@ -28,6 +28,8 @@ public class SecurityConfig {
 						.requestMatchers("/login").permitAll()
 						.requestMatchers("/css/**").permitAll()
 						.requestMatchers("/js/**").permitAll()
+						
+						.requestMatchers("/users/export/excel").permitAll()
 						.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers("/admin**").hasAnyRole("ADMIN")
 						.anyRequest().permitAll())

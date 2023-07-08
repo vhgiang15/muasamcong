@@ -49,6 +49,7 @@ public class UserExcelExporter {
         createCell(row, 9, "Giá gói thầu", style);
         createCell(row, 10, "Giá gói trúng thầu", style);
         createCell(row, 11, "Đơn vị trúng thầu", style);
+        System.out.println("write header");
          
     }
      
@@ -75,8 +76,7 @@ public class UserExcelExporter {
                  
         for (BidsNoticeDTO bidsNoticeDTO : lisBidsDTO) {
             Row row = sheet.createRow(rowCount++);
-            int columnCount = 0;
-             
+            int columnCount = 0;            
             createCell(row, columnCount++, bidsNoticeDTO.getNotifyNo(), style);
             createCell(row, columnCount++, bidsNoticeDTO.getInvestorName(), style);
             createCell(row, columnCount++, bidsNoticeDTO.getProcuringEntityName(), style);
@@ -89,6 +89,7 @@ public class UserExcelExporter {
             createCell(row, columnCount++, bidsNoticeDTO.getBidPrice(), style);
             createCell(row, columnCount++, bidsNoticeDTO.getBidWinningPrice(), style);
             createCell(row, columnCount++, bidsNoticeDTO.getContractorName(), style);
+            //System.out.println("write "+row);
              
         }
     }

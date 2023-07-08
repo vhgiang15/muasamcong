@@ -142,13 +142,13 @@ public class ScheduleTask {
 		System.out.println("hoàn thành lấy data t6");
 }
 	
-	@Scheduled(cron = "59 40 00 * * ?") 
+	//@Scheduled(cron = "30 * * * * ?") 
 	public void scheduleGetBidNoticeT7() throws IOException, ParseException {
 		Date fromDate= new Date();
 		Date toDate= new Date();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-		String fromString="2023-07-01";
-		String toString="2023-07-05";
+		String fromString="2023-07-06";
+		String toString="2023-07-06";
 		fromDate=format.parse(fromString);
 		toDate= format.parse(toString);	
 		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
@@ -158,11 +158,7 @@ public class ScheduleTask {
 	
 	
 	
-	
-	
-	
-	
-	//@Scheduled(cron = "59 0 0 * * ?") 
+	@Scheduled(cron = "59 * * * * ?") 
 	public void scheduleGetBidNoticeToday() throws IOException, ParseException {
 		Date fromDate= new Date();
 		Date toDate= new Date();

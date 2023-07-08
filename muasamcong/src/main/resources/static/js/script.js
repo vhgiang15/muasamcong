@@ -59,17 +59,6 @@ function searchBidsNotice()
                 });                                                                                 
 } 
 
-function enablesearch()
-
-{	    
-	var provCode=$("#procode").val();
-	if(provCode!=0)
-	{
-		$("#btn-search").removeClass('disabled');
-	} else {
-		$("#btn-search").addClass('disabled');		
-	}                                                                               
-} 
 
 function checkday()
 
@@ -91,6 +80,15 @@ function checkday()
 	}                                                                               
 } 
 
+function getlink()
+
+{	
+	var link="/users/export/excel?provCode="+$("#provcode").val()+"&dateFrom="+$("#datefrom").val()+"&dateTo="+$("#dateto").val()+"&investFeild="+$("#investfield").val();
+	checkdayreport();
+	$("#link-search").attr("href", link);
+	$("#linktest").text(link);
+}
+
 function checkdayreport()
 
 {	    
@@ -103,11 +101,11 @@ function checkdayreport()
 	var millisBetween = endDay.getTime() - startDay.getTime();
 	var days = millisBetween / (1000 * 3600 * 24);	
 	var diff=Math.round(Math.abs(days))+1;			
-	if(diff<=93)
+	if(diff<=31)
 	{
-		$("#btn-search").removeClass('disabled');
+		$("#link-search").removeClass('disabled');
 	} else {
-		$("#btn-search").addClass('disabled');		
+		$("#link-search").addClass('disabled');		
 	}                                                                               
 } 
 
@@ -120,7 +118,7 @@ function reportdetail()
 	var dateTo=$("#dateto").val();
 	var investFeild=$("#investfield").val();
 	 $.ajax({
-                    url : "/user/export-report-detail",
+                    url : "/users/export/excel",
                     type : "get",
                     dataType:"text",
                     data : {provCode,dateFrom, dateTo,investFeild                     
