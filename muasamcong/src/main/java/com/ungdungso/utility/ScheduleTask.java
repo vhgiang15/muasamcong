@@ -165,7 +165,7 @@ public class ScheduleTask {
 	
 	
 	
-	@Scheduled(cron = "59 * * * * ?") 
+	//@Scheduled(cron = "59 * * * * ?") 
 	public void scheduleGetBidNoticeToday() throws IOException, ParseException {
 		
 		Date fromDate= new Date();

@@ -15,7 +15,7 @@
 <body>
     <div class="dashboard-nav" th:fragment="left-menu">
         <header><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
-        		<a href="#" class="brand-logo"><i class="fas fa-anchor"></i> <span>BRAND</span></a>
+        		<a href="#" class="brand-logo"><i class="fas fa-anchor"></i> <span>GPCNTT</span></a>
         </header>
         <nav class="dashboard-nav-list">
         	<a th:href="@{/user/dashboard}" id="dashboard" class="dashboard-nav-item "><i class="fas fa-tachometer-alt"></i> Dashboard</a>
@@ -27,7 +27,6 @@
                 		<a href="#" class="dashboard-nav-dropdown-item">Chưa đóng thầu</a>
                 		<a href="#" class="dashboard-nav-dropdown-item">Đã đóng thầu</a>
                 		<a href="#" class="dashboard-nav-dropdown-item">Đã có KQLCNT</a>
-                		<a href="#" class="dashboard-nav-dropdown-item">Video</a>
                 </div>
             </div>
 			
@@ -40,11 +39,59 @@
                 </div>
             </div>
             <a href="#" id="setting" class="dashboard-nav-item"><i class="fas fa-cogs"></i> Settings </a>
-            <a href="#" id="profile" class="dashboard-nav-item"><i class="fas fa-user"></i> Profile </a>
+            
+            <div class='dashboard-nav-dropdown'>
+            <a href="#!" id="profile" class="dashboard-nav-item dashboard-nav-dropdown-toggle"><i class="fas fa-user"></i> Profile </a>
+            <div class='dashboard-nav-dropdown-menu'>
+                	<a th:href="@{#}"  class="dashboard-nav-dropdown-item">Đổi mật khẩu</a>
+                	<a th:href="@{#}"  class="dashboard-nav-dropdown-item">Thông tin tài khoản</a>
+                </div>
+            </div>
           <div class="nav-item-divider"></div>
           <a th:href="@{/logout}" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Đăng xuất </a>
         </nav>
-    </div>   
+    </div>
+    
+    	<!-- The Modal -->
+	<div class="modal" id="mymodal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form>
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Đổi mật khẩu</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div class="form-outline mb-2">
+							<label class="form-label">Mật khẩu cũ</label> <input id="oldpass"
+								type="password" class="form-control" required />
+						</div>
+						
+						<div class="form-outline mb-2">
+							<label class="form-label">Mật khẩu mới</label> <input id="newpass" onkeyup="trigger(this)" type="password" class="form-control" required />
+						</div>
+						
+						<div class="form-outline mb-2">
+							<label class="form-label">Xác nhận mật khẩu</label> <input id="conwpass" type="password" class="form-control" required />
+						</div>
+						<div class="row" id="text"></div>
+						<div class="row" id="alert"></div>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button id="btn-doipass" class="btn btn-primary disabled" type="button"	onclick="changePass()">Thay đổi mật khẩu</button>
+						<button type="button" class="btn btn-danger"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	       
 </body>
 
 

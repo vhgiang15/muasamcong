@@ -149,6 +149,79 @@ function checkdayreportkey()
 	}                                                                               
 } 
 
+function registerinfo()
+	   {
+	   var fullName=$("#fullname").val(); 
+	   var user=$("#userform").val();
+	   var phone=$("#phoneform").val();
+	   var mail=$("#emailform").val();
+	   $.ajax({
+	            url : "/register-user",
+	            type : "get",
+	            dataType:"text",
+	            data : {fullName,user,phone,mail                
+	                    },
+	            success : function (result){
+	            $('#alert-register').html(result);
+	                       }
+	   }); 
+	   } 
+	   
+	   
+function resetPass()
+{	
+var email = $("#email").val();  
+                    $.ajax({
+                    url : "/reset-pass",
+                    type : "get",
+                    dataType:"text",
+                    data : {email                 
+                    },
+                    success : function (result){
+                        $('#alert-reset').html(result);
+                    }
+                });                                                                               
+}
+
+function trigger(obj){
+     let regExpWeak = /[a-z]/;
+     let regExpMedium = /\d+/;
+     let regExpStrong = /.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/;
+     let stringPass=obj.value;
+     
+     if(stringPass.length <= 3 && (stringPass.match(regExpWeak) || stringPass.match(regExpMedium) || stringPass.match(regExpStrong))) 
+     {	$("#text").html("Mật khẩu yếu");
+     	$("#btn-doipass").addClass("disabled");
+     }
+     if(stringPass.length >= 6 && ((stringPass.match(regExpWeak) && stringPass.match(regExpMedium)) || (stringPass.match(regExpMedium) && stringPass.match(regExpStrong)) || (stringPass.match(regExpWeak) && stringPass.match(regExpStrong))))
+      {	$("#text").html("Mật khẩu trung bình");
+      	$("#btn-doipass").removeClass("disabled");   
+      }
+     if(stringPass.length >= 6 && stringPass.match(regExpWeak) && stringPass.match(regExpMedium) && stringPass.match(regExpStrong))
+     	{	$("#text").html("Mật khẩu mạnh");
+     		$("#btn-doipass").removeClass("disabled");
+     	}
+}	
+
+
+function changePass()
+{
+var oldPass=$("#oldpass").val();  
+var newPass=$("#newpass").val(); 
+var conPass=$("#conwpass").val(); 
+$.ajax({
+         url : "/SWP490JPA/change-pass",
+         type : "get",
+         dataType:"text",
+         data : {oldPass,newPass,conPass                
+                 },
+         success : function (result){
+         $('#alert').html(result);
+                    }
+}); 
+}     
+	   
+
 
 
   
