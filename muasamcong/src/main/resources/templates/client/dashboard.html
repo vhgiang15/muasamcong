@@ -20,38 +20,80 @@
 				<div class="col-lg-3"><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a> </div>
 				<div class="col-lg-9">
                         <h5>Thông tin tổng hợp</h5>
+                        <h6>VIETTEL ĐÃ TRÚNG <strong><a th:text="${total}" th:href="${totalLink}"> </a> </strong>GÓI THẦU TRONG NĂM 2023</h6>
                 </div>
 			</div>
         </header>
-        <div class='dashboard-content'> 
-        <div class="row">
-					<div class="col-xl-4 col-md-6 mb-4">
-						<div class="card border-left-primary shadow h-100 py-2">
-							<div class="card-body">
+        <div class='dashboard-content mt-0'>
+        <div class="row p-0 mt-3 ms-2">
+					<div class="col-sm-12 col-md-4 mt-3 p-0">
+						<div class="card border-left-success shadow h-100">
+							<div class="card-body pt-0 pe-3" style="border: 2px">
 								<div class="row no-gutters align-items-center">
-									<table class="table table-hover">
-									    <thead>
+									<table class="table table-hover table-sm">
+									    <thead class="table-info">
 									      <tr>
-									        <th>Miền bắc</th>
+									        <th>Miền Nam</th>
 									        <th>Hôm nay</th>
-									        <th>Luỹ kế năm</th>
+									        <th>Luỹ kế gói thầu năm</th>
 									      </tr>
 									    </thead>
 									    <tbody>
-									      <tr>
-									        <td>John</td>
-									        <td>Doe</td>
-									        <td>john@example.com</td>
+									      <tr th:each="o : ${listMN}">
+									        <td th:text="${o.provName}"></td>
+									       <td><a th:text="${o.amountNoticeToday}" th:href="${o.link}"> </a></td>
+									        <td th:text="${o.amountNoticeYear}"></td>
 									      </tr>
+									    </tbody>
+									  </table>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-12 col-md-4 mt-3 p-0">
+						<div class="card border-left-success shadow h-100">
+							<div class="card-body pt-0 pe-3">
+								<div class="row no-gutters align-items-center">
+									<table class="table table-hover table-sm">
+									    <thead class="table-info">
 									      <tr>
-									        <td>Mary</td>
-									        <td>Moe</td>
-									        <td>mary@example.com</td>
+									        <th>Miền Trung</th>
+									        <th>Hôm nay</th>
+									        <th>Luỹ kế gói thầu năm</th>
 									      </tr>
+									    </thead>
+									    <tbody>
+									      <tr th:each="o : ${listMT}">
+									        <td th:text="${o.provName}"></td>
+									      	<td><a th:text="${o.amountNoticeToday}" th:href="${o.link}"> </a></td>
+									        <td th:text="${o.amountNoticeYear}"></td>
+									      </tr>
+									    </tbody>
+									  </table>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="col-sm-12 col-md-4 mt-3 p-0">
+						<div class="card border-left-success shadow h-100">
+							<div class="card-body pt-0 pe-3">
+								<div class="row no-gutters align-items-center">
+									<table class="table table-hover table-sm">
+									    <thead class="table-info">
 									      <tr>
-									        <td>July</td>
-									        <td>Dooley</td>
-									        <td>july@example.com</td>
+									        <th>Miền Bắc</th>
+									        <th>Hôm nay</th>
+									        <th>Luỹ kế gói thầu năm</th>
+									      </tr>
+									    </thead>
+									    <tbody>
+									      <tr th:each="o : ${listMB}">
+									        <td th:text="${o.provName}"></td>
+									        <td><a th:text="${o.amountNoticeToday}" th:href="${o.link}"> </a></td>
+									        <td th:text="${o.amountNoticeYear}"></td>
 									      </tr>
 									    </tbody>
 									  </table>
@@ -60,47 +102,10 @@
 						</div>
 					</div>
 
-					<div class="col-xl-4 col-md-6 mb-4">
-						<div class="card border-left-success shadow h-100 py-2">
-							<div class="card-body">
-								<div class="row no-gutters align-items-center">
-									<div class="col mr-2">
-										<div
-											class="text-xs font-weight-bold text-success text-uppercase mb-1">
-											SL tỉnh hôm nay XS:</div>
-										<div class="h6 mb-0 font-weight-bold text-gray-800">Đã có KQXS:  </div>
-										<div class="h6 mb-0 font-weight-bold text-gray-800">Chưa có KQXS:</div>
-									</div>
-									<div class="col-auto">
-										<i class="fas fa-calendar-check fa-2x text-gray-300"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+					
 
 
-					<div class="col-xl-4 col-md-6 mb-4">
-						<div class="card border-left-info shadow h-100 py-2">
-							<div class="card-body">
-								<div class="row no-gutters align-items-center">
-									<div class="col mr-2">
-										<div
-											class="text-xs font-weight-bold text-info text-uppercase mb-1">SL tỉnh hôm qua XS:  </div>
-										<div class="row no-gutters align-items-center">
-											<div class="col-auto">
-												<div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">Đã có KQXS: </div>
-												<div class="h6 mb-0 mr-3 font-weight-bold text-gray-800">Chưa có KQXS: </div>
-											</div>
-										</div>
-									</div>
-									<div class="col-auto">
-										<i class="fas fa-calendar-check fa-2x text-gray-300"></i>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+
 				</div>
   			</div>
     	</div>

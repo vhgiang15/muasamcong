@@ -103,10 +103,9 @@ public class GetBidNotice {
 				for (District district : location) {
 					
 					//System.out.println(district.getDistrictCode() +" ---"+district.getProvCode());
-					
-					
+										
 					locationBids=locationBids+district.getProvCode()+"-"+district.getDistrictCode()+";";					
-					Province province= new Province(district.getProvCode(), district.getProvName());
+					Province province= new Province(district.getProvCode(), district.getProvName(),"", 0, 0,"");
 					if(!provinceRepository.existsById(province.getProvCode())&(province.getProvCode()!=0)) {
 						provinceRepository.save(province);
 					}				
@@ -126,14 +125,10 @@ public class GetBidNotice {
 		MediaType mediaType = MediaType.parse("application/json"); 
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		String fromDateString=format.format(fromDate).toString();
-		String toDateString=format.format(toDate).toString();
-		
-		String mediaTypeString="{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"fromdateT00:00:00.000Z\",\"to\":\"todateT23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";
-		
+		String toDateString=format.format(toDate).toString();		
+		String mediaTypeString="{\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"publicDate\",\"searchType\":\"range\",\"from\":\"fromdateT00:00:00.000Z\",\"to\":\"todateT23:59:59.059Z\"},{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";		
 		mediaTypeString=mediaTypeString.replace("fromdate", fromDateString); 
-		mediaTypeString=mediaTypeString.replace("todate", toDateString); 
-		
-		
+		mediaTypeString=mediaTypeString.replace("todate", toDateString); 		
 		RequestBody body = RequestBody.create(mediaType,mediaTypeString);				
 		Request request = new Request.Builder()
 		  .url("https://muasamcong.mpi.gov.vn/o/egp-portal-contractor-selection-v2/services/smart/search")
@@ -161,12 +156,9 @@ public class GetBidNotice {
 		int tmp1=-1;
 		int tmp2=-1;
 		String firString="";
-		String lastString="";
-		
-		tmp1=objectString.indexOf("pvccNew"); // kiểm tra trong json có pvccNew không,nếu không thì ko thaoo tác cắt pvccNew
-		
-		if(tmp1!=-1) { 
-		
+		String lastString="";		
+		tmp1=objectString.indexOf("pvccNew"); // kiểm tra trong json có pvccNew không,nếu không thì ko thaoo tác cắt pvccNew		
+		if(tmp1!=-1) { 		
 		tmp1=objectString.indexOf("\"pvccNew\":[],");   // xoá key pvccNew	
 		if(tmp1!=-1) {
 			objectString=objectString.replace("\"pvccNew\":[],", "");
@@ -176,8 +168,7 @@ public class GetBidNotice {
 			firString=objectString.substring(0, tmp1);	
 			lastString=objectString.substring(tmp2+3);
 			objectString=firString+lastString;
-			objectString=firString+lastString;
-			
+			objectString=firString+lastString;			
 		}
 		}
 	
@@ -198,15 +189,10 @@ public class GetBidNotice {
 			
 		}
 		//System.out.println("index location trong phan xoa goods: "+tmp2);
-		
-
-		
-		
+					
 		//System.out.println("Cat bo good");
 		//System.out.println(objectString);
-		
-		
-		
+				
 		tmp1=objectString.indexOf("\"locations\":");		// xoá location
 		if(tmp1!=-1) {
 			tmp2= objectString.indexOf("}],", tmp1);

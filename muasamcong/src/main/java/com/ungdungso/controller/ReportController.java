@@ -18,6 +18,7 @@ import com.ungdungso.repository.DistricRepository;
 import com.ungdungso.repository.ProvinceRepository;
 import com.ungdungso.service.BidsNoticeService;
 import com.ungdungso.utility.UserExcelExporter;
+import com.ungdungso.utility.UserExcelExporterArr;
 
 @Controller
 
@@ -31,17 +32,12 @@ public class ReportController {
 	private DistricRepository districRepository;
 	
 	@GetMapping(value = { "/users/export/excel"})
-	public void reportDetail( HttpServletResponse response,
+	public void ExportReportDetailByProvince( HttpServletResponse response,
 			@RequestParam(value = "provCode") int provCode,
 			@RequestParam(value = "dateFrom") String dateFromString,
 			@RequestParam(value = "dateTo") String dateToString,
 			@RequestParam(value = "investFeild") String investFeild) throws  IOException, ParseException {
-		//ModelAndView model= new ModelAndView("client/report-detail");
 		response.setContentType("application/octet-stream");
-		System.out.println(provCode);
-		System.out.println(dateFromString);
-		System.out.println(dateToString);
-		System.out.println("in ----" +investFeild);
 		SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
 		Date dateFrom= formatDate.parse(dateFromString);
 		Date dateTo= formatDate.parse(dateToString);
@@ -50,56 +46,85 @@ public class ReportController {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());         
         String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
-        response.setHeader(headerKey, headerValue);
-	
-		List<BidsNotice> list= bidsNoticeService.reportBidsNotices(provCode, dateFrom, dateTo,investFeild);		
-		System.out.println(list.size());
+        String headerValue = "attachment; filename=report_" + currentDateTime + ".xlsx";
+        response.setHeader(headerKey, headerValue);	
+		List<BidsNotice> list= bidsNoticeService.reportBidsNotices(provCode, dateFrom, dateTo,investFeild);	
+		int size=list.size();
 		
-		List<BidsNoticeDTO> listDTO= new ArrayList<>();
-		for (BidsNotice bidsNotice : list) {
-			BidsNoticeDTO bidsNoticeDTO= new BidsNoticeDTO();			
-			bidsNoticeDTO.convertBidNoticeToDTO(bidsNotice,districRepository,provinceRepository);
-			listDTO.add(bidsNoticeDTO);	
-		}	
-        
-        UserExcelExporter excelExporter = new UserExcelExporter(listDTO);
-         
+		//List<BidsNoticeDTO> listDTO= new ArrayList<>();
+		BidsNoticeDTO[] listDTOarr= new BidsNoticeDTO[size];
+		  
+		  for(int i=0; i<size; i++) {
+			  BidsNoticeDTO bidsNoticeDTO= new BidsNoticeDTO();
+			  bidsNoticeDTO.convertBidNoticeToDTO(list.get(i),districRepository,provinceRepository);	
+			  listDTOarr[i]=bidsNoticeDTO;
+		  }
+		
+		  
+			/*
+			 * for (BidsNotice bidsNotice : list) { BidsNoticeDTO bidsNoticeDTO= new
+			 * BidsNoticeDTO();
+			 * bidsNoticeDTO.convertBidNoticeToDTO(bidsNotice,districRepository,
+			 * provinceRepository); listDTO.add(bidsNoticeDTO); }
+			 */
+		UserExcelExporterArr excelExporter = new UserExcelExporterArr(listDTOarr); 
+        //UserExcelExporter excelExporter = new UserExcelExporter(listDTO);         
         excelExporter.export(response);           
-		System.out.println("hoan thanh");
+		System.out.println("hoan thanh users/export/excel");
 	}  
 	
 	
 	///provCodeKey,typeInfo,key,dateFrom, dateTo,investFeild   
 	@GetMapping(value = { "/user/export-report-key"})
-	public void reportDetailbyKey(
+	public void ExportEeportDetailbyKey(
+			HttpServletResponse response,
 			@RequestParam(value = "provCodeKey") int provCode,
 			@RequestParam(value = "typeInfo") String typeInfo,
 			@RequestParam(value = "key") String key,
 			@RequestParam(value = "dateFrom") String dateFromString,
 			@RequestParam(value = "dateTo") String dateToString,
 			@RequestParam(value = "investFeild") String investFeild) throws ParseException, IOException {
-		//ModelAndView model= new ModelAndView("client/report-detail");
-		System.out.println(provCode);
-		System.out.println(typeInfo);
-		System.out.println(key);
-		System.out.println(dateFromString);
-		System.out.println(dateToString);
-		System.out.println("in ----" +investFeild);
+		/*
+		 * System.out.println(provCode); System.out.println(typeInfo);
+		 * System.out.println(key); System.out.println(dateFromString);
+		 * System.out.println(dateToString); System.out.println("in ----" +investFeild);
+		 */
 		SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-yyyy");
 		Date dateFrom= formatDate.parse(dateFromString);
 		Date dateTo= formatDate.parse(dateToString);		
-		/*
-		 * List<BidsNotice> list=
-		 * bidsNoticeService.reportBidsNoticesbyKey(provCode,typeInfo, key, dateFrom,
-		 * dateTo, investFeild); System.out.println(list.size()); List<BidsNoticeDTO>
-		 * listDTO= new ArrayList<>(); for (BidsNotice bidsNotice : list) {
-		 * BidsNoticeDTO bidsNoticeDTO= new BidsNoticeDTO();
-		 * bidsNoticeDTO.convertBidNoticeToDTO(bidsNotice,districRepository,
-		 * provinceRepository); listDTO.add(bidsNoticeDTO); } final String excelFilePath
-		 * = "C:/demo/books.xlsx"; ExportToExcell.writeExcel(listDTO, excelFilePath);
-		 */
-		System.out.println("hoan thanh");
+		
+		  List<BidsNotice> list=bidsNoticeService.reportBidsNoticesbyKey(provCode,typeInfo, key, dateFrom,dateTo, investFeild); 
+		  int size=list.size();
+		  //System.out.println("Ket qua tìm kiem: "+ list.size());
+		  //List<BidsNoticeDTO> listDTO= new ArrayList<>(); 
+		  BidsNoticeDTO[] listDTOarr= new BidsNoticeDTO[size];
+		  
+		  for(int i=0; i<size; i++) {
+			  BidsNoticeDTO bidsNoticeDTO= new BidsNoticeDTO();
+			  bidsNoticeDTO.convertBidNoticeToDTO(list.get(i),districRepository,provinceRepository);	
+			  listDTOarr[i]=bidsNoticeDTO;
+		  }
+		  		  
+			/*
+			 * for (BidsNotice bidsNotice : list) { BidsNoticeDTO bidsNoticeDTO= new
+			 * BidsNoticeDTO();
+			 * bidsNoticeDTO.convertBidNoticeToDTO(bidsNotice,districRepository,
+			 * provinceRepository); listDTO.add(bidsNoticeDTO); }
+			 */
+		  
+		  
+		  
+	    response.setContentType("application/octet-stream");
+	    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+	    String currentDateTime = dateFormatter.format(new Date());         
+	    String headerKey = "Content-Disposition";
+	    String headerValue = "attachment; filename=report_" + currentDateTime + ".xlsx";
+	    response.setHeader(headerKey, headerValue);
+	    UserExcelExporterArr excelExporter = new UserExcelExporterArr(listDTOarr); 
+        //UserExcelExporter excelExporter = new UserExcelExporter(listDTO);   
+        excelExporter.export(response);           
+		System.out.println("hoan thanh /user/export-report-key");
+
 	}  
 
 }

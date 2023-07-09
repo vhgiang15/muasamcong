@@ -3,14 +3,18 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import com.ungdungso.model.Province;
 import com.ungdungso.repository.BidsNoticeRepostory;
 import com.ungdungso.repository.DistricRepository;
 import com.ungdungso.repository.ProvinceRepository;
+import com.ungdungso.service.BidsNoticeService;
 
 @Component
 @EnableScheduling 
@@ -22,6 +26,9 @@ public class ScheduleTask {
 	
 	@Autowired
 	private ProvinceRepository provinceRepository;
+	
+	@Autowired
+	private BidsNoticeService bidsNoticeService;
 
 	//@Scheduled(cron = "59 40 21 * * ?") 
 	public void scheduleGetBidNotice() throws IOException, ParseException {
@@ -160,9 +167,24 @@ public class ScheduleTask {
 	
 	@Scheduled(cron = "59 * * * * ?") 
 	public void scheduleGetBidNoticeToday() throws IOException, ParseException {
+		
 		Date fromDate= new Date();
 		Date toDate= new Date();
-		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
-		System.out.println("hoàn thành lấy data ngay");
-}
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String fromString="2023-01-01";
+		fromDate=format.parse(fromString);
+		GetBidNotice.getBidsNoticeToDay(toDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);		
+		System.out.println("hoàn thành lấy data ngay hom nay");			
+		List<Province> list= provinceRepository.findAll();		
+		for (Province province : list) {
+			int countBidToday=bidsNoticeService.countBidsNoticeByProvince(province.getProvCode(), toDate, toDate);
+			int countBidYear= bidsNoticeService.countBidsNoticeByProvince(province.getProvCode(), fromDate, toDate);
+			province.setAmountNoticeToday(countBidToday);
+			province.setAmountNoticeYear(countBidYear);
+			provinceRepository.save(province);
+		}
+		
+	}
+	
+	
 }

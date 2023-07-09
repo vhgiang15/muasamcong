@@ -53,6 +53,9 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 		
 		return bidsNoticeRepostory.queryCountGetBidsNotices(fromDateString, toDateString);
 	}
+	
+	
+	
 	@Override
 	public List<BidsNotice> searchBidsNotices(String notifyNo, int provCode, Date fromDate, Date toDate) {
 		
@@ -91,7 +94,7 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 			investField="%";
 		}
 		List<BidsNotice> list=bidsNoticeRepostory.queryReportBidsNotices(location, fromDateString, toDateString, investField);
-		System.out.println(list.size());
+		//System.out.println(list.size());
 		
 		return list;
 	}
@@ -110,28 +113,43 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 		if(investField.equals("all")) {
 			investField="%";
 		}
+		key="%"+key+"%";
 		
 		switch (typeInfo) {
 		case "CDT": {
+			list= bidsNoticeRepostory.queryReportByInvetor(location, key, fromDateString, toDateString, investField);
 			
 			break;
 		}
 		
 		case "DVMT": {
+			list= bidsNoticeRepostory.queryReportByProcuring(location, key, fromDateString, toDateString, investField);
 			
 			break;
 		}
 		
 		case "TGT": {
+			list= bidsNoticeRepostory.queryReportByBidName(location, key, fromDateString, toDateString, investField);
 			
 			break;
 		}
 		
 		case "DVTT": {
+			list= bidsNoticeRepostory.queryReportByContractor(location, key, fromDateString, toDateString, investField);
 			
 			break;
 		}		
 	}
 		return list;
 }
+	@Override
+	public int countBidsNoticeByProvince(int proCode, Date fromDate, Date toDate) {
+		// TODO Auto-generated method stub
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+		String fromDateString=formatDate.format(fromDate).toString()+" 00:00:00.000000"; //2023-06-19 00:00:00.000000
+		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";
+		String location="%"+proCode+"-%";
+		return bidsNoticeRepostory.queryCountGetBidsNoticesByLocation(location, fromDateString, toDateString);
+
+	}
 }

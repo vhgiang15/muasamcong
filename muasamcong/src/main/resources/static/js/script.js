@@ -86,7 +86,6 @@ function getlink()
 	var link="/users/export/excel?provCode="+$("#provcode").val()+"&dateFrom="+$("#datefrom").val()+"&dateTo="+$("#dateto").val()+"&investFeild="+$("#investfield").val();
 	checkdayreport();
 	$("#link-search").attr("href", link);
-	$("#linktest").text(link);
 }
 
 function checkdayreport()
@@ -110,25 +109,7 @@ function checkdayreport()
 } 
 
 
-function reportdetail()
-
-{	
-	var provCode=$("#provcode").val();    
-	var dateFrom=$("#datefrom").val();
-	var dateTo=$("#dateto").val();
-	var investFeild=$("#investfield").val();
-	 $.ajax({
-                    url : "/users/export/excel",
-                    type : "get",
-                    dataType:"text",
-                    data : {provCode,dateFrom, dateTo,investFeild                     
-                    },
-
-                }); 	                                                                         
-} 
-
-
-function enablesearchkey()
+function getlinkreportkey()
 
 {	    
 	var typeInfo=$("#typeinfo").val();
@@ -136,10 +117,14 @@ function enablesearchkey()
 	
 	if((typeInfo!=0)&&(key.length>3))
 	{
-		$("#btn-search-key").removeClass('disabled');
+		$("#link-search-key").removeClass('disabled');
 	} else {
-		$("#btn-search-key").addClass('disabled');		
-	}                                                                               
+		$("#link-search-key").addClass('disabled');		
+	}
+	checkdayreportkey();
+	var link="/user/export-report-key?provCodeKey="+$("#provcodekey").val()+"&typeInfo="+typeInfo+"&key="+key+"&dateFrom="+$("#datefromkey").val()+"&dateTo="+$("#datetokey").val()+"&investFeild="+$("#investfieldkey").val();
+		$("#link-search-key").attr("href", link);
+	                                                                               
 } 
 
 
@@ -158,31 +143,12 @@ function checkdayreportkey()
 	var diff=Math.round(Math.abs(days))+1;			
 	if(diff<=93)
 	{
-		$("#btn-search-key").removeClass('disabled');
+		$("#link-search-key").removeClass('disabled');
 	} else {
-		$("#btn-search-key").addClass('disabled');		
+		$("#link-search-key").addClass('disabled');		
 	}                                                                               
 } 
 
 
-function reportkey()
-
-{	
-	var provCodeKey=$("#provcodekey").val();  
-	var typeInfo=$("#typeinfo").val();  
-	var key=$("#keysearch").val();
-	var dateFrom=$("#datefromkey").val();
-	var dateTo=$("#datetokey").val();
-	var investFeild=$("#investfieldkey").val();
-	$("#test").text("xin chào");
-	 $.ajax({
-                    url : "/user/export-report-key",
-                    type : "get",
-                    dataType:"text",
-                    data : {provCodeKey,typeInfo,key,dateFrom, dateTo,investFeild                     
-                    },
-
-                }); 	                                                                         
-} 
 
   

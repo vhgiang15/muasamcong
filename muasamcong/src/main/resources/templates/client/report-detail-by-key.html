@@ -28,52 +28,14 @@
    		</header>
         <div class='dashboard-content'>
         <ul class="nav nav-tabs">
-					<li class="nav-item"><a class=" nav-link tab-funtion active"
-						href="admin-list-province" >Báo cáo theo tỉnh</a></li>
-					<li class="nav-item"><a class="nav-link tab-funtion " href="admin-form-add-province">Báo cáo theo từ khoá</a></li>
+					<li class="nav-item"><a class=" nav-link tab-funtion"
+						th:href="@{/user/report-detail}" >Báo cáo theo tỉnh</a></li>
+					<li class="nav-item"><a class="nav-link tab-funtion active" 
+						th:href="@{/user/report-detail-by-key}">Báo cáo theo từ khoá</a></li>
 		</ul>
-          
-        	<form action="#" id="form-tim-kiem-lich-su" class="form-custom">
-        	     <div class="row">
-        			<h6>Báo cáo theo tỉnh</h6>
-        		</div>
-				<div class="row">				
-					<div class="col-sm-12 col-lg-2">
-						<label>Tỉnh</label> 										
-						<select class="form-select" name="province" id="provcode" onchange="getlink()">
-    						<option th:each="option : ${listProvince}" th:value="${option.provCode}" th:text="${option.provName}"></option>
-						</select>
-					</div>					
-					<div class="col-sm-12 col-lg-2">
-						<label>Từ ngày *</label> <input id="datefrom" class="form-control"
-							th:value="${#dates.format(fromDate, 'dd-MM-yyyy')}" name="date-from" onchange="getlink()"required>
-					</div>
-					<div class="col-sm-12 col-lg-2">
-						<label>Đến ngày *</label> <input id="dateto" class="form-control"
-							name="date-to" th:value="${#dates.format(toDate, 'dd-MM-yyyy')}" onchange="getlink()" required>
-					</div>
-					
-					<div class="col-sm-12 col-lg-2">
-						<label>Lĩnh vực</label> 
-						<select class="form-select" name="invest-field" id="investfield" onchange="getlink()"  >
-							<option value="all">Tất cả</option>
-    						<option value="XL">Xây lắp</option>
-    						<option value="TV">Tư vấn</option>
-    						<option value="PTV">Phi tư vấn</option>
-    						<option value="HH">Hàng hoá</option>
-    						<option value="HON_HOP">Hỗn hợp</option>
-						</select>
-					</div>
-
-					<div class="col-sm-12 col-lg-2 mt-4">
-						<a class="btn btn-primary disabled" id="link-search" href="#" role="button">Báo cáo</a>
-					</div>
-				</div>
-			</form> 
-			
+          			
 			<form action="#" id="form-tim-kiem-lich-su" class="form-custom mt-5">
         	     <div class="row">
-        			<h6>Báo cáo theo từ khoá</h6>
         		</div>
 				<div class="row">
 					<div class="col-sm-12 col-lg-2">

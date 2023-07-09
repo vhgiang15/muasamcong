@@ -142,8 +142,7 @@ public class BidsNoticeDTO {
 	public void setBidPrice(String bidPrice) {
 		this.bidPrice = bidPrice;
 	}	
-	
-	
+		
 	public String getLocation() {
 		return location;
 	}
@@ -183,14 +182,8 @@ public class BidsNoticeDTO {
 		bidName=bidsNotice.getBidName();
 		procuringEntityName=bidsNotice.getProcuringEntityName();
 		investorName=bidsNotice.getInvestorName();
-		SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd-MM-yyyy");
-		//System.out.println("số thong bao moi thau:"+ bidsNotice.getNotifyNo());
-		//System.out.println("ngày thong bao moi thau:"+ bidsNotice.getPublicDate());
-		
+		SimpleDateFormat formatDate = new SimpleDateFormat("HH:mm dd-MM-yyyy");	
 		publicDate=formatDate.format(bidsNotice.getPublicDate()).toString();	
-		
-		//System.out.println("ngày thong bao dong thau:"+ bidsNotice.getBidCloseDate());	
-		//System.out.println("status:"+ bidsNotice.getStatus());
 		
 		if(bidsNotice.getBidCloseDate()==null) {
 			bidCloseDate =formatDate.format(bidsNotice.getBidOpenDate()).toString();
@@ -198,17 +191,11 @@ public class BidsNoticeDTO {
 			bidCloseDate =formatDate.format(bidsNotice.getBidCloseDate()).toString();
 			
 		}
-		//System.out.println("ngày thong bao dong thau:"+ bidCloseDate);	
+
 		isInternet =Common.hashMapInternet.get(bidsNotice.getIsInternet());
 		investField=Common.hashMapInvestField.get(bidsNotice.getInvestField());
 		status=Common.hashMapBidStatus.get(bidsNotice.getStatus());
-		bidForm=Common.hashMapBidForm.get(bidsNotice.getBidForm());
-		
-		//private String location;
-		//private String contractorName;
-		//private String decisionDate;
-		
-		
+		bidForm=Common.hashMapBidForm.get(bidsNotice.getBidForm());		
 		if((bidsNotice.getStatus().equals("IS_PUBLISH")||bidsNotice.getStatus().equals("NOT_PUBLISH"))&bidsNotice.getWinningCode()!=null) {
 			bidWinningPrice=bidsNotice.getBidWinningPrice().toString();
 			decisionDate=formatDate.format(bidsNotice.getDecisionDate()).toString();
@@ -232,10 +219,7 @@ public class BidsNoticeDTO {
 					}
 		}
 		}
-		link="https://muasamcong.mpi.gov.vn/web/guest/contractor-selection?_egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2_render=detail&type=es-notify-contractor&stepCode=notify-contractor-step-1-tbmt&id="+bidsNotice.getId()+"&notifyId="+bidsNotice.getNotifyId();
-
-		
-		
+		link="https://muasamcong.mpi.gov.vn/web/guest/contractor-selection?_egpportalcontractorselectionv2_WAR_egpportalcontractorselectionv2_render=detail&type=es-notify-contractor&stepCode=notify-contractor-step-1-tbmt&id="+bidsNotice.getId()+"&notifyId="+bidsNotice.getNotifyId();		
 	}
 
 }

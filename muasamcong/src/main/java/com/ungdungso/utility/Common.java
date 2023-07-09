@@ -18,9 +18,7 @@ public class Common {
 	public static HashMap<String, String> hashMapInvestField = new HashMap<String, String>();
 	public static HashMap<Integer, String> hashMapInternet = new HashMap<Integer, String>();
 	public static HashMap<Integer, String> hashMapProvince = new HashMap<Integer, String>();
-	public static HashMap<Integer, String> hashMapDistrict = new HashMap<Integer, String>();
-
-	
+	public static HashMap<Integer, String> hashMapDistrict = new HashMap<Integer, String>();	
 	public static void setHashMap()
 	{
 		
@@ -52,12 +50,6 @@ public class Common {
 		
 		hashMapInternet.put(1, "Qua mạng");
 		hashMapInternet.put(0, "Không qua mạng");
-		
-		
-		
-		
-		
-
 	}
 
 }

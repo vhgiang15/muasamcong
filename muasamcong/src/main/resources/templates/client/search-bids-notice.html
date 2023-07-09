@@ -22,7 +22,7 @@
 			<div class="row">
 				<div class="col-lg-3"><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a> </div>
 				<div class="col-lg-9">
-                        <h5>Chức năng tìm kiếm nhanh thông báo mời thầu</h5>
+                        <h5>Tìm kiếm nhanh thông báo mời thầu</h5>
                 </div>
 			</div>
    		</header>
@@ -36,8 +36,7 @@
 					
 					<div class="col-sm-12 col-lg-2">
 						<label>Tỉnh</label> 										
-						<select class="form-select" name="province" id="procode" onchange="enablesearch()">
-    						<option value="0">Chọn tỉnh</option>
+						<select class="form-select" name="province" id="procode">
     						<option th:each="option : ${listProvince}" th:value="${option.provCode}" th:text="${option.provName}"></option>
 						</select>
 					</div>					
