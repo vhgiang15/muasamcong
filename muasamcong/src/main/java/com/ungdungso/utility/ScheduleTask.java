@@ -165,7 +165,7 @@ public class ScheduleTask {
 	
 	
 	
-	//@Scheduled(cron = "59 * * * * ?") 
+	@Scheduled(cron = "59 * * * * ?") 
 	public void scheduleGetBidNoticeToday() throws IOException, ParseException {
 		
 		Date fromDate= new Date();
@@ -183,6 +183,18 @@ public class ScheduleTask {
 			province.setAmountNoticeYear(countBidYear);
 			provinceRepository.save(province);
 		}
+	}
+	
+	@Scheduled(cron = "30 * * * * ?") 
+	public void scheduleUpdateBidNotice() throws IOException {
+		
+		
+		
+		GetBidNotice.updateBidsNoticed("IB2200000004", bidsNoticeRepostory);
+		
+		System.out.println("hoàn thành update");			
+	
+		
 		
 	}
 	

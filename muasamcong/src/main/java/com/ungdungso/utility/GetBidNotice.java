@@ -32,9 +32,6 @@ public class GetBidNotice {
 	// Lưu thông báo mời thầu tất cả các trang
 	public static void getBidsNoticeToDay(Date fromDate, Date toDate,DistricRepository districRepository,BidsNoticeRepostory bidsNoticeRepostory, ProvinceRepository provinceRepository) throws IOException {
 		GetBidNotice.getTotalPageandElement(fromDate, toDate);
-		//System.out.println("-------------------------");
-		//System.out.println(GetBidNotice.totalPage);
-		//System.out.println(GetBidNotice.totalElement);
 				for(int i=0; i<totalPage;i++) {
 					getBidsNoticedbyDate(fromDate,toDate,i,districRepository, bidsNoticeRepostory,provinceRepository);
 		}		
@@ -56,7 +53,7 @@ public class GetBidNotice {
 		mediaTypeString=mediaTypeString.replace("fromdate", fromDateString); 
 		mediaTypeString=mediaTypeString.replace("todate", toDateString); 
 		
-		
+				
 		RequestBody body = RequestBody.create(mediaType,mediaTypeString);				
 		Request request = new Request.Builder()
 		  .url("https://muasamcong.mpi.gov.vn/o/egp-portal-contractor-selection-v2/services/smart/search")
@@ -119,6 +116,58 @@ public class GetBidNotice {
 		}
 					
 	}
+	
+	public static void updateBidsNoticed(String notifyNo,BidsNoticeRepostory bidsNoticeRepostory ) throws IOException	{			
+		OkHttpClient client = new OkHttpClient();
+		MediaType mediaType = MediaType.parse("application/json"); 
+		String mediaTypeString="{\"pageSize\":10,\"pageNumber\":\"0\",\"query\":[{\"index\":\"es-contractor-selection\",\"keyWord\":\"soTBMT\",\"matchType\":\"all-1\",\"matchFields\":[\"notifyNo\",\"bidName\"],\"filters\":[{\"fieldName\":\"type\",\"searchType\":\"in\",\"fieldValues\":[\"es-notify-contractor\"]},{\"fieldName\":\"caseKHKQ\",\"searchType\":\"not_in\",\"fieldValues\":[\"1\"]}]}]}";								     
+		mediaTypeString=mediaTypeString.replace("soTBMT", notifyNo); 	
+		RequestBody body = RequestBody.create(mediaType,mediaTypeString);						
+		Request request = new Request.Builder()
+		  .url("https://muasamcong.mpi.gov.vn/o/egp-portal-contractor-selection-v2/services/smart/search")
+		  .method("POST", body)
+		  .addHeader("Accept", "application/json, text/plain, */*")
+		  .addHeader("Accept-Language", "vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5")
+		  .addHeader("Connection", "keep-alive")
+		  .addHeader("Content-Type", "application/json")
+	      .addHeader("Origin", "https://muasamcong.mpi.gov.vn")
+		  .addHeader("Referer", "https://muasamcong.mpi.gov.vn/web/guest/contractor-selection?render=index")
+		  .build();
+		Response response = client.newCall(request).execute();			
+		String jsonData = response.body().string();		
+		System.out.println("jsonData: " +jsonData);
+	    int  tmp= jsonData.lastIndexOf("totalPages");  
+	    String temp3=jsonData.substring(8,tmp-2)+"}"; // chi lấy chuổi chứa dữ liệu thông báo mời thầu	    
+	    System.out.println(temp3);
+	    JSONObject jobject = new JSONObject(temp3);			    
+	    JSONArray Jarray = jobject.getJSONArray("content");  //2023-06-28T09:00:00
+	    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false); 
+	    objectMapper.setDateFormat(formatDate);
+
+		for(int i=0; i<Jarray.length(); i++) { 				
+			String tmpString=Jarray.get(i).toString();
+			String jsonString =reExcuteString(tmpString);
+			BidsNotice bidsNotice= objectMapper.readValue(jsonString, BidsNotice.class);
+			System.out.println("so thong boa moi thau: "+ bidsNotice.getNotifyNo());
+			if(bidsNoticeRepostory.existsById(bidsNotice.getNotifyNo())) {				
+				BidsNotice oldBidsNotice=bidsNoticeRepostory.findById(bidsNotice.getNotifyNo()).get();				
+				 oldBidsNotice.setStatus(bidsNotice.getStatus());
+				 oldBidsNotice.setBidOpenDate(bidsNotice.getBidOpenDate());
+				 oldBidsNotice.setDecisionDate(bidsNotice.getDecisionDate());
+				 oldBidsNotice.setContractorName(bidsNotice.getContractorName());
+				 oldBidsNotice.setBidWinningPrice(bidsNotice.getBidWinningPrice());
+				 oldBidsNotice.setNumBidderJoin(bidsNotice.getNumBidderJoin());
+				 oldBidsNotice.setWinningCode(bidsNotice.getWinningCode());
+				 bidsNoticeRepostory.save(oldBidsNotice);			
+			}
+		}
+					
+	}
+
+	
+	
 	
 	private static void getTotalPageandElement(Date fromDate, Date toDate) throws IOException {		
 		OkHttpClient client = new OkHttpClient();
