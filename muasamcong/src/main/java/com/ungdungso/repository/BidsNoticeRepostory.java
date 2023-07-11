@@ -38,4 +38,7 @@ public interface BidsNoticeRepostory extends JpaRepository<BidsNotice, String>{
 	
 	@Query(value="select * from bids_notice where location like :clocation and contractor_name like :ckey and (public_date between :cfromDay and :ctoDay) and invest_field like :cinvestField order by public_date", nativeQuery = true)
 	List<BidsNotice> queryReportByContractor(@Param("clocation") String location,@Param("ckey") String key,@Param("cfromDay") String fromDay, @Param("ctoDay") String toDay, @Param("cinvestField") String investField);
+	
+	@Query(value="select * from bids_notice where decision_date IS null and (public_date between :cfromDay and :ctoDay) order by public_date", nativeQuery = true)
+	List<BidsNotice> queryGetBidNotFinish(@Param("cfromDay") String fromDay, @Param("ctoDay") String toDay);
 }

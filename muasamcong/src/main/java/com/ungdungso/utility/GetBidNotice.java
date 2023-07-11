@@ -135,10 +135,10 @@ public class GetBidNotice {
 		  .build();
 		Response response = client.newCall(request).execute();			
 		String jsonData = response.body().string();		
-		System.out.println("jsonData: " +jsonData);
+		//System.out.println("jsonData: " +jsonData);
 	    int  tmp= jsonData.lastIndexOf("totalPages");  
 	    String temp3=jsonData.substring(8,tmp-2)+"}"; // chi lấy chuổi chứa dữ liệu thông báo mời thầu	    
-	    System.out.println(temp3);
+	    //System.out.println(temp3);
 	    JSONObject jobject = new JSONObject(temp3);			    
 	    JSONArray Jarray = jobject.getJSONArray("content");  //2023-06-28T09:00:00
 	    SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -150,7 +150,7 @@ public class GetBidNotice {
 			String tmpString=Jarray.get(i).toString();
 			String jsonString =reExcuteString(tmpString);
 			BidsNotice bidsNotice= objectMapper.readValue(jsonString, BidsNotice.class);
-			System.out.println("so thong boa moi thau: "+ bidsNotice.getNotifyNo());
+			//System.out.println("so thong boa moi thau: "+ bidsNotice.getNotifyNo());
 			if(bidsNoticeRepostory.existsById(bidsNotice.getNotifyNo())) {				
 				BidsNotice oldBidsNotice=bidsNoticeRepostory.findById(bidsNotice.getNotifyNo()).get();				
 				 oldBidsNotice.setStatus(bidsNotice.getStatus());

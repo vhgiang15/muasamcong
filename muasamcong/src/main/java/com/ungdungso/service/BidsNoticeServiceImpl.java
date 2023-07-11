@@ -20,25 +20,15 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 	public List<BidsNotice> getBidsNoticesByDate(Date fromDate, Date toDate) {
 		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 		String fromDateString=formatDate.format(fromDate).toString()+" 00:00:00.000000"; //2023-06-19 00:00:00.000000
-		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";
-		
-		//String fromDateString="2023-06-24 00:00:00.000000";
-		//String toDateString="2023-06-24 23:59:59.000000";	
-		
+		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";	
 		List<BidsNotice> list=bidsNoticeRepostory.queryGetBidsNotices(fromDateString, toDateString);
-		//System.out.println("Số lượng các thông báo mời thầu");
-		//System.out.println(list.size());
 		return list;
 	}
 	@Override
 	public List<BidsNotice> getBidsNoticesByDateByPage(Date fromDate, Date toDate, int page) {
 		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 		String fromDateString=formatDate.format(fromDate).toString()+" 00:00:00.000000"; //2023-06-19 00:00:00.000000
-		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";
-		
-	//	String fromDateString="2023-06-24 00:00:00.000000";
-	//	String toDateString="2023-06-24 23:59:59.000000";		
-		
+		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";	
 		List<BidsNotice> list=bidsNoticeRepostory.queryGetBidsNoticesByPage(fromDateString, toDateString, page*10-10);
 		return list;
 	}
@@ -46,11 +36,7 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 	public int countBidsNotice(Date fromDate, Date toDate) {
 		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 		String fromDateString=formatDate.format(fromDate).toString()+" 00:00:00.000000"; //2023-06-19 00:00:00.000000
-		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";
-		
-	//	String fromDateString="2023-06-24 00:00:00.000000";
-	//	String toDateString="2023-06-24 23:59:59.000000";	
-		
+		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";		
 		return bidsNoticeRepostory.queryCountGetBidsNotices(fromDateString, toDateString);
 	}
 	
@@ -59,9 +45,7 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 	@Override
 	public List<BidsNotice> searchBidsNotices(String notifyNo, int provCode, Date fromDate, Date toDate) {
 		
-		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
-		
-		
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");		
 		String fromDateString=formatDate.format(fromDate).toString()+" 00:00:00.000000"; //2023-06-19 00:00:00.000000
 		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";
 		String location="";
@@ -72,11 +56,7 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 			
 		if(notifyNo.equals("all")) {
 			notifyNo="%";
-		}
-		
-		//System.out.println("fromDateString "+ fromDateString);
-		//System.out.println("toDateString "+ toDateString);
-		//System.out.println("location "+ location);		
+		}		
 		List<BidsNotice> list=bidsNoticeRepostory.querySearchBidsNotices(notifyNo, location, fromDateString, toDateString);		
 		return list;
 	}
@@ -94,8 +74,6 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 			investField="%";
 		}
 		List<BidsNotice> list=bidsNoticeRepostory.queryReportBidsNotices(location, fromDateString, toDateString, investField);
-		//System.out.println(list.size());
-		
 		return list;
 	}
 	@Override
@@ -144,12 +122,18 @@ public class BidsNoticeServiceImpl implements BidsNoticeService {
 }
 	@Override
 	public int countBidsNoticeByProvince(int proCode, Date fromDate, Date toDate) {
-		// TODO Auto-generated method stub
 		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
 		String fromDateString=formatDate.format(fromDate).toString()+" 00:00:00.000000"; //2023-06-19 00:00:00.000000
 		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";
 		String location="%"+proCode+"-%";
 		return bidsNoticeRepostory.queryCountGetBidsNoticesByLocation(location, fromDateString, toDateString);
 
+	}
+	@Override
+	public List<BidsNotice> getBidNotFinish(Date fromDate, Date toDate) {		
+		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+		String fromDateString=formatDate.format(fromDate).toString()+" 00:00:00.000000"; //2023-06-19 00:00:00.000000
+		String toDateString=formatDate.format(toDate).toString()+" 23:59:59.000000";		
+		return bidsNoticeRepostory.queryGetBidNotFinish(fromDateString, toDateString);
 	}
 }

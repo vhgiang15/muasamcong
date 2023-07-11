@@ -2,6 +2,7 @@ package com.ungdungso.utility;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.ungdungso.model.BidsNotice;
 import com.ungdungso.model.Province;
 import com.ungdungso.repository.BidsNoticeRepostory;
 import com.ungdungso.repository.DistricRepository;
@@ -165,7 +167,7 @@ public class ScheduleTask {
 	
 	
 	
-	@Scheduled(cron = "59 * * * * ?") 
+	//@Scheduled(cron = "59 * * * * ?") 
 	public void scheduleGetBidNoticeToday() throws IOException, ParseException {
 		
 		Date fromDate= new Date();
@@ -185,12 +187,22 @@ public class ScheduleTask {
 		}
 	}
 	
-	@Scheduled(cron = "30 * * * * ?") 
+	@Scheduled(cron = "30 40 * * * ?") 
 	public void scheduleUpdateBidNotice() throws IOException {
+		Calendar ctoday = Calendar.getInstance();
+		Calendar cfromday = Calendar.getInstance();
+		cfromday.add(Calendar.DAY_OF_MONTH, -300);
+		Date toDate = ctoday.getTime();
+		Date fromDate = cfromday.getTime();
+		System.out.println(toDate);
+		System.out.println(fromDate);
+		List<BidsNotice> list= bidsNoticeService.getBidNotFinish(fromDate, toDate);
+		System.out.println(list.size());
+		for (BidsNotice bidsNotice : list) {
+			GetBidNotice.updateBidsNoticed(bidsNotice.getNotifyNo(), bidsNoticeRepostory);
+			
+		}
 		
-		
-		
-		GetBidNotice.updateBidsNoticed("IB2200000004", bidsNoticeRepostory);
 		
 		System.out.println("hoàn thành update");			
 	
