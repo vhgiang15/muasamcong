@@ -22,7 +22,7 @@
 			<div class="row">
 				<div class="col-lg-3"><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a> </div>
 				<div class="col-lg-9">
-                        <h5>Chức năng tìm kiếm nhanh thông báo mời thầu</h5>
+                        <h5>Tìm kiếm nhanh thông báo mời thầu</h5>
                 </div>
 			</div>
    		</header>
@@ -30,40 +30,40 @@
         	<form action="#" id="form-tim-kiem-lich-su" class="form-custom">
 				<div class="row">
 					<div class="col-sm-12 col-lg-2">
-						<label>Số thông báo mời thầu</label> <input id="notice-no" class="form-control"
+						<label>Số TBMT</label> <input id="notice-no" class="form-control"
 							th:value="${notifyNo}" name="notice-no">
 					</div>
 					
 					<div class="col-sm-12 col-lg-2">
 						<label>Tỉnh</label> 										
-						<select class="form-select" name="province" id="provinceAdmin">
-    						<option value="0">Chọn tỉnh</option>
+						<select class="form-select" name="province" id="procode">
     						<option th:each="option : ${listProvince}" th:value="${option.provCode}" th:text="${option.provName}"></option>
 						</select>
 					</div>					
 					<div class="col-sm-12 col-lg-2">
 						<label>Từ ngày *</label> <input id="datefrom" class="form-control"
-							th:value="${dateFrom}" name="date-from" required>
+							th:value="${#dates.format(fromDate, 'dd-MM-yyyy')}" name="date-from" onchange="checkday()" required>
 					</div>
 					<div class="col-sm-12 col-lg-2">
 						<label>Đến ngày *</label> <input id="dateto" class="form-control"
-							name="date-to" th:value="${dateTo}" required>
+							name="date-to" th:value="${#dates.format(toDate, 'dd-MM-yyyy')}" onchange="checkday()" required>
 					</div>
 
 					<div class="col-sm-12 col-lg-2 mt-4">
 						<button type="button" id="btn-search"
-							class="btn btn-primary btn-dove" th:value="1"
-							onclick="searchbids()">Tìm kiếm</button>
+							class="btn btn-primary btn-dove disabled" th:value="1"
+							onclick="searchBidsNotice()">Tìm kiếm</button>
 					</div>
 				</div>
-			</form>                  
-
-						         
+			</form> 
+                						         
         </div>
+       <div id="result-search" class='dashboard-content'></div> 
     </div>
 
     
 </div>
+
 <script>
 $("#dashboard").removeClass('active');
 $("#notice-today").removeClass('active');
@@ -72,7 +72,9 @@ $("#notice-manage").removeClass('active');
 $("#report").removeClass('active');
 $("#setting").removeClass('active');
 $("#profile").removeClass('active');
+</script>
 
+<script>
 flatpickr("#datefrom", {
 	dateFormat: "d-m-Y",
 	});
@@ -80,7 +82,6 @@ flatpickr("#datefrom", {
 flatpickr("#dateto", {
 	dateFormat: "d-m-Y",
 	});
-
 </script>
 
 

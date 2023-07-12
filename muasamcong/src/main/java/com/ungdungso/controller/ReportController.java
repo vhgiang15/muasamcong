@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jakarta.servlet.http.HttpServletResponse;
 import com.ungdungso.dto.BidsNoticeDTO;
 import com.ungdungso.model.BidsNotice;
-import com.ungdungso.model.User;
 import com.ungdungso.repository.DistricRepository;
 import com.ungdungso.repository.ProvinceRepository;
 import com.ungdungso.service.BidsNoticeService;

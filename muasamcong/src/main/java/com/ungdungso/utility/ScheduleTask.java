@@ -163,11 +163,8 @@ public class ScheduleTask {
 		GetBidNotice.getBidsNoticeToDay(fromDate,toDate,districRepository,bidsNoticeRepostory,provinceRepository);	
 		System.out.println("hoàn thành lấy data t7");
 }
-	
-	
-	
-	
-	//@Scheduled(cron = "59 * * * * ?") 
+		
+	@Scheduled(cron = "59 * * * * ?") 
 	public void scheduleGetBidNoticeToday() throws IOException, ParseException {
 		
 		Date fromDate= new Date();
@@ -187,11 +184,11 @@ public class ScheduleTask {
 		}
 	}
 	
-	@Scheduled(cron = "30 40 * * * ?") 
+	@Scheduled(cron = "0 0 * * * ?") 
 	public void scheduleUpdateBidNotice() throws IOException {
 		Calendar ctoday = Calendar.getInstance();
 		Calendar cfromday = Calendar.getInstance();
-		cfromday.add(Calendar.DAY_OF_MONTH, -300);
+		cfromday.add(Calendar.DAY_OF_MONTH, -30);
 		Date toDate = ctoday.getTime();
 		Date fromDate = cfromday.getTime();
 		System.out.println(toDate);
@@ -199,16 +196,8 @@ public class ScheduleTask {
 		List<BidsNotice> list= bidsNoticeService.getBidNotFinish(fromDate, toDate);
 		System.out.println(list.size());
 		for (BidsNotice bidsNotice : list) {
-			GetBidNotice.updateBidsNoticed(bidsNotice.getNotifyNo(), bidsNoticeRepostory);
-			
-		}
-		
-		
-		System.out.println("hoàn thành update");			
-	
-		
-		
-	}
-	
-	
+			GetBidNotice.updateBidsNoticed(bidsNotice.getNotifyNo(), bidsNoticeRepostory);			
+		}		
+		System.out.println("hoàn thành update");					
+	}	
 }

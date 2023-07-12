@@ -30,7 +30,7 @@ body {
     line-height: 1.5;
     color: #515151;
     text-align: left;
-    background-color: #e9edf4;
+    background-color: white;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -132,6 +132,7 @@ h1, .h1 {
     -ms-flex-positive: 2;
     flex-grow: 2;
     padding: 25px;
+    background-color:white important;
 }
 
 .dashboard-nav {
@@ -361,7 +362,7 @@ h1, .h1 {
 
 .dashboard-toolbar {
     min-height: 84px;
-    background-color: #dfdfdf;
+    background-color: white;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;

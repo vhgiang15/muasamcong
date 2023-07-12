@@ -12,29 +12,16 @@
 <link rel="stylesheet" th:href="@{/css/style.css}">
 
 </head>
-<body>
-<div class='dashboard'>
-<div th:replace="/client/left-menu :: left-menu"></div>
-    <div class='dashboard-app'>
-        <header class='dashboard-toolbar'>
-			<div class="row">
-				<div class="col-lg-3"><a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a> </div>
-				<div class="col-lg-9">
-                        <h6>Hôm nay có <span th:text="${totalBid}"></span> TBMT</h6>
-                </div>
-			</div>
-   		</header>
-		
-   		
-        <div class='dashboard-content'>                    
-   				<div class="card border-left-success shadow m-3" th:each="o : ${listDTO}">
+<body>               
+                  
+   				<div class="card border-left-success shadow m-2" th:each="o : ${listDTO}">
             		<div class="card-body">
 						<div class="row no-gutters align-items-center">
-	            			<div class="d-flex justify-content-between align-items-center">
-	            				<p class="text-xs font-weight-bold text-danger text-uppercase mb-1"> Mã TBMT: <span th:text="${o.notifyNoStand}"></span></p> 
-	            				<span class="text-danger" th:text="${o.status}"></span>
-	            			</div>
-		            		<div class="row">
+		            			<div class="d-flex justify-content-between align-items-center">
+		            				<p class="text-xs font-weight-bold text-danger text-uppercase mb-1"> Mã TBMT: <span th:text="${o.notifyNoStand}"></span></p> 
+		            				<span class="text-danger" th:text="${o.status}"></span>
+		            			</div>
+			            		<div class="row">
 			            			<div class="col-md-8">
 			            				<a th:href="@{${o.link}}">
 			            		  			<span class="text-primary h6" th:text="${o.bidName}"></span>            				
@@ -48,7 +35,7 @@
 			            					
 			            					<div class="col-md-4 content__body__left__item__infor__contract__other">
 			            						<h6><strong>Lĩnh vực: </strong> <span th:text="${o.investField}"></span></h6> 
-			            						<h6><strong> Địa điểm:</strong> <span th:text="${o.location}"></span></h6>
+			            						<h6><strong> Địa điểm: </strong> <span th:text="${o.location}"></span></h6>
 			            					</div>
 			            				</div>
 			            			</div> 
@@ -72,25 +59,13 @@
 			            					            				
 										</div>
 									</div>
-								
-							</div>
+									
+								</div>
 					</div>
 				</div> 
 			</div> 			         
-        </div>
-    </div>             
-</div>
 
-
-<script>
-$("#dashboard").removeClass('active');
-$("#notice-today").addClass('active');
-$("#search").removeClass('active');
-$("#notice-manage").removeClass('active');
-$("#report").removeClass('active');
-$("#setting").removeClass('active');
-$("#profile").removeClass('active');
-</script>
-
+          
+            
 </body>
 </html>

@@ -8,6 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="http://code.jquery.com/jquery-2.0.0.min.js"></script>
+<script th:src="@{/js/script.js}"></script>
 <link rel="stylesheet" th:href="@{/css/style.css}">
 
 </head>
@@ -17,7 +18,7 @@
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-9 col-lg-6 col-xl-5">
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+        <img src="/media/image.png"
           class="img-fluid" alt="Sample image">
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
@@ -65,14 +66,15 @@
                 Ghi nhớ
               </label>
             </div>
-            <a href="#!" class="text-body">Quên mật khẩu?</a>
+            <button type="button" class="btn btn-link btn-sm" data-bs-toggle="modal" data-bs-target="#quenmatkhau">Quên	mật khẩu?</button>
           </div>
 
           <div class="text-center text-lg-start mt-4 pt-2">
             <button type="submit" class="btn btn-primary btn-lg"
               style="padding-left: 2.5rem; padding-right: 2.5rem;">Đăng nhập</button>
-            <p class="small fw-bold mt-2 pt-1 mb-0">Bạn chưa có tài khoản? <a href="#!"
-                class="link-danger">Đăng ký</a></p>
+            <p class="small fw-bold mt-2 pt-1 mb-0">Bạn chưa có tài khoản? 
+            	<a href="#form-dang-ky" class="menu-item" data-bs-toggle="modal" data-bs-target="#form-dang-ky">ĐĂNG KÝ</a>
+            </p>
           </div>
 
         </form>
@@ -83,7 +85,7 @@
     class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
     <!-- Copyright -->
     <div class="text-white mb-3 mb-md-0">
-      Copyright © 2020. All rights reserved.
+      Copyright © 2023. All rights reserved.
     </div>
     <!-- Copyright -->
 
@@ -105,3 +107,87 @@
     <!-- Right -->
   </div>
 </section>
+
+		<!-- The Modal đăng ky-->
+		<div class="modal" id="form-dang-ky">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h5 class="mt-1 mb-2 pb-1">Hệ thống báo cáo hồ sơ thầu</h5>
+						<button class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+							<div class="form-outline mb-2">
+								<label class="form-label" for="form2Example11">Họ tên</label> <input
+									id="fullname" type="text" class="form-control" name="fullName"
+									required />
+							</div>
+
+							<div class="form-outline mb-2">
+								<label class="form-label" for="form2Example11">Tên đăng
+									nhập</label> <input id="userform" type="text" class="form-control"
+									name="userForm" required />
+
+							</div>
+
+							<div class="form-outline mb-2">
+								<label class="form-label" for="form2Example11">Số điện
+									thoại</label> <input id="phoneform" type="text" class="form-control"
+									name="phone" required />
+
+							</div>
+
+							<div class="form-outline mb-2">
+								<label class="form-label" for="form2Example11">Email</label> <input
+									id="emailform" type="email" class="form-control" name="mail"
+									required />
+							</div>
+							<div class="text-center pt-1 mb-3 pb-1">
+								<button class="btn btn-primary" th:onclick="registerinfo()">Đăng ký</button>
+								
+
+							</div>
+							<div class="d-flex align-items-center justify-content-center">
+								<p class="mb-0 me-2">
+									Đã có tài khoản!
+									<button type="button" class="btn btn-outline-danger"
+										onclick="location.href='login-page';">Đăng nhập</button>
+							</div>
+						<div class="row" id="alert-register"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- The Modal -->
+	<div class="modal" id="quenmatkhau">
+		<div class="modal-dialog">
+			<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">Quên mật khẩu</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">
+						<div class="form-outline mb-2">
+							<label class="form-label">Email đã đăng ký</label> <input
+								id="email" type="email" class="form-control" name="email"
+								required />
+						</div>
+						<div class="row" id="alert-reset"></div>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button id="btn-reset" class="btn btn-primary" th:onclick="resetPass()">Reset mật khẩu</button>
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+					</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
